@@ -157,6 +157,7 @@ class Process extends \app\inc\Controller
             } catch (\PDOException $e) {
                 $response['success'] = false;
                 $response['message'][] = explode("\n", $e->getMessage())[0];
+                $response['message'][] = explode("\n", $e->getMessage())[1];
                 //$response['message'][] = $e->getMessage();
                 $response['code'] = 401;
                 return $response;
