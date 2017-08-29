@@ -2,4 +2,4 @@
 
 use \app\inc\Route;
 
-Route::add("extensions/fkguploader/api/process");
+Route::add("extensions/fkgupload/api/process");

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\extensions\fkguploader\api;
+namespace app\extensions\fkgupload\api;
 
 use \app\conf\App;
 use \app\inc\Response;
