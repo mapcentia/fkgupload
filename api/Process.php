@@ -42,6 +42,7 @@ class Process extends \app\inc\Controller
                 "oprindkode" => ["oprindkode", true, "int"],
                 "statuskode" => ["statuskode", true, "int"],
                 "off_kode" => ["off_kode", true, "int"],
+
                 "udd_distrikt_nr" => ["udd_d_nr", false, "int"],
                 "udd_distrikt_navn" => ["udd_d_nv", false, "varchar"],
                 "udd_distrikt_type_kode" => ["udd_tpkode", false, "int"],
@@ -49,6 +50,96 @@ class Process extends \app\inc\Controller
                 "sluttrin_kode" => ["slutr_kode", false, "int"],
                 "noegle" => ["noegle", false, "varchar"],
                 "sagsnr" => ["sagsnr", false, "varchar"],
+                "link" => ["link", false, "varchar"],
+                "geometri" => ["the_geom", true, "geometry"],
+            ],
+            "t_5800_fac_pkt" => [
+                "objekt_id" => ["objekt_id", false, "uuid"],
+                "cvr_kode" => ["cvr_kode", true, "int"],
+                "bruger_id" => ["bruger_id", true, "varchar"],
+                "oprindkode" => ["oprindkode", true, "int"],
+                "statuskode" => ["statuskode", true, "int"],
+                "off_kode" => ["off_kode", true, "int"],
+
+                "facil_ty_k" => ["facil_ty_k", true, "int"],
+                "handicap_k" => ["handicap_k", false, "int"],
+                "navn" => ["navn", false, "varchar"],
+                "season_k" => ["season_k", false, "int"], // saeson_k
+                "beskrivels" => ["beskrivels", false, "varchar"],
+                "ansvar_org" => ["ansvar_org", false, "varchar"],
+                "kontak_vedl" => ["kontak_vedl", false, "varchar"],
+                "foto_link1" => ["foto_link1", false, "varchar"],
+                "foto_link2" => ["foto_link2", false, "varchar"],
+                "vejkode" => ["vejkode", false, "int"],
+                "vejnavn" => ["vejnavn", false, "varchar"],
+                "ansva_v_k" => ["ansva_v_k", false, "int"], // ansvar_v_k
+                "husnr" => ["husnr", false, "int"],
+                "postnr" => ["postnr", false, "int"],
+
+                "link" => ["link", false, "varchar"],
+                "geometri" => ["the_geom", true, "geometry"],
+            ],
+
+            "t_5801_fac_fl" => [
+                "objekt_id" => ["objekt_id", false, "uuid"],
+                "cvr_kode" => ["cvr_kode", true, "int"],
+                "bruger_id" => ["bruger_id", true, "varchar"],
+                "oprindkode" => ["oprindkode", true, "int"],
+                "statuskode" => ["statuskode", true, "int"],
+                "off_kode" => ["off_kode", true, "int"],
+
+                "facil_ty_k" => ["facil_ty_k", true, "int"],
+                "handicap_k" => ["handicap_k", false, "int"],
+                "navn" => ["navn", false, "varchar"],
+                "season_k" => ["season_k", false, "int"], // saeson_k
+                "beskrivels" => ["beskrivels", false, "varchar"],
+                "ansvar_org" => ["ansvar_org", false, "varchar"],
+                "kontak_vedl" => ["kontak_vedl", false, "varchar"],
+                "foto_link1" => ["foto_link1", false, "varchar"],
+                "foto_link2" => ["foto_link2", false, "varchar"],
+                "vejkode" => ["vejkode", false, "int"],
+                "vejnavn" => ["vejnavn", false, "varchar"],
+                "ansva_v_k" => ["ansva_v_k", false, "int"], // ansvar_v_k
+                "husnr" => ["husnr", false, "int"],
+                "postnr" => ["postnr", false, "int"],
+
+                "link" => ["link", false, "varchar"],
+                "geometri" => ["the_geom", true, "geometry"],
+            ],
+
+            "t_5802_fac_li" => [
+                "objekt_id" => ["objekt_id", false, "uuid"],
+                "cvr_kode" => ["cvr_kode", true, "int"],
+                "bruger_id" => ["bruger_id", true, "varchar"],
+                "oprindkode" => ["oprindkode", true, "int"],
+                "statuskode" => ["statuskode", true, "int"],
+                "off_kode" => ["off_kode", true, "int"],
+
+                "rute_ty_k" => ["rute_ty_k", true, "int"],
+                "rute_uty_k" => ["rute_uty_k", false, "int"],
+                "kategori_k" => ["kategori_k", false, "int"],
+                "hierarki_k" => ["hierarki_k", false, "int"],
+                "svaerhed_k" => ["svaerhed_k", false, "int"],
+                "navn" => ["navn", false, "varchar"],
+                "navndels" => ["navndels", false, "varchar"],
+                "straekn_nr" => ["straekn_nr", false, "varchar"],
+                "ansvar_org" => ["ansvar_org", false, "varchar"],
+                "konta_vedl" => ["konta_vedl", false, "varchar"],
+                "laengde" => ["laengde", false, "numeric"],
+                "folder_k" => ["folder_k", false, "int"],
+                "folde_link" => ["folde_link", false, "varchar"],
+                "gpx_link" => ["gpx_link", false, "varchar"],
+                "foto_link1" => ["foto_link1", false, "varchar"],
+                "foto_link2" => ["foto_link2", false, "varchar"],
+                "obs" => ["obs", false, "varchar"],
+                "beskrivels" => ["beskrivels", false, "varchar"],
+                "belaegn_k" => ["belaegn_k", false, "int"],
+                "handicap_k" => ["handicap_k", false, "int"], // handikap_k
+                "ansva_v_k" => ["ansva_v_k", false, "int"], // ansvar_v_k
+                "startpkt_x" => ["startpkt_x", false, "int"], // startpunkt_x
+                "startpkt_x" => ["startpkt_x", false, "int"], // startpunkt_y
+                "afm_rute_k" => ["afm_rute_k", false, "int"],
+
                 "link" => ["link", false, "varchar"],
                 "geometri" => ["the_geom", true, "geometry"],
             ]
@@ -71,8 +162,8 @@ class Process extends \app\inc\Controller
         $checkFields = false;
         $missingField = "";
 
-        //$response["data"]["upload_schema"] = $uploadSchema;
-        //$response["data"]["fkg_schema"][] = $fkgSchema;
+        $response["data"]["upload_schema"] = $uploadSchema;
+        $response["data"]["fkg_schema"][] = $fkgSchema;
 
 
         foreach ($fkgSchema as $key => $value) {
@@ -189,7 +280,16 @@ class Process extends \app\inc\Controller
             case "t_5710_born_skole_dis":
                 $geoType = "multipolygon";
                 break;
-            default:
+
+            case "t_5801_fac_fl":
+                $geoType = "multipolygon";
+                break;
+
+            case "t_5802_fac_li":
+                $geoType = "multilinestring";
+                break;
+
+                default:
                 $geoType = "auto";
                 break;
 
