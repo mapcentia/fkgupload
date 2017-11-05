@@ -64,7 +64,7 @@ class Process extends \app\inc\Controller
                 "facil_ty_k" => ["facil_ty_k", true, "int"],
                 "handicap_k" => ["handicap_k", false, "int"],
                 "navn" => ["navn", false, "varchar"],
-                "season_k" => ["season_k", false, "int"], // saeson_k
+                "saeson_k" => ["saeson_k", false, "int"], // saeson_k
                 "beskrivels" => ["beskrivels", false, "varchar"],
                 "ansvar_org" => ["ansvar_org", false, "varchar"],
                 "kontak_vedl" => ["kontak_vedl", false, "varchar"],
@@ -91,7 +91,7 @@ class Process extends \app\inc\Controller
                 "facil_ty_k" => ["facil_ty_k", true, "int"],
                 "handicap_k" => ["handicap_k", false, "int"],
                 "navn" => ["navn", false, "varchar"],
-                "season_k" => ["season_k", false, "int"], // saeson_k
+                "saeson_k" => ["saeson_k", false, "int"], // saeson_k
                 "beskrivels" => ["beskrivels", false, "varchar"],
                 "ansvar_org" => ["ansvar_org", false, "varchar"],
                 "kontak_vedl" => ["kontak_vedl", false, "varchar"],
