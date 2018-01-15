@@ -229,7 +229,7 @@ class Process extends \app\inc\Controller
                 $resUpdate->execute(["objekt_id" => $objekt_id]);
             } catch (\PDOException $e) {
                 $response['success'] = false;
-                $response['message'][] = $e->get;
+                $response['message'][] = $e->getMessage();
                 $response['code'] = 401;
                 return $response;
             }
