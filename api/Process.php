@@ -137,7 +137,7 @@ class Process extends \app\inc\Controller
                 "handicap_k" => ["handicap_k", false, "int"], // handikap_k
                 "ansva_v_k" => ["ansva_v_k", false, "int"], // ansvar_v_k
                 "startpkt_x" => ["startpkt_x", false, "int"], // startpunkt_x
-                "startpkt_x" => ["startpkt_x", false, "int"], // startpunkt_y
+                "startpkt_y" => ["startpkt_y", false, "int"], // startpunkt_y
                 "afm_rute_k" => ["afm_rute_k", false, "int"],
 
                 "link" => ["link", false, "varchar"],
