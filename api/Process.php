@@ -142,7 +142,41 @@ class Process extends \app\inc\Controller
 
                 "link" => ["link", false, "varchar"],
                 "geometri" => ["the_geom", true, "geometry"],
-            ]
+            ],
+
+            "t_5713_prog_stat_dis" => [
+                "objekt_id" => ["objekt_id", false, "uuid"],
+                "cvr_kode" => ["cvr_kode", true, "int"],
+                "bruger_id" => ["bruger_id", true, "varchar"],
+                "oprindkode" => ["oprindkode", true, "int"],
+                "statuskode" => ["statuskode", true, "int"],
+                "off_kode" => ["off_kode", true, "int"],
+
+                "prog_distrikt_nr" => ["pro_dis_nr", false, "int"],
+                "prog_distrikt_navn" => ["pro_dis_na", false, "varchar"],
+                "prog_distrikt_type_kode" => ["pro_di_ty_k", false, "int"],
+                "noegle" => ["noegle", false, "varchar"],
+                "sagsnr" => ["sagsnr", false, "varchar"],
+                "link" => ["link", false, "varchar"],
+                "geometri" => ["the_geom", true, "geometry"],
+            ],
+
+            "t_5711_and_dis" => [
+                "objekt_id" => ["objekt_id", false, "uuid"],
+                "cvr_kode" => ["cvr_kode", true, "int"],
+                "bruger_id" => ["bruger_id", true, "varchar"],
+                "oprindkode" => ["oprindkode", true, "int"],
+                "statuskode" => ["statuskode", true, "int"],
+                "off_kode" => ["off_kode", true, "int"],
+
+                "an_distrikt_nr" => ["an_dis_nr", false, "int"],
+                "an_distrikt_navn" => ["an_dis_na", false, "varchar"],
+                "an_distrikt_type_kode" => ["an_dis_ty_k", false, "int"],
+                "noegle" => ["noegle", false, "varchar"],
+                "sagsnr" => ["sagsnr", false, "varchar"],
+                "link" => ["link", false, "varchar"],
+                "geometri" => ["the_geom", true, "geometry"],
+            ],
         ];
 
         return $schemata[$schema];
@@ -281,6 +315,14 @@ class Process extends \app\inc\Controller
                 $geoType = "multipolygon";
                 break;
 
+            case "t_5713_prog_stat_dis":
+                $geoType = "multipolygon";
+                break;
+
+            case "t_5711_and_dis":
+                $geoType = "multipolygon";
+                break;
+
             case "t_5801_fac_fl":
                 $geoType = "multipolygon";
                 break;
@@ -289,7 +331,7 @@ class Process extends \app\inc\Controller
                 $geoType = "multilinestring";
                 break;
 
-                default:
+            default:
                 $geoType = "auto";
                 break;
 
