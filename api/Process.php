@@ -195,34 +195,43 @@ class Process extends \app\inc\Controller
         $sqlUpdateIds = [];
         $checkFields = false;
         $missingField = "";
+        $longFieldsName = false;
 
         $response["data"]["upload_schema"] = $uploadSchema;
         $response["data"]["fkg_schema"][] = $fkgSchema;
 
-
         foreach ($fkgSchema as $key => $value) {
             $check = false;
             foreach ($uploadSchema as $sValue) {
-                if ($value[0] == $sValue["id"]) {
-                    $response["data"]["fields"][$value[0]] = true;
+                if ($value[0] == $sValue["id"] || $key == $sValue["id"]) {
+
+                    if ($key == $sValue["id"]) {
+                        $fieldName = $key;
+                    } else {
+                        $fieldName = $value[0];
+
+                    }
+
+                    $response["data"]["fields"][$fieldName] = true;
                     if ($key != "objekt_id") {
                         $arr1[] = $key;
-                        $arr2[] = $value[0] . "::" . $value[2];
+                        $arr2[] = $fieldName . "::" . $value[2];
                     }
-                    $arr3[] = "{$key}={$uploadTable}.{$value[0]}::{$value[2]}";
+                    $arr3[] = "{$key}={$uploadTable}.{$fieldName}::{$value[2]}"; // TODO
                     $check = true;
                     break;
                 }
 
             }
             if (!$check) {
-                $response["data"]["fields"][$value[0]] = false;
+                $response["data"]["fields"][$fieldName] = false;
                 if ($value[1]) {
                     $checkFields = true;
-                    $missingField = $value[0];
+                    $missingField = $fieldName;
                     break;
                 }
             }
+
         }
 
         if ($checkFields) {
