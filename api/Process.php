@@ -30,6 +30,9 @@ class Process extends \app\inc\Controller
 
         $this->model = new Model();
 
+        // Set path so libjvm.so can be loaded in ogr2ogr for MS Access support
+        putenv("LD_LIBRARY_PATH=/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server");
+
     }
 
     private function fkgSchema($schema)
@@ -72,8 +75,8 @@ class Process extends \app\inc\Controller
                 "foto_link2" => ["foto_link2", false, "varchar"],
                 "vejkode" => ["vejkode", false, "int"],
                 "vejnavn" => ["vejnavn", false, "varchar"],
-                "ansva_v_k" => ["ansva_v_k", false, "int"], // ansvar_v_k
-                "husnr" => ["husnr", false, "int"],
+                "ansvar_v_k" => ["ansvar_v_k", false, "int"], // ansvar_v_k
+                "husnr" => ["husnr", false, "varchar"],
                 "postnr" => ["postnr", false, "int"],
 
                 "link" => ["link", false, "varchar"],
@@ -99,8 +102,8 @@ class Process extends \app\inc\Controller
                 "foto_link2" => ["foto_link2", false, "varchar"],
                 "vejkode" => ["vejkode", false, "int"],
                 "vejnavn" => ["vejnavn", false, "varchar"],
-                "ansva_v_k" => ["ansva_v_k", false, "int"], // ansvar_v_k
-                "husnr" => ["husnr", false, "int"],
+                "ansvar_v_k" => ["ansvar_v_k", false, "int"], // ansvar_v_k
+                "husnr" => ["husnr", false, "varchar"],
                 "postnr" => ["postnr", false, "int"],
 
                 "link" => ["link", false, "varchar"],
@@ -135,7 +138,7 @@ class Process extends \app\inc\Controller
                 "beskrivels" => ["beskrivels", false, "varchar"],
                 "belaegn_k" => ["belaegn_k", false, "int"],
                 "handicap_k" => ["handicap_k", false, "int"], // handikap_k
-                "ansva_v_k" => ["ansva_v_k", false, "int"], // ansvar_v_k
+                "ansvar_v_k" => ["ansvar_v_k", false, "int"], // ansvar_v_k
                 "startpkt_x" => ["startpkt_x", false, "int"], // startpunkt_x
                 "startpkt_y" => ["startpkt_y", false, "int"], // startpunkt_y
                 "afm_rute_k" => ["afm_rute_k", false, "int"],
