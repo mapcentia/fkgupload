@@ -180,6 +180,23 @@ class Process extends \app\inc\Controller
                 "link" => ["link", false, "varchar"],
                 "geometri" => ["the_geom", true, "geometry"],
             ],
+
+            "t_5712_plej_aeldr_dis" => [
+                "objekt_id" => ["objekt_id", false, "uuid"],
+                "cvr_kode" => ["cvr_kode", true, "int"],
+                "bruger_id" => ["bruger_id", true, "varchar"],
+                "oprindkode" => ["oprindkode", true, "int"],
+                "statuskode" => ["statuskode", true, "int"],
+                "off_kode" => ["off_kode", true, "int"],
+
+                "plej_distrikt_nr" => ["pl_dis_nr", false, "int"],
+                "plej_distrikt_navn" => ["pl_dis_na", false, "varchar"],
+                "plej_distrikt_type_kode" => ["pl_dis_ty_k", false, "int"],
+                "noegle" => ["noegle", false, "varchar"],
+                "sagsnr" => ["sagsnr", false, "varchar"],
+                "link" => ["link", false, "varchar"],
+                "geometri" => ["the_geom", true, "geometry"],
+            ],
         ];
 
         return $schemata[$schema];
@@ -332,6 +349,10 @@ class Process extends \app\inc\Controller
                 break;
 
             case "t_5711_and_dis":
+                $geoType = "multipolygon";
+                break;
+
+            case "t_5712_plej_aeldr_dis":
                 $geoType = "multipolygon";
                 break;
 
