@@ -51,6 +51,7 @@ class Process extends \app\inc\Controller
                 "udd_distrikt_type_kode" => ["udd_tpkode", false, "int"],
                 "starttrin_kode" => ["strtr_kode", false, "int"],
                 "sluttrin_kode" => ["slutr_kode", false, "int"],
+
                 "noegle" => ["noegle", false, "varchar"],
                 "sagsnr" => ["sagsnr", false, "varchar"],
                 "link" => ["link", false, "varchar"],
@@ -158,6 +159,7 @@ class Process extends \app\inc\Controller
                 "prog_distrikt_nr" => ["pro_dis_nr", false, "int"],
                 "prog_distrikt_navn" => ["pro_dis_na", false, "varchar"],
                 "prog_distrikt_type_kode" => ["pro_di_ty_k", false, "int"],
+
                 "noegle" => ["noegle", false, "varchar"],
                 "sagsnr" => ["sagsnr", false, "varchar"],
                 "link" => ["link", false, "varchar"],
@@ -192,6 +194,7 @@ class Process extends \app\inc\Controller
                 "plej_distrikt_nr" => ["pl_dis_nr", false, "int"],
                 "plej_distrikt_navn" => ["pl_dis_na", false, "varchar"],
                 "plej_distrikt_type_kode" => ["pl_dis_ty_k", false, "int"],
+
                 "noegle" => ["noegle", false, "varchar"],
                 "sagsnr" => ["sagsnr", false, "varchar"],
                 "link" => ["link", false, "varchar"],
@@ -215,7 +218,6 @@ class Process extends \app\inc\Controller
         $sqlUpdateIds = [];
         $checkFields = false;
         $missingField = "";
-        $longFieldsName = false;
 
         $response["data"]["upload_schema"] = $uploadSchema;
         $response["data"]["fkg_schema"][] = $fkgSchema;
@@ -241,13 +243,12 @@ class Process extends \app\inc\Controller
                     $check = true;
                     break;
                 }
-
             }
             if (!$check) {
-                $response["data"]["fields"][$fieldName] = false;
+                $response["data"]["fields"][$key] = false;
                 if ($value[1]) {
                     $checkFields = true;
-                    $missingField = $fieldName;
+                    $missingField = $key;
                     break;
                 }
             }
