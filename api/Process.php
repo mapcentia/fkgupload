@@ -177,6 +177,7 @@ class Process extends \app\inc\Controller
                 "an_distrikt_nr" => ["an_dis_nr", false, "int"],
                 "an_distrikt_navn" => ["an_dis_na", false, "varchar"],
                 "an_distrikt_type_kode" => ["an_dis_ty_k", false, "int"],
+
                 "noegle" => ["noegle", false, "varchar"],
                 "sagsnr" => ["sagsnr", false, "varchar"],
                 "link" => ["link", false, "varchar"],
