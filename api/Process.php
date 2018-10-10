@@ -48,7 +48,7 @@ class Process extends \app\inc\Controller
 
                 "udd_distrikt_nr" => ["udd_d_nr", false, "int"],
                 "udd_distrikt_navn" => ["udd_d_nv", false, "varchar"],
-                "udd_distrikt_type_kode" => ["udd_tpkode", false, "int"],
+                "udd_distrikt_type_kode" => ["udd_tpkode", true, "int"],
                 "starttrin_kode" => ["strtr_kode", false, "int"],
                 "sluttrin_kode" => ["slutr_kode", false, "int"],
 
