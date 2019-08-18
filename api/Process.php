@@ -66,21 +66,35 @@ class Process extends \app\inc\Controller
                 "off_kode" => ["off_kode", true, "int"],
 
                 "facil_ty_k" => ["facil_ty_k", true, "int"],
-                "handicap_k" => ["handicap_k", false, "int"],
                 "navn" => ["navn", false, "varchar"],
-                "saeson_k" => ["saeson_k", false, "int"], // saeson_k
                 "beskrivels" => ["beskrivels", false, "varchar"],
+                "lang_beskr" => ["lang_beskr", false, "varchar"],
+                "uk_k_beskr" => ["uk_k_beskr", false, "varchar"],
+                "uk_l_beskr" => ["uk_l_beskr", false, "varchar"],
+                "d_k_beskr" => ["d_k_beskr", false, "varchar"],
+                "d_l_beskr" => ["d_l_beskr", false, "varchar"],
                 "ansvar_org" => ["ansvar_org", false, "varchar"],
-                "kontak_vedl" => ["kontak_vedl", false, "varchar"],
+                "kontak_ved" => ["kontak_ved", false, "varchar"],
+
+                "handicap_k" => ["handicap_k", false, "int"], // Felt defineret under: 4.1
+
+                "saeson_k" => ["saeson_k", false, "int"],
+                "saeson_st" => ["saeson_st", false, "int"],
+                "saeson_sl" => ["saeson_sl", false, "int"],
+                "doegnaab_k" => ["doegnaab_k", false, "int"],
+                "vandhane_k" => ["vandhane_k", false, "int"],
+                "bemand_k" => ["bemand_k", false, "int"],
+                "betaling_k" => ["betaling_k", false, "int"],
+                "book_k" => ["book_k", false, "int"],
+                "antal_pl" => ["antal_pl", false, "int"],
                 "foto_link1" => ["foto_link1", false, "varchar"],
                 "foto_link2" => ["foto_link2", false, "varchar"],
-                "vejkode" => ["vejkode", false, "int"],
-                "vejnavn" => ["vejnavn", false, "varchar"],
-                "ansvar_v_k" => ["ansvar_v_k", false, "int"], // ansvar_v_k
-                "husnr" => ["husnr", false, "varchar"],
-                "postnr" => ["postnr", false, "int"],
+                "filmlink" => ["filmlink", false, "varchar"],
+                "adr_id" => ["adr_id", false, "varchar"],
 
-                "link" => ["link", false, "varchar"],
+                "ansva_v_k" => ["ansva_v_k", false, "varchar"], // Felt defineret under: 4.1
+                "link" => ["link", false, "varchar"], // Felt defineret under: 4.1
+
                 "geometri" => ["the_geom", true, "geometry"],
             ],
 
@@ -93,21 +107,35 @@ class Process extends \app\inc\Controller
                 "off_kode" => ["off_kode", true, "int"],
 
                 "facil_ty_k" => ["facil_ty_k", true, "int"],
-                "handicap_k" => ["handicap_k", false, "int"],
                 "navn" => ["navn", false, "varchar"],
-                "saeson_k" => ["saeson_k", false, "int"], // saeson_k
                 "beskrivels" => ["beskrivels", false, "varchar"],
+                "lang_beskr" => ["lang_beskr", false, "varchar"],
+                "uk_k_beskr" => ["uk_k_beskr", false, "varchar"],
+                "uk_l_beskr" => ["uk_l_beskr", false, "varchar"],
+                "d_k_beskr" => ["d_k_beskr", false, "varchar"],
+                "d_l_beskr" => ["d_l_beskr", false, "varchar"],
                 "ansvar_org" => ["ansvar_org", false, "varchar"],
-                "kontak_vedl" => ["kontak_vedl", false, "varchar"],
+                "kontak_ved" => ["kontak_ved", false, "varchar"],
+
+                "handicap_k" => ["handicap_k", false, "int"], // Felt defineret under: 4.1
+
+                "saeson_k" => ["saeson_k", false, "int"],
+                "saeson_st" => ["saeson_st", false, "int"],
+                "saeson_sl" => ["saeson_sl", false, "int"],
+                "doegnaab_k" => ["doegnaab_k", false, "int"],
+                "vandhane_k" => ["vandhane_k", false, "int"],
+                "bemand_k" => ["bemand_k", false, "int"],
+                "betaling_k" => ["betaling_k", false, "int"],
+                "book_k" => ["book_k", false, "int"],
+                "antal_pl" => ["antal_pl", false, "int"],
                 "foto_link1" => ["foto_link1", false, "varchar"],
                 "foto_link2" => ["foto_link2", false, "varchar"],
-                "vejkode" => ["vejkode", false, "int"],
-                "vejnavn" => ["vejnavn", false, "varchar"],
-                "ansvar_v_k" => ["ansvar_v_k", false, "int"], // ansvar_v_k
-                "husnr" => ["husnr", false, "varchar"],
-                "postnr" => ["postnr", false, "int"],
+                "filmlink" => ["filmlink", false, "varchar"],
+                "adr_id" => ["adr_id", false, "varchar"],
 
-                "link" => ["link", false, "varchar"],
+                "ansva_v_k" => ["ansva_v_k", false, "varchar"], // Felt defineret under: 4.1
+                "link" => ["link", false, "varchar"], // Felt defineret under: 4.1
+
                 "geometri" => ["the_geom", true, "geometry"],
             ],
 
@@ -121,30 +149,46 @@ class Process extends \app\inc\Controller
 
                 "rute_ty_k" => ["rute_ty_k", true, "int"],
                 "rute_uty_k" => ["rute_uty_k", false, "int"],
-                "kategori_k" => ["kategori_k", false, "int"],
-                "hierarki_k" => ["hierarki_k", false, "int"],
-                "svaerhed_k" => ["svaerhed_k", false, "int"],
+
                 "navn" => ["navn", false, "varchar"],
                 "navndels" => ["navndels", false, "varchar"],
                 "straekn_nr" => ["straekn_nr", false, "varchar"],
-                "ansvar_org" => ["ansvar_org", false, "varchar"],
-                "konta_vedl" => ["konta_vedl", false, "varchar"],
+
+                "afm_rute_k" => ["afm_rute_k", false, "int"],
                 "laengde" => ["laengde", false, "numeric"],
+
+                "beskrivels" => ["beskrivels", false, "varchar"],
+                "lang_beskr" => ["lang_beskr", false, "varchar"],
+                "uk_k_beskr" => ["uk_k_beskr", false, "varchar"],
+                "uk_l_beskr" => ["uk_l_beskr", false, "varchar"],
+                "d_k_beskr" => ["d_k_beskr", false, "varchar"],
+                "d_l_beskr" => ["d_l_beskr", false, "varchar"],
+                "ansvar_org" => ["ansvar_org", false, "varchar"],
+                "kontak_ved" => ["kontak_ved", false, "varchar"],
+                "betaling_k" => ["betaling_k", false, "varchar"],
+
+                "belaegn_k" => ["belaegn_k", false, "varchar"], // Felt defineret under: 4.1
+                "handicap_k" => ["handicap_k", false, "int"], // Felt defineret under: 4.1
+                "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
+
+                "startpkt_x" => ["startpkt_x", false, "int"],
+                "startpkt_y" => ["startpkt_y", false, "int"],
+                "slutpkt_x" => ["slutpkt_x", false, "int"],
+                "slutpkt_y" => ["slutpkt_y", false, "int"],
+                "svaerhed_k" => ["svaerhed_k", false, "int"],
+                "obs" => ["obs", false, "varchar"],
+                "kategori_k" => ["kategori_k", false, "int"],
+                "certifi_k" => ["certifi_k", false, "int"],
+                "hierarki_k" => ["hierarki_k", false, "int"],
                 "folder_k" => ["folder_k", false, "int"],
                 "folde_link" => ["folde_link", false, "varchar"],
-                "gpx_link" => ["gpx_link", false, "varchar"],
                 "foto_link1" => ["foto_link1", false, "varchar"],
                 "foto_link2" => ["foto_link2", false, "varchar"],
-                "obs" => ["obs", false, "varchar"],
-                "beskrivels" => ["beskrivels", false, "varchar"],
-                "belaegn_k" => ["belaegn_k", false, "int"],
-                "handicap_k" => ["handicap_k", false, "int"], // handikap_k
-                "ansvar_v_k" => ["ansvar_v_k", false, "int"], // ansvar_v_k
-                "startpkt_x" => ["startpkt_x", false, "int"], // startpunkt_x
-                "startpkt_y" => ["startpkt_y", false, "int"], // startpunkt_y
-                "afm_rute_k" => ["afm_rute_k", false, "int"],
+                "filmlink" => ["filmlink", false, "varchar"],
+                "gpx_link" => ["gpx_link", false, "varchar"],
+                "adr_id" => ["adr_id", false, "varchar"],
 
-                "link" => ["link", false, "varchar"],
+                "link" => ["link", false, "varchar"], // Felt defineret under: 4.1
                 "geometri" => ["the_geom", true, "geometry"],
             ],
 
