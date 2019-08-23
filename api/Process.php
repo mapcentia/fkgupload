@@ -79,8 +79,8 @@ class Process extends \app\inc\Controller
                 "handicap_k" => ["handicap_k", false, "int"], // Felt defineret under: 4.1
 
                 "saeson_k" => ["saeson_k", false, "int"],
-                "saeson_st" => ["saeson_st", false, "int"],
-                "saeson_sl" => ["saeson_sl", false, "int"],
+                "saeson_st" => ["saeson_st", false, "date"],
+                "saeson_sl" => ["saeson_sl", false, "date"],
                 "doegnaab_k" => ["doegnaab_k", false, "int"],
                 "vandhane_k" => ["vandhane_k", false, "int"],
                 "bemand_k" => ["bemand_k", false, "int"],
@@ -90,9 +90,9 @@ class Process extends \app\inc\Controller
                 "foto_link1" => ["foto_link1", false, "varchar"],
                 "foto_link2" => ["foto_link2", false, "varchar"],
                 "filmlink" => ["filmlink", false, "varchar"],
-                "adr_id" => ["adr_id", false, "varchar"],
+                "adr_id" => ["adr_id", false, "uuid"],
 
-                "ansva_v_k" => ["ansva_v_k", false, "varchar"], // Felt defineret under: 4.1
+                "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
                 "link" => ["link", false, "varchar"], // Felt defineret under: 4.1
 
                 "geometri" => ["the_geom", true, "geometry"],
@@ -120,8 +120,8 @@ class Process extends \app\inc\Controller
                 "handicap_k" => ["handicap_k", false, "int"], // Felt defineret under: 4.1
 
                 "saeson_k" => ["saeson_k", false, "int"],
-                "saeson_st" => ["saeson_st", false, "int"],
-                "saeson_sl" => ["saeson_sl", false, "int"],
+                "saeson_st" => ["saeson_st", false, "date"],
+                "saeson_sl" => ["saeson_sl", false, "date"],
                 "doegnaab_k" => ["doegnaab_k", false, "int"],
                 "vandhane_k" => ["vandhane_k", false, "int"],
                 "bemand_k" => ["bemand_k", false, "int"],
@@ -131,9 +131,9 @@ class Process extends \app\inc\Controller
                 "foto_link1" => ["foto_link1", false, "varchar"],
                 "foto_link2" => ["foto_link2", false, "varchar"],
                 "filmlink" => ["filmlink", false, "varchar"],
-                "adr_id" => ["adr_id", false, "varchar"],
+                "adr_id" => ["adr_id", false, "uuid"],
 
-                "ansva_v_k" => ["ansva_v_k", false, "varchar"], // Felt defineret under: 4.1
+                "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
                 "link" => ["link", false, "varchar"], // Felt defineret under: 4.1
 
                 "geometri" => ["the_geom", true, "geometry"],
@@ -152,7 +152,7 @@ class Process extends \app\inc\Controller
 
                 "navn" => ["navn", false, "varchar"],
                 "navndels" => ["navndels", false, "varchar"],
-                "straekn_nr" => ["straekn_nr", false, "varchar"],
+               // "straekn_nr" => ["straekn_nr", false, "varchar"],
 
                 "afm_rute_k" => ["afm_rute_k", false, "int"],
                 "laengde" => ["laengde", false, "numeric"],
@@ -165,9 +165,9 @@ class Process extends \app\inc\Controller
                 "d_l_beskr" => ["d_l_beskr", false, "varchar"],
                 "ansvar_org" => ["ansvar_org", false, "varchar"],
                 "kontak_ved" => ["kontak_ved", false, "varchar"],
-                "betaling_k" => ["betaling_k", false, "varchar"],
+                "betaling_k" => ["betaling_k", false, "int"],
 
-                "belaegn_k" => ["belaegn_k", false, "varchar"], // Felt defineret under: 4.1
+                "belaegn_k" => ["belaegn_k", false, "int"], // Felt defineret under: 4.1
                 "handicap_k" => ["handicap_k", false, "int"], // Felt defineret under: 4.1
                 "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
 
@@ -186,7 +186,7 @@ class Process extends \app\inc\Controller
                 "foto_link2" => ["foto_link2", false, "varchar"],
                 "filmlink" => ["filmlink", false, "varchar"],
                 "gpx_link" => ["gpx_link", false, "varchar"],
-                "adr_id" => ["adr_id", false, "varchar"],
+                "adr_id" => ["adr_id", false, "uuid"],
 
                 "link" => ["link", false, "varchar"], // Felt defineret under: 4.1
                 "geometri" => ["the_geom", true, "geometry"],
@@ -281,10 +281,22 @@ class Process extends \app\inc\Controller
 
                     $response["data"]["fields"][$fieldName] = true;
                     if ($key != "objekt_id") {
+                        if (strpos($key, 'saeson_s') !== false) {
+                            $arr2[] = "('0001-'||" . $fieldName . ")::" . $value[2];
+                        } else {
+                            $arr2[] = $fieldName . "::" . $value[2];
+
+                        }
                         $arr1[] = $key;
-                        $arr2[] = $fieldName . "::" . $value[2];
                     }
-                    $arr3[] = "{$key}={$uploadTable}.{$fieldName}::{$value[2]}"; // TODO
+
+                    if (strpos($key, 'saeson_s') !== false) {
+                        $arr3[] = "{$key}=('0001-'||{$uploadTable}.{$fieldName})::{$value[2]}";
+
+                    } else {
+                        $arr3[] = "{$key}={$uploadTable}.{$fieldName}::{$value[2]}";
+
+                    }
                     $check = true;
                     break;
                 }
