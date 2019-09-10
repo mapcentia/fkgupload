@@ -152,7 +152,7 @@ class Process extends \app\inc\Controller
 
                 "navn" => ["navn", false, "varchar"],
                 "navndels" => ["navndels", false, "varchar"],
-               // "straekn_nr" => ["straekn_nr", false, "varchar"],
+                // "straekn_nr" => ["straekn_nr", false, "varchar"],
 
                 "afm_rute_k" => ["afm_rute_k", false, "int"],
                 "laengde" => ["laengde", false, "numeric"],
@@ -412,6 +412,10 @@ class Process extends \app\inc\Controller
 
             case "t_5712_plej_aeldr_dis":
                 $geoType = "multipolygon";
+                break;
+
+            case "t_5800_fac_pkt":
+                $geoType = "multipoint";
                 break;
 
             case "t_5801_fac_fl":
