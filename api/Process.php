@@ -152,7 +152,7 @@ class Process extends \app\inc\Controller
 
                 "navn" => ["navn", false, "varchar"],
                 "navndels" => ["navndels", false, "varchar"],
-                // "straekn_nr" => ["straekn_nr", false, "varchar"],
+                "straekn_nr" => ["straekn_nr", false, "varchar"],
 
                 "afm_rute_k" => ["afm_rute_k", false, "int"],
                 "laengde" => ["laengde", false, "numeric"],
