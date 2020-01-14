@@ -25,7 +25,7 @@ class Process extends \app\inc\Controller
         Session::start();
         Session::authenticate(null);
 
-        Database::setDb(Session::getUser());
+        Database::setDb(Session::getDatabase());
         Connection::$param["postgisschema"] = $_SESSION['postgisschema'];
 
         $this->model = new Model();
