@@ -442,7 +442,7 @@ class Process extends \app\inc\Controller
         $zipCheck1 = explode(".", $_REQUEST['file']);
         $zipCheck2 = array_reverse($zipCheck1);
         $format = strtolower($zipCheck2[0]);
-        if ($format == "zip" || $format == "rar") {
+        if (strtolower($zipCheck2[0]) == "zip" || strtolower($zipCheck2[0]) == "rar") {
             $ext = array("shp", "tab", "geojson", "gml", "kml", "mif", "gdb", "csv");
             $folderArr = array();
             $safeNameArr = array();
@@ -453,7 +453,7 @@ class Process extends \app\inc\Controller
 
             // ZIP start
             // =========
-            if ($format == "zip") {
+            if (strtolower($zipCheck2[0]) == "zip") {
                 $zip = new \ZipArchive;
                 $res = $zip->open($dir . "/" . $_REQUEST['file']);
                 if ($res === false) {
@@ -467,7 +467,7 @@ class Process extends \app\inc\Controller
 
             // RAR start
             // =========
-            if ($format == "rar") {
+            if (strtolower($zipCheck2[0]) == "rar") {
                 $rar_file = rar_open($dir . "/" . $_REQUEST['file']);
                 if (!$rar_file) {
                     $response['success'] = false;
@@ -488,7 +488,7 @@ class Process extends \app\inc\Controller
                     if ($entry !== "." && $entry !== "..") {
                         $zipCheck1 = explode(".", $entry);
                         $zipCheck2 = array_reverse($zipCheck1);
-                        if (in_array($format, $ext)) {
+                        if (in_array(strtolower($zipCheck2[0]), $ext)) {
                             $_REQUEST['file'] = $folder . "/" . $entry;
                             for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
                                 $safeNameArr[] = $zipCheck1[$i];
