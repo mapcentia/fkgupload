@@ -1,26 +1,42 @@
 <?php
+/**
+ * @author     Martin Høgh <mh@mapcentia.com>
+ * @copyright  2013-2021 MapCentia ApS
+ * @license    http://www.gnu.org/licenses/#AGPL  GNU AFFERO GENERAL PUBLIC LICENSE 3
+ *
+ */
 
 namespace app\extensions\fkgupload\api;
 
-use \app\conf\App;
-use \app\inc\Response;
-use \app\models\Database;
-use \app\conf\Connection;
-use \app\inc\Session;
-use \app\inc\Input;
-use \app\inc\Model;
-use \app\models\Table;
+use app\conf\App;
+use app\controllers\Tilecache;
+use app\inc\Controller;
+use app\inc\Input;
+use app\inc\Response;
+use app\models\Database;
+use app\conf\Connection;
+use app\inc\Session;
+use app\inc\Model;
+use app\models\Table;
+use PDOException;
+use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
+use ZipArchive;
+
 
 /**
  * Class Processvector
  * @package app\controllers\upload
  */
-class Process extends \app\inc\Controller
+class Process extends Controller
 {
+    /**
+     * @var Model
+     */
     private $model;
 
     function __construct()
     {
+        parent::__construct();
 
         Session::start();
         Session::authenticate(null);
@@ -32,10 +48,13 @@ class Process extends \app\inc\Controller
 
         // Set path so libjvm.so can be loaded in ogr2ogr for MS Access support
         putenv("LD_LIBRARY_PATH=/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server");
-
     }
 
-    private function fkgSchema($schema)
+    /**
+     * @param string $schema
+     * @return array[]
+     */
+    private function fkgSchema(string $schema): array
     {
         $schemata = [
             "t_5710_born_skole_dis" => [
@@ -250,6 +269,12 @@ class Process extends \app\inc\Controller
         return $schemata[$schema];
     }
 
+    /**
+     * @param string $uploadTable
+     * @param string $fkgTable
+     * @return array<mixed>
+     * @throws PhpfastcacheInvalidArgumentException
+     */
     private function schema(string $uploadTable, string $fkgTable): array
     {
         $response = [];
@@ -326,13 +351,13 @@ class Process extends \app\inc\Controller
         $res = $this->model->prepare($sql);
         try {
             $res->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             $response['success'] = false;
             $response['message'] = $e->getMessage();
             $response['code'] = 401;
             return $response;
         }
-        while ($row = $this->model->fetchRow($res, "assoc")) {
+        while ($row = $this->model->fetchRow($res)) {
             if (isset($row["objekt_id"]) && $row["objekt_id"]) {
                 $sqlUpdateIds[] = $row["objekt_id"];
             } else {
@@ -348,7 +373,7 @@ class Process extends \app\inc\Controller
         foreach ($sqlUpdateIds as $objekt_id) {
             try {
                 $resUpdate->execute(["objekt_id" => $objekt_id]);
-            } catch (\PDOException $e) {
+            } catch (PDOException $e) {
                 $response['success'] = false;
                 $response['message'][] = $e->getMessage();
                 $response['code'] = 401;
@@ -366,7 +391,7 @@ class Process extends \app\inc\Controller
         foreach ($sqlInsertIds as $gid) {
             try {
                 $resInsert->execute(["gid" => $gid]);
-            } catch (\PDOException $e) {
+            } catch (PDOException $e) {
                 $response['success'] = false;
                 $response['message'][] = explode("\n", $e->getMessage())[0];
                 $response['message'][] = explode("\n", $e->getMessage())[1];
@@ -375,7 +400,7 @@ class Process extends \app\inc\Controller
                 return $response;
             }
 
-            $row = $this->model->fetchRow($resInsert, "assoc");
+            $row = $this->model->fetchRow($resInsert);
             $response["data"]["inserted_ids"][] = $row["objekt_id"];
         }
 
@@ -386,40 +411,29 @@ class Process extends \app\inc\Controller
     }
 
     /**
-     * @return array
+     * @return array<mixed>
+     * @throws PhpfastcacheInvalidArgumentException
      */
-    public function get_index()
+    public function post_index(): array
     {
-
         $response = [];
         $dir = App::$param['path'] . "app/tmp/" . Connection::$param["postgisdb"] . "/__vectors";
         $safeName = Session::getUser() . "_" . md5(microtime() . rand());
-        $encoding = $_REQUEST["encoding"];
-        $fkgName = $_REQUEST["fkgname"];
+        $body = json_decode(Input::getBody(), true);
+        $encoding = "LATIN1";
+        $fkgName = $body["fileName"];
 
         switch ($fkgName) {
-            case "t_5710_born_skole_dis":
-                $geoType = "multipolygon";
-                break;
-
             case "t_5713_prog_stat_dis":
-                $geoType = "multipolygon";
-                break;
-
             case "t_5711_and_dis":
-                $geoType = "multipolygon";
-                break;
-
             case "t_5712_plej_aeldr_dis":
+            case "t_5801_fac_fl":
+            case "t_5710_born_skole_dis":
                 $geoType = "multipolygon";
                 break;
 
             case "t_5800_fac_pkt":
                 $geoType = "multipoint";
-                break;
-
-            case "t_5801_fac_fl":
-                $geoType = "multipolygon";
                 break;
 
             case "t_5802_fac_li":
@@ -429,20 +443,17 @@ class Process extends \app\inc\Controller
             default:
                 $geoType = "auto";
                 break;
-
         }
 
         if (is_numeric($safeName[0])) {
             $safeName = "_" . $safeName;
         }
 
-
         // Check if file is .zip
         // =====================
         $zipCheck1 = explode(".", $_REQUEST['file']);
         $zipCheck2 = array_reverse($zipCheck1);
-        $format = strtolower($zipCheck2[0]);
-        if (strtolower($zipCheck2[0]) == "zip" || strtolower($zipCheck2[0]) == "rar") {
+        if (strtolower($zipCheck2[0]) == "zip") {
             $ext = array("shp", "tab", "geojson", "gml", "kml", "mif", "gdb", "csv");
             $folderArr = array();
             $safeNameArr = array();
@@ -454,7 +465,7 @@ class Process extends \app\inc\Controller
             // ZIP start
             // =========
             if (strtolower($zipCheck2[0]) == "zip") {
-                $zip = new \ZipArchive;
+                $zip = new ZipArchive;
                 $res = $zip->open($dir . "/" . $_REQUEST['file']);
                 if ($res === false) {
                     $response['success'] = false;
@@ -463,24 +474,6 @@ class Process extends \app\inc\Controller
                 }
                 $zip->extractTo($dir . "/" . $folder);
                 $zip->close();
-            }
-
-            // RAR start
-            // =========
-            if (strtolower($zipCheck2[0]) == "rar") {
-                $rar_file = rar_open($dir . "/" . $_REQUEST['file']);
-                if (!$rar_file) {
-                    $response['success'] = false;
-                    $response['message'] = "Could not unrar file";
-                    return Response::json($response);
-                }
-
-                $list = rar_list($rar_file);
-                foreach ($list as $file) {
-                    $entry = rar_entry_get($rar_file, $file);
-                    $file->extract($dir . "/" . $folder); // extract to the current dir
-                }
-                rar_close($rar_file);
             }
 
             if ($handle = opendir($dir . "/" . $folder)) {
@@ -550,7 +543,7 @@ class Process extends \app\inc\Controller
 
             // Bust cache, in case of layer already exist
             // ==========================================
-            \app\controllers\Tilecache::bust(Connection::$param["postgisschema"] . "." . $safeName);
+            Tilecache::bust(Connection::$param["postgisschema"] . "." . $safeName);
 
 
         } else {
@@ -566,7 +559,7 @@ class Process extends \app\inc\Controller
             $res = $this->model->prepare($sql);
             try {
                 $res->execute();
-            } catch (\PDOException $e) {
+            } catch (PDOException $e) {
 
             }
 
