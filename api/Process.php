@@ -12,7 +12,6 @@ use app\conf\App;
 use app\controllers\Tilecache;
 use app\inc\Controller;
 use app\inc\Input;
-use app\inc\Response;
 use app\models\Database;
 use app\conf\Connection;
 use app\inc\Session;
@@ -51,13 +50,13 @@ class Process extends Controller
     }
 
     /**
-     * @param string $schema
+     * @param int $schema
      * @return array[]
      */
-    private function fkgSchema(string $schema): array
+    private function fkgSchema(int $schema): array
     {
         $schemata = [
-            "t_5710_born_skole_dis" => [
+            5710 => [
                 "objekt_id" => ["objekt_id", false, "uuid"],
                 "cvr_kode" => ["cvr_kode", true, "int"],
                 "bruger_id" => ["bruger_id", true, "varchar"],
@@ -76,7 +75,7 @@ class Process extends Controller
                 "link" => ["link", false, "varchar"],
                 "geometri" => ["the_geom", true, "geometry"],
             ],
-            "t_5800_fac_pkt" => [
+            5800 => [
                 "objekt_id" => ["objekt_id", false, "uuid"],
                 "cvr_kode" => ["cvr_kode", true, "int"],
                 "bruger_id" => ["bruger_id", true, "varchar"],
@@ -108,7 +107,7 @@ class Process extends Controller
                 "antal_pl" => ["antal_pl", false, "int"],
                 "foto_link1" => ["foto_link1", false, "varchar"],
                 "foto_link2" => ["foto_link2", false, "varchar"],
-                "filmlink" => ["filmlink", false, "varchar"],
+                "film_link" => ["film_link", false, "varchar"],
                 "adr_id" => ["adr_id", false, "uuid"],
 
                 "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
@@ -116,8 +115,7 @@ class Process extends Controller
 
                 "geometri" => ["the_geom", true, "geometry"],
             ],
-
-            "t_5801_fac_fl" => [
+            5801 => [
                 "objekt_id" => ["objekt_id", false, "uuid"],
                 "cvr_kode" => ["cvr_kode", true, "int"],
                 "bruger_id" => ["bruger_id", true, "varchar"],
@@ -149,7 +147,7 @@ class Process extends Controller
                 "antal_pl" => ["antal_pl", false, "int"],
                 "foto_link1" => ["foto_link1", false, "varchar"],
                 "foto_link2" => ["foto_link2", false, "varchar"],
-                "filmlink" => ["filmlink", false, "varchar"],
+                "film_link" => ["film_link", false, "varchar"],
                 "adr_id" => ["adr_id", false, "uuid"],
 
                 "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
@@ -157,8 +155,7 @@ class Process extends Controller
 
                 "geometri" => ["the_geom", true, "geometry"],
             ],
-
-            "t_5802_fac_li" => [
+            5802 => [
                 "objekt_id" => ["objekt_id", false, "uuid"],
                 "cvr_kode" => ["cvr_kode", true, "int"],
                 "bruger_id" => ["bruger_id", true, "varchar"],
@@ -203,15 +200,14 @@ class Process extends Controller
                 "folde_link" => ["folde_link", false, "varchar"],
                 "foto_link1" => ["foto_link1", false, "varchar"],
                 "foto_link2" => ["foto_link2", false, "varchar"],
-                "filmlink" => ["filmlink", false, "varchar"],
+                "film_link" => ["film_link", false, "varchar"],
                 "gpx_link" => ["gpx_link", false, "varchar"],
                 "adr_id" => ["adr_id", false, "uuid"],
 
                 "link" => ["link", false, "varchar"], // Felt defineret under: 4.1
                 "geometri" => ["the_geom", true, "geometry"],
             ],
-
-            "t_5713_prog_stat_dis" => [
+            5713 => [
                 "objekt_id" => ["objekt_id", false, "uuid"],
                 "cvr_kode" => ["cvr_kode", true, "int"],
                 "bruger_id" => ["bruger_id", true, "varchar"],
@@ -228,8 +224,7 @@ class Process extends Controller
                 "link" => ["link", false, "varchar"],
                 "geometri" => ["the_geom", true, "geometry"],
             ],
-
-            "t_5711_and_dis" => [
+            5711 => [
                 "objekt_id" => ["objekt_id", false, "uuid"],
                 "cvr_kode" => ["cvr_kode", true, "int"],
                 "bruger_id" => ["bruger_id", true, "varchar"],
@@ -246,8 +241,7 @@ class Process extends Controller
                 "link" => ["link", false, "varchar"],
                 "geometri" => ["the_geom", true, "geometry"],
             ],
-
-            "t_5712_plej_aeldr_dis" => [
+            5712 => [
                 "objekt_id" => ["objekt_id", false, "uuid"],
                 "cvr_kode" => ["cvr_kode", true, "int"],
                 "bruger_id" => ["bruger_id", true, "varchar"],
@@ -270,17 +264,49 @@ class Process extends Controller
     }
 
     /**
+     * @param int $code
+     * @return string
+     */
+    private function getThemeName(int $code): string
+    {
+        $names = [
+            5710 => "t_5710_born_skole_dis",
+            5800 => "t_5800_fac_pkt",
+            5801 => "t_5801_fac_fl",
+            5802 => "t_5802_fac_li",
+            5713 => "t_5713_prog_stat_dis",
+            5711 => "t_5711_and_dis",
+            5712 => "t_5712_plej_aeldr_dis",
+        ];
+        return $names[$code];
+    }
+
+    /**
      * @param string $uploadTable
-     * @param string $fkgTable
      * @return array<mixed>
      * @throws PhpfastcacheInvalidArgumentException
      */
-    private function schema(string $uploadTable, string $fkgTable): array
+    private function schema(string $uploadTable): array
     {
         $response = [];
         $table = new Table($uploadTable);
+        $firstRow = $table->getFirstRecord();
+        if (!$firstRow["success"]) {
+            $response["success"] = false;
+            $response["message"] = "Kunne ikke læse tabel";
+            return  $response;
+        }
+        if (empty($firstRow["data"]) || empty($firstRow["data"]["temakode"])) {
+            $response["success"] = false;
+            $response["message"] = "Kunne ikke læse temakode";
+            return  $response;
+        }
+
+        $themeCode = $firstRow["data"]["temakode"];
+        $themeName = $this->getThemeName($themeCode);
         $uploadSchema = $table->getTableStructure()["data"];
-        $fkgSchema = $this->fkgSchema($fkgTable);
+
+        $fkgSchema = $this->fkgSchema($themeCode);
         $arr1 = [];
         $arr2 = [];
         $arr3 = [];
@@ -296,14 +322,11 @@ class Process extends Controller
             $check = false;
             foreach ($uploadSchema as $sValue) {
                 if ($value[0] == $sValue["id"] || $key == $sValue["id"]) {
-
                     if ($key == $sValue["id"]) {
                         $fieldName = $key;
                     } else {
                         $fieldName = $value[0];
-
                     }
-
                     $response["data"]["fields"][$fieldName] = true;
                     if ($key != "objekt_id") {
                         if (strpos($key, 'saeson_s') !== false) {
@@ -314,13 +337,10 @@ class Process extends Controller
                         }
                         $arr1[] = $key;
                     }
-
                     if (strpos($key, 'saeson_s') !== false) {
                         $arr3[] = "{$key}=('0001-'||{$uploadTable}.{$fieldName})::{$value[2]}";
-
                     } else {
                         $arr3[] = "{$key}={$uploadTable}.{$fieldName}::{$value[2]}";
-
                     }
                     $check = true;
                     break;
@@ -334,9 +354,7 @@ class Process extends Controller
                     break;
                 }
             }
-
         }
-
         if ($checkFields) {
             $response['success'] = false;
             $response['code'] = 401;
@@ -365,7 +383,7 @@ class Process extends Controller
             }
         }
 
-        $sqlUpdate = "UPDATE fkg." . $fkgTable . " SET " . implode(", ", $arr3) . " FROM " . $uploadTable . " WHERE fkg." . $fkgTable . ".objekt_id=" . $uploadTable . ".objekt_id::uuid AND " . $fkgTable . ".objekt_id=:objekt_id";
+        $sqlUpdate = "UPDATE fkg." . $themeName . " SET " . implode(", ", $arr3) . " FROM " . $uploadTable . " WHERE fkg." . $themeName . ".objekt_id=" . $uploadTable . ".objekt_id::uuid AND " . $themeName . ".objekt_id=:objekt_id";
         //echo $sqlUpdate . "\n\n";
         $resUpdate = $this->model->prepare($sqlUpdate);
 
@@ -383,7 +401,7 @@ class Process extends Controller
             $response["data"]["updated_ids"][] = $objekt_id;
         }
 
-        $sqlInsert = "INSERT INTO fkg." . $fkgTable . " (" . implode(",", $arr1) . ") (SELECT " . implode(",", $arr2) . " FROM " . $uploadTable . " WHERE gid=:gid) RETURNING objekt_id";
+        $sqlInsert = "INSERT INTO fkg." . $themeName . " (" . implode(",", $arr1) . ") (SELECT " . implode(",", $arr2) . " FROM " . $uploadTable . " WHERE gid=:gid) RETURNING objekt_id";
         //echo $sqlInsert . "\n\n";
         $resInsert = $this->model->prepare($sqlInsert);
 
@@ -416,45 +434,21 @@ class Process extends Controller
      */
     public function post_index(): array
     {
+        $request = json_decode(Input::getBody(), true);
+        $fileName = $request["fileName"];
         $response = [];
         $dir = App::$param['path'] . "app/tmp/" . Connection::$param["postgisdb"] . "/__vectors";
         $safeName = Session::getUser() . "_" . md5(microtime() . rand());
-        $body = json_decode(Input::getBody(), true);
-        $encoding = "LATIN1";
-        $fkgName = $body["fileName"];
-
-        switch ($fkgName) {
-            case "t_5713_prog_stat_dis":
-            case "t_5711_and_dis":
-            case "t_5712_plej_aeldr_dis":
-            case "t_5801_fac_fl":
-            case "t_5710_born_skole_dis":
-                $geoType = "multipolygon";
-                break;
-
-            case "t_5800_fac_pkt":
-                $geoType = "multipoint";
-                break;
-
-            case "t_5802_fac_li":
-                $geoType = "multilinestring";
-                break;
-
-            default:
-                $geoType = "auto";
-                break;
-        }
 
         if (is_numeric($safeName[0])) {
             $safeName = "_" . $safeName;
         }
 
-        // Check if file is .zip
-        // =====================
-        $zipCheck1 = explode(".", $_REQUEST['file']);
+        // Check if file is .zips
+        $zipCheck1 = explode(".", $fileName);
         $zipCheck2 = array_reverse($zipCheck1);
         if (strtolower($zipCheck2[0]) == "zip") {
-            $ext = array("shp", "tab", "geojson", "gml", "kml", "mif", "gdb", "csv");
+            $ext = array("shp", "tab", "geojson", "gml", "kml", "mif", "gdb", "csv", "gpkg");
             $folderArr = array();
             $safeNameArr = array();
             for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
@@ -463,14 +457,13 @@ class Process extends Controller
             $folder = implode(".", $folderArr);
 
             // ZIP start
-            // =========
             if (strtolower($zipCheck2[0]) == "zip") {
                 $zip = new ZipArchive;
-                $res = $zip->open($dir . "/" . $_REQUEST['file']);
-                if ($res === false) {
+                $res = $zip->open($dir . "/" . $fileName);
+                if ($res !== true) {
                     $response['success'] = false;
-                    $response['message'] = "Could not unzip file";
-                    return Response::json($response);
+                    $response['message'] = $res;
+                    return $response;
                 }
                 $zip->extractTo($dir . "/" . $folder);
                 $zip->close();
@@ -482,75 +475,41 @@ class Process extends Controller
                         $zipCheck1 = explode(".", $entry);
                         $zipCheck2 = array_reverse($zipCheck1);
                         if (in_array(strtolower($zipCheck2[0]), $ext)) {
-                            $_REQUEST['file'] = $folder . "/" . $entry;
+                            $fileName = $folder . "/" . $entry;
                             for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
                                 $safeNameArr[] = $zipCheck1[$i];
                             }
                             $safeName = Model::toAscii(implode(".", $safeNameArr), array(), "_");
                             break;
                         }
-                        $_REQUEST['file'] = $folder;
+                        $fileName = $folder;
                     }
                 }
             }
         }
 
-        switch ($geoType) {
-            case "point":
-                $type = "point";
-                break;
-            case "linestring":
-                $type = "linestring";
-                break;
-            case "polygon":
-                $type = "polygon";
-                break;
-            case "multipoint":
-                $type = "multipoint";
-                break;
-            case "multilinestring":
-                $type = "multilinestring";
-                break;
-            case "multipolygon":
-                $type = "multipolygon";
-                break;
-            case "geometry":
-                $type = "geometry";
-                break;
-            default:
-                $type = "PROMOTE_TO_MULTI";
-                break;
-        }
+        $connectionStr = "\"PG:host=" . Connection::$param["postgishost"] . " user=" . Connection::$param["postgisuser"] . " password=" . Connection::$param["postgispw"] . " dbname=" . Connection::$param["postgisdb"] . "\"";
 
-        $cmd = "PGCLIENTENCODING={$encoding} ogr2ogr " .
-            "-overwrite " .
-            "-lco 'GEOMETRY_NAME=the_geom' " .
-            "-lco 'FID=gid' " .
-            "-lco 'PRECISION=NO' " .
-            "-a_srs 'EPSG:25832' " .
-            "-dim XY " .
+        $cmd = "ogr2postgis" .
+            " -c {$connectionStr}" .
+            " -t EPSG:25832" .
+            " -o public" .
+            " -n {$safeName}" .
+            " -i" .
+            " -p" .
+            " '" . $dir . "/" . $fileName . "'";
 
-            "-f 'PostgreSQL' PG:'host=" . Connection::$param["postgishost"] . " user=" . Connection::$param["postgisuser"] . " password=" . Connection::$param["postgispw"] . " dbname=" . Connection::$param["postgisdb"] . "' " .
-            "'" . $dir . "/" . $_REQUEST['file'] . "' " .
-            "-nln " . Connection::$param["postgisschema"] . ".{$safeName} " .
-            "-nlt {$type}";
-
-        exec($cmd . ' 2>&1', $out, $err);
+        exec($cmd . ' > /dev/null', $out, $err);
 
         // Check ogr2ogr output
-        // ====================
         if ($out[0] == "") {
-
             // Bust cache, in case of layer already exist
-            // ==========================================
             Tilecache::bust(Connection::$param["postgisschema"] . "." . $safeName);
-
-
         } else {
             $response['success'] = false;
-            $response['message'] = Session::createLog($out, $_REQUEST['file']);
+            $response['message'] = Session::createLog($out, $fileName);
             $response['out'] = $out;
-            Session::createLog($out, $_REQUEST['file']);
+            Session::createLog($out, $fileName);
 
             // Make sure the table is dropped if not
             // skipping failures and it didn't exists before
@@ -560,15 +519,13 @@ class Process extends Controller
             try {
                 $res->execute();
             } catch (PDOException $e) {
-
             }
-
             return $response;
         }
 
         //$response['cmd'] = $cmd;
 
-        $s = $this->schema("public." . $safeName, $fkgName);
+        $s = $this->schema("public." . $safeName);
 
         if (!$s["success"]) {
             $response['success'] = false;
@@ -578,9 +535,7 @@ class Process extends Controller
             $response['message'] = "Data indlæst";
             $response['success'] = true;
         }
-
         $response["fkg_report"] = $s["data"];
-
         return $response;
     }
 }
