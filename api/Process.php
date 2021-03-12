@@ -425,6 +425,7 @@ class Process extends Controller
         $this->model->commit();
 
         $response["success"] = true;
+        $response["theme_name"] = $themeName;
         return $response;
     }
 
@@ -530,12 +531,13 @@ class Process extends Controller
         if (!$s["success"]) {
             $response['success'] = false;
             $response['message'] = $s["message"];
-            $response['code'] = "401";
+            $response['code'] = "403";
         } else {
             $response['message'] = "Data indlæst";
             $response['success'] = true;
         }
         $response["fkg_report"] = $s["data"];
+        $response["theme_name"] = $s["theme_name"];
         return $response;
     }
 }
