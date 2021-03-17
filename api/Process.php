@@ -283,10 +283,11 @@ class Process extends Controller
 
     /**
      * @param string $uploadTable
+     * @param bool $delete
      * @return array<mixed>
      * @throws PhpfastcacheInvalidArgumentException
      */
-    private function schema(string $uploadTable): array
+    private function schema(string $uploadTable, bool $delete = false): array
     {
         $response = [];
         $table = new Table($uploadTable);
@@ -294,12 +295,12 @@ class Process extends Controller
         if (!$firstRow["success"]) {
             $response["success"] = false;
             $response["message"] = "Kunne ikke læse tabel";
-            return  $response;
+            return $response;
         }
         if (empty($firstRow["data"]) || empty($firstRow["data"]["temakode"])) {
             $response["success"] = false;
             $response["message"] = "Kunne ikke læse temakode";
-            return  $response;
+            return $response;
         }
 
         $themeCode = $firstRow["data"]["temakode"];
@@ -383,22 +384,36 @@ class Process extends Controller
             }
         }
 
-        $sqlUpdate = "UPDATE fkg." . $themeName . " SET " . implode(", ", $arr3) . " FROM " . $uploadTable . " WHERE fkg." . $themeName . ".objekt_id=" . $uploadTable . ".objekt_id::uuid AND " . $themeName . ".objekt_id=:objekt_id";
+        $sqlExists = "SELECT 1 FROM fkg." . $themeName . " WHERE objekt_id=:objekt_id";
+        $sqlUpdate = "UPDATE fkg." . $themeName . " SET " . implode(", ", $arr3) . " FROM " . $uploadTable . " WHERE fkg." . $themeName . ".objekt_id=" . $uploadTable . ".objekt_id::uuid AND " . $themeName . ".objekt_id=:objekt_id;";
         //echo $sqlUpdate . "\n\n";
+        $resExists = $this->model->prepare($sqlExists);
         $resUpdate = $this->model->prepare($sqlUpdate);
 
         $response["data"]["updated_ids"] = [];
         foreach ($sqlUpdateIds as $objekt_id) {
+
             try {
-                $resUpdate->execute(["objekt_id" => $objekt_id]);
+                $resExists->execute(["objekt_id" => $objekt_id]);
             } catch (PDOException $e) {
                 $response['success'] = false;
                 $response['message'][] = $e->getMessage();
                 $response['code'] = 401;
                 return $response;
             }
-
-            $response["data"]["updated_ids"][] = $objekt_id;
+            $rowExists = $this->model->fetchRow($resExists);
+            if (!empty($rowExists)) {
+                try {
+                    $resUpdate->execute(["objekt_id" => $objekt_id]);
+                } catch (PDOException $e) {
+                    $response['success'] = false;
+                    $response['message'][] = $e->getMessage();
+                    $response['code'] = 401;
+                    return $response;
+                }
+                $row = $this->model->fetchRow($resUpdate);
+                $response["data"]["updated_ids"][] = $objekt_id;
+            }
         }
 
         $sqlInsert = "INSERT INTO fkg." . $themeName . " (" . implode(",", $arr1) . ") (SELECT " . implode(",", $arr2) . " FROM " . $uploadTable . " WHERE gid=:gid) RETURNING objekt_id";
@@ -422,10 +437,43 @@ class Process extends Controller
             $response["data"]["inserted_ids"][] = $row["objekt_id"];
         }
 
+        // Delete not effected rows
+        $sqlDelete = "";
+        $deleteCount = 0;
+        $cvrKode = Session::get()["properties"]->cvr_kode;
+        if (empty($cvrKode)) {
+            $response['success'] = false;
+            $response['message'] = "Der er ingen cvr kode tilknyttet brugeren. Kontakt supporten.";
+            $response['code'] = 401;
+            return $response;
+        }
+        if ($delete) {
+            $deleteIds = array_merge($response["data"]["inserted_ids"], $response["data"]["updated_ids"]);
+            if (sizeof($deleteIds) == 0) {
+                $sqlDelete = "DELETE FROM fkg." . $themeName . " WHERE cvr_kode=?";
+            } else {
+                $sqlDelete = "DELETE FROM fkg." . $themeName . " WHERE cvr_kode=? AND objekt_id NOT IN (" . trim(str_repeat(', ?', count($deleteIds)), ', ') . ")";
+            }
+            $resDelete = $this->model->prepare($sqlDelete);
+            try {
+                $deleteCount = $resDelete->execute(array_merge([29189609], $deleteIds));
+                $deleteCount = $resDelete->rowCount();
+            } catch (PDOException $e) {
+                $response['success'] = false;
+                $response['message'][] = $e->getMessage();
+                $response['code'] = 401;
+                return $response;
+            }
+        }
+
         $this->model->commit();
 
         $response["success"] = true;
         $response["theme_name"] = $themeName;
+        $response["delete_sql"] = $sqlDelete;
+        $response["insert_count"] = sizeof($response["data"]["inserted_ids"]);
+        $response["update_count"] = sizeof($response["data"]["updated_ids"]);
+        $response["delete_count"] = $deleteCount;
         return $response;
     }
 
@@ -437,6 +485,7 @@ class Process extends Controller
     {
         $request = json_decode(Input::getBody(), true);
         $fileName = $request["fileName"];
+        $delete = $request["delete"];
         $response = [];
         $dir = App::$param['path'] . "app/tmp/" . Connection::$param["postgisdb"] . "/__vectors";
         $safeName = Session::getUser() . "_" . md5(microtime() . rand());
@@ -526,11 +575,12 @@ class Process extends Controller
 
         //$response['cmd'] = $cmd;
 
-        $s = $this->schema("public." . $safeName);
+        $s = $this->schema("public." . $safeName, $delete);
 
         if (!$s["success"]) {
             $response['success'] = false;
             $response['message'] = $s["message"];
+            $response['file_name'] = $fileName;
             $response['code'] = "403";
         } else {
             $response['message'] = "Data indlæst";
@@ -538,6 +588,11 @@ class Process extends Controller
         }
         $response["fkg_report"] = $s["data"];
         $response["theme_name"] = $s["theme_name"];
+        $response["delete_sql"] = $s["delete_sql"];
+        $response["delete_count"] = $s["delete_count"];
+        $response["insert_count"] = $s["insert_count"];
+        $response["update_count"] = $s["update_count"];
+        $response["session"] = Session::get()["properties"]->cvr_kode;
         return $response;
     }
 }
