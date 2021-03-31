@@ -16,6 +16,8 @@ use app\models\Database;
 use app\conf\Connection;
 use app\inc\Session;
 use app\inc\Model;
+use app\inc\UserFilter;
+use app\models\Geofence as GeofenceModel;
 use app\models\Table;
 use PDOException;
 use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
@@ -366,7 +368,15 @@ class Process extends Controller
         $this->model->connect();
         $this->model->begin();
 
-        $sql = "SELECT * FROM {$uploadTable}";
+        $split = explode(".", $uploadTable);
+        $rowCount = $this->model->countRows($split[0], $split[1])["data"];
+
+
+        $userFilter = new UserFilter("fkg", Session::getUser(), "*", "*", "*", "*", "fkg." . $themeName);
+        $geofence = new GeofenceModel($userFilter);
+        $rule = $geofence->authorize();
+
+        $sql = "SELECT * FROM {$uploadTable} as t WHERE ST_intersects(t.the_geom, ST_transform(({$rule["filters"]["write_spatial"]}), 25832));";
         $res = $this->model->prepare($sql);
         try {
             $res->execute();
@@ -376,12 +386,14 @@ class Process extends Controller
             $response['code'] = 401;
             return $response;
         }
+        $countAfterRules = 0;
         while ($row = $this->model->fetchRow($res)) {
             if (isset($row["objekt_id"]) && $row["objekt_id"]) {
                 $sqlUpdateIds[] = $row["objekt_id"];
             } else {
                 $sqlInsertIds[] = $row["gid"];
             }
+            $countAfterRules++;
         }
 
         $sqlExists = "SELECT 1 FROM fkg." . $themeName . " WHERE objekt_id=:objekt_id";
@@ -456,7 +468,7 @@ class Process extends Controller
             }
             $resDelete = $this->model->prepare($sqlDelete);
             try {
-                $deleteCount = $resDelete->execute(array_merge([29189609], $deleteIds));
+                $resDelete->execute(array_merge([$cvrKode], $deleteIds));
                 $deleteCount = $resDelete->rowCount();
             } catch (PDOException $e) {
                 $response['success'] = false;
@@ -474,6 +486,7 @@ class Process extends Controller
         $response["insert_count"] = sizeof($response["data"]["inserted_ids"]);
         $response["update_count"] = sizeof($response["data"]["updated_ids"]);
         $response["delete_count"] = $deleteCount;
+        $response["skip_count"] = $rowCount - $countAfterRules;
         return $response;
     }
 
@@ -592,6 +605,7 @@ class Process extends Controller
         $response["delete_count"] = $s["delete_count"];
         $response["insert_count"] = $s["insert_count"];
         $response["update_count"] = $s["update_count"];
+        $response["skip_count"] = $s["skip_count"];
         $response["session"] = Session::get()["properties"]->cvr_kode;
         return $response;
     }
