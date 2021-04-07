@@ -99,6 +99,14 @@ class Schemata
             "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
 
             "geometri" => ["the_geom", true, "geometry"],
+
+            "saeson_bem" => ["saeson_bem", false, "varchar"],
+            "vejkode" => ["vejkode", false, "int"],
+            "vejnavn" => ["vejnavn", false, "string"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "string"],
+            "husnr" => ["husnr", false, "string"],
+            "postnr" => ["postnr", false, "int"],
+            "postnr_by" => ["postnr_by", false, "string"],
         ],
         5801 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -161,6 +169,14 @@ class Schemata
             "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
 
             "geometri" => ["the_geom", true, "geometry"],
+
+            "saeson_bem" => ["saeson_bem", false, "varchar"],
+            "vejkode" => ["vejkode", false, "int"],
+            "vejnavn" => ["vejnavn", false, "string"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "string"],
+            "husnr" => ["husnr", false, "string"],
+            "postnr" => ["postnr", false, "int"],
+            "postnr_by" => ["postnr_by", false, "string"],
         ],
         5802 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -233,6 +249,14 @@ class Schemata
             "link3" => ["ink3", false, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry"],
+
+            "saeson_bem" => ["saeson_bem", false, "varchar"],
+            "vejkode" => ["vejkode", false, "int"],
+            "vejnavn" => ["vejnavn", false, "string"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "string"],
+            "husnr" => ["husnr", false, "string"],
+            "postnr" => ["postnr", false, "int"],
+            "postnr_by" => ["postnr_by", false, "string"],
         ],
         5713 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
