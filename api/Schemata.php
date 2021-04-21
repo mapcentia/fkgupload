@@ -102,11 +102,11 @@ class Schemata
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
             "vejkode" => ["vejkode", false, "int"],
-            "vejnavn" => ["vejnavn", false, "string"],
-            "cvf_vejkode" => ["cvf_vejkode", false, "string"],
-            "husnr" => ["husnr", false, "string"],
+            "vejnavn" => ["vejnavn", false, "varchar"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
-            "postnr_by" => ["postnr_by", false, "string"],
+            "postnr_by" => ["postnr_by", false, "varchar"],
         ],
         5801 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -172,11 +172,11 @@ class Schemata
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
             "vejkode" => ["vejkode", false, "int"],
-            "vejnavn" => ["vejnavn", false, "string"],
-            "cvf_vejkode" => ["cvf_vejkode", false, "string"],
-            "husnr" => ["husnr", false, "string"],
+            "vejnavn" => ["vejnavn", false, "varchar"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
-            "postnr_by" => ["postnr_by", false, "string"],
+            "postnr_by" => ["postnr_by", false, "varchar"],
         ],
         5802 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -252,11 +252,11 @@ class Schemata
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
             "vejkode" => ["vejkode", false, "int"],
-            "vejnavn" => ["vejnavn", false, "string"],
-            "cvf_vejkode" => ["cvf_vejkode", false, "string"],
-            "husnr" => ["husnr", false, "string"],
+            "vejnavn" => ["vejnavn", false, "varchar"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
-            "postnr_by" => ["postnr_by", false, "string"],
+            "postnr_by" => ["postnr_by", false, "varchar"],
         ],
         5713 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
