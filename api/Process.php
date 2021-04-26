@@ -19,9 +19,14 @@ use app\inc\Model;
 use app\inc\UserFilter;
 use app\models\Geofence as GeofenceModel;
 use app\models\Table;
+use Aws\S3\S3Client;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\Filesystem;
 use PDOException;
 use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
 use ZipArchive;
+
+const S3_FOLDER = "fkg";
 
 
 /**
@@ -302,106 +307,256 @@ class Process extends Controller
             $safeName = "_" . $safeName;
         }
 
+        $fileFullPath = $dir . "/" . $fileName;
+
         // Check if file is .zips
         $zipCheck1 = explode(".", $fileName);
         $zipCheck2 = array_reverse($zipCheck1);
-        if (strtolower($zipCheck2[0]) == "zip") {
-            $ext = array("shp", "tab", "geojson", "gml", "kml", "mif", "gdb", "csv", "gpkg");
-            $folderArr = array();
-            $safeNameArr = array();
-            for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
-                $folderArr[] = $zipCheck1[$i];
-            }
-            $folder = implode(".", $folderArr);
 
-            // ZIP start
+        // Check if file is image
+        if (strtolower($zipCheck2[0]) == "png" || strtolower($zipCheck2[0]) == "jpg" || strtolower($zipCheck2[0]) == "jpeg") {
+            try {
+                $fotoObjektId =   $this->insertInto7901();
+            } catch (PDOException $e) {
+                $response['success'] = false;
+                $response['message'] = $e->getMessage();
+                $response['code'] = 401;
+                return $response;
+            }
+            return $this->storeImageInS3($fileName, $fotoObjektId);
+        } else {
+
             if (strtolower($zipCheck2[0]) == "zip") {
-                $zip = new ZipArchive;
-                $res = $zip->open($dir . "/" . $fileName);
-                if ($res !== true) {
-                    $response['success'] = false;
-                    $response['message'] = $res;
-                    return $response;
+                $ext = array("shp", "tab", "geojson", "gml", "kml", "mif", "gdb", "csv", "gpkg");
+                $folderArr = array();
+                $safeNameArr = array();
+                for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
+                    $folderArr[] = $zipCheck1[$i];
                 }
-                $zip->extractTo($dir . "/" . $folder);
-                $zip->close();
-            }
+                $folder = implode(".", $folderArr);
 
-            if ($handle = opendir($dir . "/" . $folder)) {
-                while (false !== ($entry = readdir($handle))) {
-                    if ($entry !== "." && $entry !== "..") {
-                        $zipCheck1 = explode(".", $entry);
-                        $zipCheck2 = array_reverse($zipCheck1);
-                        if (in_array(strtolower($zipCheck2[0]), $ext)) {
-                            $fileName = $folder . "/" . $entry;
-                            for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
-                                $safeNameArr[] = $zipCheck1[$i];
+                // ZIP start
+                if (strtolower($zipCheck2[0]) == "zip") {
+                    $zip = new ZipArchive;
+                    $res = $zip->open($dir . "/" . $fileName);
+                    if ($res !== true) {
+                        $response['success'] = false;
+                        $response['message'] = $res;
+                        return $response;
+                    }
+                    $zip->extractTo($dir . "/" . $folder);
+                    $zip->close();
+                }
+
+                if ($handle = opendir($dir . "/" . $folder)) {
+                    while (false !== ($entry = readdir($handle))) {
+                        if ($entry !== "." && $entry !== "..") {
+                            $zipCheck1 = explode(".", $entry);
+                            $zipCheck2 = array_reverse($zipCheck1);
+                            if (in_array(strtolower($zipCheck2[0]), $ext)) {
+                                $fileName = $folder . "/" . $entry;
+                                for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
+                                    $safeNameArr[] = $zipCheck1[$i];
+                                }
+                                $safeName = Model::toAscii(implode(".", $safeNameArr), array(), "_");
+                                break;
                             }
-                            $safeName = Model::toAscii(implode(".", $safeNameArr), array(), "_");
-                            break;
+                            $fileName = $folder;
                         }
-                        $fileName = $folder;
                     }
                 }
             }
-        }
 
-        $connectionStr = "\"PG:host=" . Connection::$param["postgishost"] . " user=" . Connection::$param["postgisuser"] . " password=" . Connection::$param["postgispw"] . " dbname=" . Connection::$param["postgisdb"] . "\"";
+            $connectionStr = "\"PG:host=" . Connection::$param["postgishost"] . " user=" . Connection::$param["postgisuser"] . " password=" . Connection::$param["postgispw"] . " dbname=" . Connection::$param["postgisdb"] . "\"";
 
-        $cmd = "ogr2postgis" .
-            " -c {$connectionStr}" .
-            " -t EPSG:25832" .
-            " -o public" .
-            " -n {$safeName}" .
-            " -i" .
-            " -p" .
-            " '" . $dir . "/" . $fileName . "'";
+            $cmd = "ogr2postgis" .
+                " -c {$connectionStr}" .
+                " -t EPSG:25832" .
+                " -o public" .
+                " -n {$safeName}" .
+                " -i" .
+                " -p" .
+                " '" . $fileFullPath . "'";
 
-        exec($cmd . ' > /dev/null', $out, $err);
+            exec($cmd . ' > /dev/null', $out, $err);
 
-        // Check ogr2ogr output
-        if ($out[0] == "") {
-            // Bust cache, in case of layer already exist
-            Tilecache::bust(Connection::$param["postgisschema"] . "." . $safeName);
-        } else {
-            $response['success'] = false;
-            $response['message'] = Session::createLog($out, $fileName);
-            $response['out'] = $out;
-            Session::createLog($out, $fileName);
+            // Check ogr2ogr output
+            if ($out[0] == "") {
+                // Bust cache, in case of layer already exist
+                Tilecache::bust(Connection::$param["postgisschema"] . "." . $safeName);
+            } else {
+                $response['success'] = false;
+                $response['message'] = Session::createLog($out, $fileName);
+                $response['out'] = $out;
+                Session::createLog($out, $fileName);
 
-            // Make sure the table is dropped if not
-            // skipping failures and it didn't exists before
-            // =================================================
-            $sql = "DROP TABLE " . Connection::$param["postgisschema"] . "." . $safeName;
-            $res = $this->model->prepare($sql);
-            try {
-                $res->execute();
-            } catch (PDOException $e) {
+                // Make sure the table is dropped if not
+                // skipping failures and it didn't exists before
+                // =================================================
+                $sql = "DROP TABLE " . Connection::$param["postgisschema"] . "." . $safeName;
+                $res = $this->model->prepare($sql);
+                try {
+                    $res->execute();
+                } catch (PDOException $e) {
+                }
+                return $response;
             }
+
+            //$response['cmd'] = $cmd;
+
+            $s = $this->schema("public." . $safeName, $delete);
+
+            if (!$s["success"]) {
+                $response['success'] = false;
+                $response['message'] = $s["message"];
+                $response['file_name'] = $fileName;
+                $response['code'] = "403";
+            } else {
+                $response['message'] = "Data indlæst";
+                $response['success'] = true;
+            }
+            $response["cmd"] = $cmd;
+            $response["fkg_report"] = $s["data"];
+            $response["theme_name"] = $s["theme_name"];
+            $response["delete_sql"] = $s["delete_sql"];
+            $response["delete_count"] = $s["delete_count"];
+            $response["insert_count"] = $s["insert_count"];
+            $response["update_count"] = $s["update_count"];
+            $response["skip_count"] = $s["skip_count"];
+            $response["session"] = Session::get()["properties"]->cvr_kode;
             return $response;
         }
+    }
 
-        //$response['cmd'] = $cmd;
+    /**
+     * @return string
+     * @throw PDOException
+     */
+    private function insertInto7901(): string
+    {
 
-        $s = $this->schema("public." . $safeName, $delete);
+        $cvrKode = Session::get()["properties"]->cvr_kode;
+        $brugerId = Session::get()["screen_name"];
+        $sql = "INSERT INTO fkg.t_7901_foto(cvr_kode, bruger_id, oprindkode, statuskode, off_kode) VALUES (:cvrKode,:brugerId,0,3,1) RETURNING objekt_id";
+        $res = $this->model->prepare($sql);
+        $res->execute([$cvrKode, $brugerId]);
+        $row = $this->model->fetchRow($res);
+        return $row["objekt_id"];
 
-        if (!$s["success"]) {
-            $response['success'] = false;
-            $response['message'] = $s["message"];
-            $response['file_name'] = $fileName;
-            $response['code'] = "403";
-        } else {
-            $response['message'] = "Data indlæst";
-            $response['success'] = true;
+    }
+
+    /**
+     * @param string $fileName
+     * @param string $fotoObjekId
+     * @return array<mixed>
+     */
+    public function storeImageInS3(string $fileName, string $fotoObjekId): array
+    {
+
+        @set_time_limit(5 * 60);
+        $mainDir = App::$param['path'] . "/app/tmp/fkg";
+        $targetDir = $mainDir . "/__vectors";
+
+        $thumbNailsSizes = [171, 360, 560, 1600];
+
+        if (!file_exists($mainDir)) {
+            @mkdir($mainDir);
         }
-        $response["fkg_report"] = $s["data"];
-        $response["theme_name"] = $s["theme_name"];
-        $response["delete_sql"] = $s["delete_sql"];
-        $response["delete_count"] = $s["delete_count"];
-        $response["insert_count"] = $s["insert_count"];
-        $response["update_count"] = $s["update_count"];
-        $response["skip_count"] = $s["skip_count"];
-        $response["session"] = Session::get()["properties"]->cvr_kode;
-        return $response;
+        if (!file_exists($targetDir)) {
+            @mkdir($targetDir);
+        }
+
+        foreach ($thumbNailsSizes as $size) {
+            if (!file_exists($targetDir . "/" . (string)$size)) {
+                @mkdir($targetDir . "/" . (string)$size);
+            }
+        }
+
+        $client = new S3Client([
+            'credentials' => [
+                'key' => App::$param["s3"]["id"],
+                'secret' => App::$param["s3"]["secret"],
+            ],
+            'region' => 'eu-west-1',
+            'version' => 'latest',
+        ]);
+
+        $adapter = new AwsS3Adapter($client, 'mapcentia-www');
+        $filesystem = new Filesystem($adapter);
+        $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
+        $response = $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . $fotoObjekId, file_get_contents($filePath));
+        foreach ($thumbNailsSizes as $size) {
+            $this->createThumbnail($fileName, $size, $size, $targetDir, $targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR);
+            $response = $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fotoObjekId, file_get_contents($targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fileName));
+        }
+
+        return [
+            "success" => true,
+            "image" => $fotoObjekId,
+        ];
+    }
+
+    /**
+     * @param string $image_name
+     * @param int $new_width
+     * @param int $new_height
+     * @param string $uploadDir
+     * @param string $moveToDir
+     * @return bool
+     */
+    public function createThumbnail(string $image_name, int $new_width, int $new_height, string $uploadDir, string $moveToDir): bool
+    {
+        $result = false;
+        $src_img = false;
+        $thumb_h = 0;
+        $thumb_w = 0;
+
+        $path = $uploadDir . '/' . $image_name;
+
+        $mime = getimagesize($path);
+
+        if ($mime['mime'] == 'image/png') {
+            $src_img = imagecreatefrompng($path);
+        }
+        if ($mime['mime'] == 'image/jpg' || $mime['mime'] == 'image/jpeg' || $mime['mime'] == 'image/pjpeg') {
+            $src_img = imagecreatefromjpeg($path);
+        }
+
+        $old_x = imageSX($src_img);
+        $old_y = imageSY($src_img);
+
+        if ($old_x > $old_y) {
+            $thumb_w = $new_width;
+            $thumb_h = $old_y * ($new_height / $old_x);
+        }
+
+        if ($old_x < $old_y) {
+            $thumb_w = $old_x * ($new_width / $old_y);
+            $thumb_h = $new_height;
+        }
+
+        if ($old_x == $old_y) {
+            $thumb_w = $new_width;
+            $thumb_h = $new_height;
+        }
+
+        $dst_img = ImageCreateTrueColor($thumb_w, $thumb_h);
+
+        imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $thumb_w, $thumb_h, $old_x, $old_y);
+
+        // New save location
+        $new_thumb_loc = $moveToDir . $image_name;
+
+        if ($mime['mime'] == 'image/png') {
+            $result = imagepng($dst_img, $new_thumb_loc, 8);
+        }
+        if ($mime['mime'] == 'image/jpg' || $mime['mime'] == 'image/jpeg' || $mime['mime'] == 'image/pjpeg') {
+            $result = imagejpeg($dst_img, $new_thumb_loc, 80);
+        }
+
+        imagedestroy($dst_img);
+        imagedestroy($src_img);
+
+        return $result;
     }
 }
