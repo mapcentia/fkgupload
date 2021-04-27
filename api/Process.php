@@ -12,6 +12,7 @@ use app\conf\App;
 use app\controllers\Tilecache;
 use app\inc\Controller;
 use app\inc\Input;
+use app\inc\Route;
 use app\models\Database;
 use app\conf\Connection;
 use app\inc\Session;
@@ -316,7 +317,7 @@ class Process extends Controller
         // Check if file is image
         if (strtolower($zipCheck2[0]) == "png" || strtolower($zipCheck2[0]) == "jpg" || strtolower($zipCheck2[0]) == "jpeg") {
             try {
-                $fotoObjektId =   $this->insertInto7901();
+                $fotoObjektId = $this->insertInto7901();
             } catch (PDOException $e) {
                 $response['success'] = false;
                 $response['message'] = $e->getMessage();
@@ -481,18 +482,20 @@ class Process extends Controller
             'version' => 'latest',
         ]);
 
+        $objektIdName = $fotoObjekId . ".jpg";
+
         $adapter = new AwsS3Adapter($client, 'mapcentia-www');
         $filesystem = new Filesystem($adapter);
         $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
-        $response = $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . $fotoObjekId, file_get_contents($filePath));
+        $response = $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($filePath));
         foreach ($thumbNailsSizes as $size) {
             $this->createThumbnail($fileName, $size, $size, $targetDir, $targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR);
-            $response = $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fotoObjekId, file_get_contents($targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fileName));
+            $response = $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fileName));
         }
 
         return [
             "success" => true,
-            "image" => $fotoObjekId,
+            "image" => $objektIdName,
         ];
     }
 
@@ -558,5 +561,79 @@ class Process extends Controller
         imagedestroy($src_img);
 
         return $result;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function post_7900(): array
+    {
+        $request = json_decode(Input::getBody(), true);
+
+        $cvrKode = Session::get()["properties"]->cvr_kode;
+        $brugerId = Session::get()["screen_name"];
+        $tema = $request["tema"];
+        $foto_objek = $request["foto_objek"];
+        $foto_lokat = $request["foto_lokat"];
+
+        $sql = "INSERT INTO fkg.t_7900_fotoforbindelse(cvr_kode, bruger_id, oprindkode, statuskode, off_kode, fkg_tema, foto_objek, foto_lokat, primaer_kode)
+                VALUES (:cvrKode, :brugerId, 0, 3, 1, :tema, :foto_objek, :foto_lokat, 0)";
+
+        $res = $this->model->prepare($sql);
+        try {
+            $res->execute([$cvrKode, $brugerId, $tema, $foto_objek, $foto_lokat]);
+        } catch (PDOException $e) {
+            $response['success'] = false;
+            $response['message'][] = $e->getMessage();
+            $response['code'] = 401;
+            return $response;
+        }
+        $response['success'] = true;
+        return $response;
+
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function delete_7900(): array
+    {
+        $objekt_id = Route::getParam("objekt_id");
+        $cvrKode = Session::get()["properties"]->cvr_kode;
+        $sql = "DELETE FROM fkg.t_7900_fotoforbindelse WHERE cvr_kode=:cvrKode AND objekt_id=:objekt_id";
+        $res = $this->model->prepare($sql);
+        try {
+            $res->execute([$cvrKode, $objekt_id]);
+        } catch (PDOException $e) {
+            $response['success'] = false;
+            $response['message'][] = $e->getMessage();
+            $response['code'] = 401;
+            return $response;
+        }
+        $response['success'] = true;
+        return $response;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function get_7901(): array
+    {
+        $cvrKode = Session::get()["properties"]->cvr_kode;
+        $sql = "SELECT objekt_id FROM fkg.t_7901_foto WHERE cvr_kode=:cvrKode";
+        $res = $this->model->prepare($sql);
+        try {
+            $res->execute([$cvrKode]);
+        } catch (PDOException $e) {
+            $response['success'] = false;
+            $response['message'][] = $e->getMessage();
+            $response['code'] = 401;
+            return $response;
+        }
+        while ($row = $this->model->fetchRow($res)) {
+            $response['data'][] = $row["objekt_id"];
+        }
+        $response['success'] = true;
+        return $response;
     }
 }
