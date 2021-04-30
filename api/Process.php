@@ -600,7 +600,7 @@ class Process extends Controller
     {
         $objekt_id = Route::getParam("objekt_id");
         $cvrKode = Session::get()["properties"]->cvr_kode;
-        $sql = "DELETE FROM fkg.t_7900_fotoforbindelse WHERE cvr_kode=:cvrKode AND objekt_id=:objekt_id";
+        $sql = "DELETE FROM fkg.t_7900_fotoforbindelse WHERE cvr_kode=:cvrKode AND foto_objek=:objekt_id";
         $res = $this->model->prepare($sql);
         try {
             $res->execute([$cvrKode, $objekt_id]);
@@ -615,15 +615,17 @@ class Process extends Controller
     }
 
     /**
+     * Returner alle foto id'er for cvr nr, der IKKE allerede er tilknyttet den angivne facilitet (objekt_id)
      * @return array<mixed>
      */
     public function get_7901(): array
     {
+        $objekt_id = Route::getParam("objekt_id");
         $cvrKode = Session::get()["properties"]->cvr_kode;
-        $sql = "SELECT objekt_id FROM fkg.t_7901_foto WHERE cvr_kode=:cvrKode";
+        $sql = "select * from fkg.t_7901_foto where cvr_kode=:cvrKode and objekt_id not in (select foto_objek from fkg.t_7900_fotoforbindelse where foto_lokat=:objekt_id) order by oprettet limit 10";
         $res = $this->model->prepare($sql);
         try {
-            $res->execute([$cvrKode]);
+            $res->execute(["cvrKode" => $cvrKode, "objekt_id" => $objekt_id]);
         } catch (PDOException $e) {
             $response['success'] = false;
             $response['message'][] = $e->getMessage();
@@ -632,6 +634,65 @@ class Process extends Controller
         }
         while ($row = $this->model->fetchRow($res)) {
             $response['data'][] = $row["objekt_id"];
+        }
+        $response['success'] = true;
+        return $response;
+    }
+
+    /**
+     * Returnerer alle foto id'er (foto_objek) for den angivne facilitet (objekt_id)
+     * @return array<mixed>
+     */
+    public function get_7900(): array
+    {
+        $objekt_id = Route::getParam("objekt_id");
+        $sql = "select * from fkg.t_7900_fotoforbindelse where foto_lokat=:objekt_id order by oprettet";
+        $res = $this->model->prepare($sql);
+        try {
+            $res->execute(["objekt_id" => $objekt_id]);
+        } catch (PDOException $e) {
+            $response['success'] = false;
+            $response['message'][] = $e->getMessage();
+            $response['code'] = 401;
+            return $response;
+        }
+        while ($row = $this->model->fetchRow($res)) {
+            $response['data'][] = [$row["foto_objek"], $row["primaer_kode"], $row["objekt_id"]];
+        }
+        $response['success'] = true;
+        return $response;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function put_7900(): array
+    {
+        $request = json_decode(Input::getBody(), true);
+        $objekt_id = $request["objekt_id"];
+        $foto_lokat= $request["foto_lokat"];
+        $cvrKode = Session::get()["properties"]->cvr_kode;
+
+        $sql = "update fkg.t_7900_fotoforbindelse set primaer_kode=0 where foto_lokat=:foto_lokat;";
+        $res = $this->model->prepare($sql);
+        try {
+            $res->execute(["foto_lokat" => $foto_lokat]);
+        } catch (PDOException $e) {
+            $response['success'] = false;
+            $response['message'][] = $e->getMessage();
+            $response['code'] = 401;
+            return $response;
+        }
+
+        $sql = "update fkg.t_7900_fotoforbindelse set primaer_kode=1 where objekt_id=:objekt_id;";
+        $res = $this->model->prepare($sql);
+        try {
+            $res->execute(["objekt_id" => $objekt_id]);
+        } catch (PDOException $e) {
+            $response['success'] = false;
+            $response['message'][] = $e->getMessage();
+            $response['code'] = 401;
+            return $response;
         }
         $response['success'] = true;
         return $response;
