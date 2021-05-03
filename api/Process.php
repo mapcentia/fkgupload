@@ -600,7 +600,7 @@ class Process extends Controller
     {
         $objekt_id = Route::getParam("objekt_id");
         $cvrKode = Session::get()["properties"]->cvr_kode;
-        $sql = "DELETE FROM fkg.t_7900_fotoforbindelse WHERE foto_lokat=:objekt_id";
+        $sql = "DELETE FROM fkg.t_7900_fotoforbindelse WHERE objekt_id=:objekt_id";
         $res = $this->model->prepare($sql);
         try {
             $res->execute([$objekt_id]);
