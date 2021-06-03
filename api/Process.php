@@ -372,6 +372,7 @@ class Process extends Controller
 
             $cmd = "ogr2postgis" .
                 " -c {$connectionStr}" .
+                " -s EPSG:25832" .
                 " -t EPSG:25832" .
                 " -o public" .
                 " -n {$safeName}" .
