@@ -224,7 +224,7 @@ class Process extends Controller
                     $response['code'] = 401;
                     return $response;
                 }
-                $row = $this->model->fetchRow($resUpdate); // TODO can this line be deleted?
+                $this->model->fetchRow($resUpdate); // TODO can this line be deleted?
                 $response["data"]["updated_ids"][] = $objekt_id;
             }
         }
@@ -460,10 +460,10 @@ class Process extends Controller
         $adapter = new AwsS3Adapter($client, 'mapcentia-www');
         $filesystem = new Filesystem($adapter);
         $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
-        $response = $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($filePath));
+        $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($filePath));
         foreach ($thumbNailsSizes as $size) {
             $this->createThumbnail($fileName, $size, $size, $targetDir, $targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR);
-            $response = $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fileName));
+            $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fileName));
         }
 
         return [
@@ -572,7 +572,6 @@ class Process extends Controller
     public function delete_7900(): array
     {
         $objekt_id = Route::getParam("objekt_id");
-        $cvrKode = Session::get()["properties"]->cvr_kode;
         $sql = "DELETE FROM fkg.t_7900_fotoforbindelse WHERE objekt_id=:objekt_id";
         $res = $this->model->prepare($sql);
         try {
@@ -644,7 +643,6 @@ class Process extends Controller
         $request = json_decode(Input::getBody(), true);
         $objekt_id = $request["objekt_id"];
         $objekt_id_7900 = $request["objekt_id_7900"];
-        $cvrKode = Session::get()["properties"]->cvr_kode;
 
         $sql = "update fkg.t_7900_fotoforbindelse set primaer_kode=0 where foto_objek=:objekt_id;";
         $res = $this->model->prepare($sql);
