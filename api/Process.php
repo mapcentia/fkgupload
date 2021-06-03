@@ -326,46 +326,17 @@ class Process extends Controller
             }
             return $this->storeImageInS3($fileName, $fotoObjektId);
         } else {
-
             if (strtolower($zipCheck2[0]) == "zip") {
-                $ext = array("shp", "tab", "geojson", "gml", "kml", "mif", "gdb", "csv", "gpkg");
-                $folderArr = array();
-                $safeNameArr = array();
-                for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
-                    $folderArr[] = $zipCheck1[$i];
+                $zip = new ZipArchive;
+                $res = $zip->open($dir . "/" . $fileName);
+                if ($res !== true) {
+                    $response['success'] = false;
+                    $response['message'] = $res;
+                    return $response;
                 }
-                $folder = implode(".", $folderArr);
-
-                // ZIP start
-                if (strtolower($zipCheck2[0]) == "zip") {
-                    $zip = new ZipArchive;
-                    $res = $zip->open($dir . "/" . $fileName);
-                    if ($res !== true) {
-                        $response['success'] = false;
-                        $response['message'] = $res;
-                        return $response;
-                    }
-                    $zip->extractTo($dir . "/" . $folder);
-                    $zip->close();
-                }
-
-                if ($handle = opendir($dir . "/" . $folder)) {
-                    while (false !== ($entry = readdir($handle))) {
-                        if ($entry !== "." && $entry !== "..") {
-                            $zipCheck1 = explode(".", $entry);
-                            $zipCheck2 = array_reverse($zipCheck1);
-                            if (in_array(strtolower($zipCheck2[0]), $ext)) {
-                                $fileName = $folder . "/" . $entry;
-                                for ($i = 0; $i < sizeof($zipCheck1) - 1; $i++) {
-                                    $safeNameArr[] = $zipCheck1[$i];
-                                }
-                                $safeName = Model::toAscii(implode(".", $safeNameArr), array(), "_");
-                                break;
-                            }
-                            $fileName = $folder;
-                        }
-                    }
-                }
+                $zip->extractTo($dir . "/" . $safeName);
+                $zip->close();
+                $fileFullPath = $dir . "/" . $safeName;
             }
 
             $connectionStr = "\"PG:host=" . Connection::$param["postgishost"] . " user=" . Connection::$param["postgisuser"] . " password=" . Connection::$param["postgispw"] . " dbname=" . Connection::$param["postgisdb"] . "\"";
@@ -375,6 +346,7 @@ class Process extends Controller
                 " -s EPSG:25832" .
                 " -t EPSG:25832" .
                 " -o public" .
+                " -a " . // Need to append if folder from zip file
                 " -n {$safeName}" .
                 " -i" .
                 " -p" .
