@@ -27,9 +27,9 @@ class Schemata
             "statuskode" => ["statuskode", true, "int"],
             "off_kode" => ["off_kode", true, "int"],
 
-            "udd_distrikt_nr" => ["udd_d_nr", false, "int"],
-            "udd_distrikt_navn" => ["udd_d_nv", false, "varchar"],
-            "udd_distrikt_type_kode" => ["udd_tpkode", true, "int"],
+            "udd_distrikt_nr" => ["udd_dis_nr", false, "int"],
+            "udd_distrikt_navn" => ["udd_dis_na", false, "varchar"],
+            "udd_distrikt_type_kode" => ["udd_d_ty_k", true, "int"],
             "starttrin_kode" => ["strtr_kode", false, "int"],
             "sluttrin_kode" => ["slutr_kode", false, "int"],
 
