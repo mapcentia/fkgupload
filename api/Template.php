@@ -43,7 +43,7 @@ class Template extends Controller
         $layer = Route::getParam("layer");
         $layerNum = (int)filter_var($layer, FILTER_SANITIZE_NUMBER_INT);
 
-        $fieldArr = [];
+        $fieldArr = ["temakode"];
         $schema = Schemata::$schemata[$layerNum];
         foreach ($schema as $key => $value) {
             if ($key == "objekt_id") {
@@ -54,10 +54,11 @@ class Template extends Controller
                 $fieldArr[] = $key;
             }
         }
+        $limit = $format == "MapInfo File" ? 0 : 10;
         $fieldStr = implode(",", $fieldArr);
-        $q = "select {$fieldStr} from fkg.{$layer} limit 10";
+        $q = "select {$fieldStr} from fkg.{$layer} WHERE ST_IsValid(geometri) = true limit {$limit}";
         $sql = new Sql("25832");
-        $res = $sql->sql($q, "UTF8", "ogr/" . $format);
+        $res = $sql->sql($q, "UTF8", "ogr/" . $format, null, false, null, null, $layer);
         if (!$res["success"]) {
             return $res;
         }
