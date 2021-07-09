@@ -30,9 +30,7 @@ class Gpx extends Controller
     function __construct()
     {
         parent::__construct();
-        Session::start();
-        Session::authenticate(null);
-        Database::setDb(Session::getDatabase());
+        Database::setDb("fkg");
     }
 
     /**
