@@ -594,7 +594,7 @@ class Process extends Controller
     {
         $objekt_id = Route::getParam("objekt_id");
         $cvrKode = Session::get()["properties"]->cvr_kode;
-        $sql = "select * from fkg.t_7901_foto where cvr_kode=:cvrKode and objekt_id not in (select foto_lokat from fkg.t_7900_fotoforbindelse where foto_objek=:objekt_id) order by oprettet limit 50";
+        $sql = "select * from fkg.t_7901_foto where cvr_kode=:cvrKode and objekt_id not in (select foto_lokat from fkg.t_7900_fotoforbindelse where foto_objek=:objekt_id) order by oprettet desc limit 100";
         $res = $this->model->prepare($sql);
         try {
             $res->execute(["cvrKode" => $cvrKode, "objekt_id" => $objekt_id]);
