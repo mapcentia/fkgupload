@@ -42,21 +42,20 @@ class Template extends Controller
         $format = urldecode(Route::getParam("format"));
         $layer = Route::getParam("layer");
         $layerNum = (int)filter_var($layer, FILTER_SANITIZE_NUMBER_INT);
+        $cvrKode = Session::get()["properties"]->cvr_kode;
 
         $fieldArr = ["temakode"];
         $schema = Schemata::$schemata[$layerNum];
         foreach ($schema as $key => $value) {
-            if ($key == "objekt_id") {
-                $fieldArr[] = "NULL AS {$key}";
-            } elseif ($format == "ESRI Shapefile") {
+            if ($format == "ESRI Shapefile") {
                 $fieldArr[] = "{$key} AS {$value[0]}";
             } else {
                 $fieldArr[] = $key;
             }
         }
-        $limit = $format == "MapInfo File" ? 0 : 10;
+        $limit = $format == "MapInfo File" ? 0 : 1000000;
         $fieldStr = implode(",", $fieldArr);
-        $q = "select {$fieldStr} from fkg.{$layer} WHERE ST_IsValid(geometri) = true limit {$limit}";
+        $q = "select {$fieldStr} from fkg.{$layer} WHERE cvr_kode = {$cvrKode} limit {$limit}";
         $sql = new Sql("25832");
         $res = $sql->sql($q, "UTF8", "ogr/" . $format, null, false, null, null, $layer);
         if (!$res["success"]) {
