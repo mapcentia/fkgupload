@@ -146,7 +146,7 @@ class Schemata
             "link" => ["link", false, "varchar"],
             "link1" => ["link1", false, "varchar"],
             "link2" => ["link2", false, "varchar"],
-            "link3" => ["ink3", false, "varchar"],
+            "link3" => ["link3", false, "varchar"],
 
             "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
 
