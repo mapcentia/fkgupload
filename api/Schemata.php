@@ -159,6 +159,7 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "postnr_by" => ["postnr_by", false, "varchar"],
+            "kvalitet_k" => ["kvalitet_k", false, "int"],
         ],
         5801 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -230,6 +231,7 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "postnr_by" => ["postnr_by", false, "varchar"],
+            "kvalitet_k" => ["kvalitet_k", false, "int"],
         ],
         5802 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -311,6 +313,7 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "postnr_by" => ["postnr_by", false, "varchar"],
+            "kvalitet_k" => ["kvalitet_k", false, "int"],
         ],
     ];
 }
