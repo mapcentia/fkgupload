@@ -15,6 +15,10 @@ namespace app\extensions\fkgupload\api;
  */
 class Schemata
 {
+    const MULTIPOINT = "MULTIPOINT";
+    const MULTILINESTRING = "MULTILINESTRING";
+    const MULTIPOLYGON = "MULTIPOLYGON";
+
     /**
      * @var array[][]
      */
@@ -36,7 +40,7 @@ class Schemata
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
-            "geometri" => ["the_geom", true, "geometry"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5713 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -53,7 +57,7 @@ class Schemata
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
-            "geometri" => ["the_geom", true, "geometry"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5711 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -70,7 +74,7 @@ class Schemata
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
-            "geometri" => ["the_geom", true, "geometry"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5712 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -87,7 +91,7 @@ class Schemata
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
-            "geometri" => ["the_geom", true, "geometry"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5800 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -150,7 +154,7 @@ class Schemata
 
             "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
 
-            "geometri" => ["the_geom", true, "geometry"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
             //"vejkode" => ["vejkode", false, "int"],
@@ -222,7 +226,7 @@ class Schemata
 
             "ansva_v_k" => ["ansva_v_k", false, "int"], // Felt defineret under: 4.1
 
-            "geometri" => ["the_geom", true, "geometry"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
             //"vejkode" => ["vejkode", false, "int"],
@@ -304,7 +308,7 @@ class Schemata
             "link2" => ["link2", false, "varchar"],
             "link3" => ["ink3", false, "varchar"],
 
-            "geometri" => ["the_geom", true, "geometry"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
             //"vejkode" => ["vejkode", false, "int"],

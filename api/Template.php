@@ -22,6 +22,7 @@ use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
  */
 class Template extends Controller
 {
+
     /**
      * Template constructor.
      */
@@ -57,7 +58,7 @@ class Template extends Controller
         $fieldStr = implode(",", $fieldArr);
         $q = "select {$fieldStr} from fkg.{$layer} WHERE cvr_kode = {$cvrKode} limit {$limit}";
         $sql = new Sql("25832");
-        $res = $sql->sql($q, "UTF8", "ogr/" . $format, null, false, null, null, $layer);
+        $res = $sql->sql($q, "UTF8", "ogr/" . $format, null, false, null, $schema["geometri"][3], $layer);
         if (!$res["success"]) {
             return $res;
         }
