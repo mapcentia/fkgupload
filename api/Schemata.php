@@ -40,6 +40,7 @@ class Schemata
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5713 => [
@@ -57,6 +58,7 @@ class Schemata
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5711 => [
@@ -74,6 +76,7 @@ class Schemata
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5712 => [
@@ -91,6 +94,7 @@ class Schemata
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5800 => [
@@ -101,6 +105,7 @@ class Schemata
             "statuskode" => ["statuskode", true, "int"],
             "off_kode" => ["off_kode", true, "int"],
             "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
 
             "facil_ty_k" => ["facil_ty_k", true, "int"],
             "navn" => ["navn", false, "varchar"],
@@ -173,6 +178,7 @@ class Schemata
             "statuskode" => ["statuskode", true, "int"],
             "off_kode" => ["off_kode", true, "int"],
             "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
 
             "facil_ty_k" => ["facil_ty_k", true, "int"],
             "navn" => ["navn", false, "varchar"],
@@ -245,6 +251,7 @@ class Schemata
             "statuskode" => ["statuskode", true, "int"],
             "off_kode" => ["off_kode", true, "int"],
             "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
 
             "rute_ty_k" => ["rute_ty_k", true, "int"],
             "rute_uty_k" => ["rute_uty_k", false, "int"],
