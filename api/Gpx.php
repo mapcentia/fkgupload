@@ -22,7 +22,8 @@ use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
  */
 class Gpx extends Controller
 {
-    const LAYER = "fkg.t_5802_fac_li";
+    const LLAYER = "fkg.t_5802_fac_li";
+    const PLAYER = "fkg.t_5800_fac_pkt";
 
     /**
      * Template constructor.
@@ -40,10 +41,20 @@ class Gpx extends Controller
     public function get_index(): ?array
     {
         $objekt_id = urldecode(Route::getParam("objekt_id"));
+        $type = Route::getParam("type");
 
-        $q = "select navn as name,geometri from " . self::LAYER . " WHERE objekt_id='{$objekt_id}'";
+        if ($type != "point" && $type != "line") {
+            return [
+                "success" => false,
+                "code" => 400,
+                "message" => "Type skal være 'point' eller 'line'",
+            ];
+        }
+
+        $q = "select navn as name,geometri from " . ($type == "point" ? self::PLAYER : self::LLAYER) . " WHERE objekt_id='{$objekt_id}'";
+//        die($q);
         $sql = new Sql("4326");
-        $res = $sql->sql($q, "UTF8", "ogr/GPX", null, false, null, "MULTILINESTRING", "gpx_" . $objekt_id);
+        $res = $sql->sql($q, "UTF8", "ogr/GPX", null, false, null, ($type == "point" ? "POINT" : "LINESTRING"), "gpx_" . $objekt_id);
         if (!$res["success"]) {
             return $res;
         }
