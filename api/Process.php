@@ -498,6 +498,32 @@ class Process extends Controller
             $src_img = imagecreatefromjpeg($path);
         }
 
+        $exif = exif_read_data($path);
+
+        if (isset($exif['Orientation']) ) {
+            $orientation = $exif['Orientation'];
+        }
+        elseif (isset($exif['IFD0']['Orientation'])) {
+            $orientation = $exif['IFD0']['Orientation'];
+        }
+        else {
+            $orientation = 0;
+        }
+
+        switch($orientation) {
+            case 3: // rotate 180 degrees
+                $src_img = imagerotate($src_img, 180, 0);
+                break;
+
+            case 6: // rotate 90 degrees CW
+                $src_img = imagerotate($src_img, 270, 0);
+                break;
+
+            case 8: // rotate 90 degrees CCW
+                $src_img = imagerotate($src_img, 90, 0);
+                break;
+        }
+
         $old_x = imageSX($src_img);
         $old_y = imageSY($src_img);
 
