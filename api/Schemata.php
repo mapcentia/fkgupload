@@ -129,7 +129,7 @@ class Schemata
             "betaling_k" => ["betaling_k", false, "int"],
             "book_k" => ["book_k", false, "int"],
             "antal_pl" => ["antal_pl", false, "int"],
-            //"adr_id" => ["adr_id", false, "uuid"],
+            "adr_id" => ["adr_id", false, "uuid"],
 
             "foto_link" => ["foto_link", false, "varchar"],
             "foto_link1" => ["foto_link1", false, "varchar"],
@@ -162,9 +162,9 @@ class Schemata
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
-            //"vejkode" => ["vejkode", false, "int"],
+            "vejkode" => ["vejkode", false, "int"],
             "vejnavn" => ["vejnavn", false, "varchar"],
-            //"cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "postnr_by" => ["postnr_by", false, "varchar"],
@@ -202,7 +202,7 @@ class Schemata
             "betaling_k" => ["betaling_k", false, "int"],
             "book_k" => ["book_k", false, "int"],
             "antal_pl" => ["antal_pl", false, "int"],
-            //"adr_id" => ["adr_id", false, "uuid"],
+            "adr_id" => ["adr_id", false, "uuid"],
 
             "foto_link" => ["foto_link", false, "varchar"],
             "foto_link1" => ["foto_link1", false, "varchar"],
@@ -235,9 +235,9 @@ class Schemata
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
-            //"vejkode" => ["vejkode", false, "int"],
+            "vejkode" => ["vejkode", false, "int"],
             "vejnavn" => ["vejnavn", false, "varchar"],
-            //"cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "postnr_by" => ["postnr_by", false, "varchar"],
@@ -287,7 +287,7 @@ class Schemata
             "certifi_k" => ["certifi_k", false, "int"],
             "hierarki_k" => ["hierarki_k", false, "int"],
             "gpx_link" => ["gpx_link", false, "varchar"],
-            //"adr_id" => ["adr_id", false, "uuid"],
+            "adr_id" => ["adr_id", false, "uuid"],
 
             "foto_link" => ["foto_link", false, "varchar"],
             "foto_link1" => ["foto_link1", false, "varchar"],
@@ -318,9 +318,9 @@ class Schemata
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
 
             "saeson_bem" => ["saeson_bem", false, "varchar"],
-            //"vejkode" => ["vejkode", false, "int"],
+            "vejkode" => ["vejkode", false, "int"],
             "vejnavn" => ["vejnavn", false, "varchar"],
-            //"cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "postnr_by" => ["postnr_by", false, "varchar"],
