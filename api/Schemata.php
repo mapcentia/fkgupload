@@ -167,7 +167,6 @@ class Schemata
             "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
-            "postnr_by" => ["postnr_by", false, "varchar"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
         ],
         5801 => [
@@ -240,7 +239,6 @@ class Schemata
             "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
-            "postnr_by" => ["postnr_by", false, "varchar"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
         ],
         5802 => [
@@ -323,7 +321,6 @@ class Schemata
             "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
-            "postnr_by" => ["postnr_by", false, "varchar"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
         ],
     ];
