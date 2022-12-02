@@ -80,6 +80,8 @@ class Process extends Controller
             5713 => "t_5713_prog_stat_dis",
             5711 => "t_5711_and_dis",
             5712 => "t_5712_plej_aeldr_dis",
+            5607 => "t_5607_ladepunkter",
+            5608 => "t_5608_plan_ladefaciliteter",
         ];
         return $names[$code];
     }
