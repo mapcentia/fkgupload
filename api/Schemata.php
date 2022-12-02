@@ -341,7 +341,7 @@ class Schemata
             "udbyder_ladefacilitet" => ["udbyder", false, "varchar"],
             "antal_ladepunkter" => ["ladepkt", false, "int"],
             "stiktype" => ["stiktype", false, "varchar"],
-            "effekt_kode" => ["effekt_k", false, "int"],
+            "effekt_type_kode" => ["effekt_k", false, "int"],
             "tilgaengelighed_type_kode" => ["tilgae_ty_k", false, "int"],
             "anvendelsesgrad_kwh" => ["anvgr_kWh", false, "int"],
             "driftstart_fra" => ["drift_fra", false, "date"],
@@ -364,7 +364,7 @@ class Schemata
             "operatoer_ladefacilitet" => ["operatoer", false, "varchar"],
             "udbyder_ladefacilitet" => ["udbyder", false, "varchar"],
             "stiktype" => ["stiktype", false, "varchar"],
-            "effekt_kode" => ["effekt_k", false, "int"],
+            "effekt_type_kode" => ["effekt_k", false, "int"],
             "tilgaengelighed_type_kode" => ["tilgae_ty_k", false, "int"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
