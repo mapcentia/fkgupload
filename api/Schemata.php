@@ -1,7 +1,7 @@
 <?php
 /**
  * @author     Martin Høgh <mh@mapcentia.com>
- * @copyright  2013-2021 MapCentia ApS
+ * @copyright  2013-2022 MapCentia ApS
  * @license    http://www.gnu.org/licenses/#AGPL  GNU AFFERO GENERAL PUBLIC LICENSE 3
  *
  */
@@ -322,6 +322,52 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
+        ],
+
+        5607 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+
+            "ladefacilitet_type_kode" => ["lade_ty_k", true, "int"],
+            "internationalt_id" => ["int_id", false, "varchar"],
+            "ejer_ladefacilitet" => ["ejer", false, "varchar"],
+            "operatoer_ladefacilitet" => ["operatoer", false, "varchar"],
+            "udbyder_ladefacilitet" => ["udbyder", false, "varchar"],
+            "antal_ladepunkter" => ["ladepkt", false, "int"],
+            "stiktype" => ["stiktype", false, "varchar"],
+            "effekt_kode" => ["effekt_k", false, "int"],
+            "tilgaengelighed_type_kode" => ["tilgae_ty_k", false, "int"],
+            "anvendelsesgrad_kwh" => ["anvgr_kWh", false, "int"],
+            "driftstart_fra" => ["drift_fra", false, "date"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
+        5608 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+
+            "ladefacilitet_type_kode" => ["lade_ty_k", true, "int"],
+            "antal_planlagte_ladefaciliteter" => ["lade_ty_k", false, "int"],
+            "ejer_ladefacilitet" => ["ejer", false, "varchar"],
+            "operatoer_ladefacilitet" => ["operatoer", false, "varchar"],
+            "udbyder_ladefacilitet" => ["udbyder", false, "varchar"],
+            "stiktype" => ["stiktype", false, "varchar"],
+            "effekt_kode" => ["effekt_k", false, "int"],
+            "tilgaengelighed_type_kode" => ["tilgae_ty_k", false, "int"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
     ];
 }
