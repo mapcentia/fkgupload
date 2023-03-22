@@ -8,11 +8,13 @@
 
 namespace app\extensions\fkgupload\api;
 
+use app\conf\Connection;
 use app\inc\Controller;
 use app\inc\Route;
 use app\models\Database;
 use app\models\Sql;
 use app\inc\Session;
+use app\api\v3\Xmlworkspace;
 use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
 
 
@@ -54,6 +56,14 @@ class Template extends Controller
                 $fieldArr[] = $key;
             }
         }
+        if ($format == "ESRI Xml Workspace") {
+            $Xmlworkspace = new Xmlworkspace();
+            $xml = $Xmlworkspace->create("fkg." . $layer, Connection::$param["postgisdb"], $fieldArr);
+            header('Content-type: application/xml; charset=utf-8');
+            echo $xml;
+            exit();
+        }
+
         $limit = $format == "MapInfo File" ? 0 : 1000000;
         $fieldStr = implode(",", $fieldArr);
         $q = "select {$fieldStr} from fkg.{$layer} WHERE cvr_kode = {$cvrKode} limit {$limit}";
