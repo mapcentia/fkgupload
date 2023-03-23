@@ -60,7 +60,7 @@ class Template extends Controller
         }
         // If Xml Workspace when creating and zip
         if ($format == "ESRI Xml Workspace") {
-            $name = "_" . md5(rand(1, 999999999) . microtime()) . ".xml";
+            $name = "_" . md5(rand(1, 999999999) . microtime());
             $path = App::$param['path'] . "app/tmp/" . Connection::$param["postgisdb"] . "/__vectors/" . $name;
             $Xmlworkspace = new Xmlworkspace();
             $xml = $Xmlworkspace->create("fkg." . $layer, Connection::$param["postgisdb"], $fieldArr);
@@ -70,7 +70,7 @@ class Template extends Controller
             if (!$zip->open($zipPath, ZIPARCHIVE::CREATE)) {
                 error_log("Could not open ZIP archive");
             }
-            $zip->addFile($path, $name);
+            $zip->addFile($path, $name . ".xml");
             if ($zip->status != ZIPARCHIVE::ER_OK) {
                 error_log("Failed to write files to zip archive");
             }
