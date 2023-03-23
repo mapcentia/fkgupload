@@ -577,8 +577,8 @@ class Process extends Controller
         $foto_objek = $request["foto_objek"];
         $foto_lokat = $request["foto_lokat"];
 
-        $sql = "INSERT INTO fkg.t_7900_fotoforbindelse(cvr_kode, bruger_id, oprindkode, statuskode, off_kode, fkg_tema, foto_objek, foto_lokat, primaer_kode)
-                VALUES (:cvrKode, :brugerId, 0, 3, 1, :tema, :foto_objek, :foto_lokat, 0)";
+        $sql = "INSERT INTO fkg.t_7900_fotoforbindelse(cvr_kode, bruger_id, oprindkode, statuskode, off_kode, fkg_tema, foto_objek, foto_lokat, primaer_kode, tilgaeng_kode)
+                VALUES (:cvrKode, :brugerId, 0, 3, 1, :tema, :foto_objek, :foto_lokat, 0, 0)";
 
         $res = $this->model->prepare($sql);
         try {
