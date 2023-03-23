@@ -8,6 +8,7 @@
 
 namespace app\extensions\fkgupload\api;
 
+use app\conf\App;
 use app\conf\Connection;
 use app\inc\Controller;
 use app\inc\Route;
@@ -16,6 +17,7 @@ use app\models\Sql;
 use app\inc\Session;
 use app\api\v3\Xmlworkspace;
 use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
+use ZipArchive;
 
 
 /**
@@ -40,7 +42,7 @@ class Template extends Controller
      * @return array<mixed>|null
      * @throws PhpfastcacheInvalidArgumentException
      */
-    public function get_index(): ?array
+    public function get_index()
     {
         $format = urldecode(Route::getParam("format"));
         $layer = Route::getParam("layer");
@@ -56,11 +58,26 @@ class Template extends Controller
                 $fieldArr[] = $key;
             }
         }
+        // If Xml Workspace when creating and zip
         if ($format == "ESRI Xml Workspace") {
+            $name = "_" . md5(rand(1, 999999999) . microtime()) . ".xml";
+            $path = App::$param['path'] . "app/tmp/" . Connection::$param["postgisdb"] . "/__vectors/" . $name;
             $Xmlworkspace = new Xmlworkspace();
             $xml = $Xmlworkspace->create("fkg." . $layer, Connection::$param["postgisdb"], $fieldArr);
-            header('Content-type: application/xml; charset=utf-8');
-            echo $xml;
+            file_put_contents($path, $xml);
+            $zip = new ZipArchive();
+            $zipPath = $path . ".zip";
+            if (!$zip->open($zipPath, ZIPARCHIVE::CREATE)) {
+                error_log("Could not open ZIP archive");
+            }
+            $zip->addFile($path, $name);
+            if ($zip->status != ZIPARCHIVE::ER_OK) {
+                error_log("Failed to write files to zip archive");
+            }
+            $zip->close();
+            header("Content-type: application/gpx, application/octet-stream");
+            header("Content-Disposition: attachment; filename=\"{$name}.zip\"");
+            readfile($zipPath);
             exit();
         }
 
