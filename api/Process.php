@@ -176,13 +176,12 @@ class Process extends Controller
         $split = explode(".", $uploadTable);
         $rowCount = $this->model->countRows($split[0], $split[1])["data"];
 
-
-        $rule = new Rule();
-        $userFilter = new UserFilter("fkg", Session::getUser(), "*", "*", "*", "*");
+        $Rule = new Rule();
+        $userFilter = new UserFilter(Session::getUser(),"*", "insert", "*", "fkg", "*");
         $geofence = new GeofenceModel($userFilter);
-        $rule = $geofence->authorize($rule->get());
+        $rule = $geofence->authorize($Rule->get());
 
-        $sql = "SELECT * FROM $uploadTable as t WHERE {$rule["filters"]["filter"]});";
+        $sql = "SELECT * FROM $uploadTable as t WHERE ({$rule["filters"]["filter"]});";
         $res = $this->model->prepare($sql);
         try {
             $res->execute();
