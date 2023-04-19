@@ -177,7 +177,7 @@ class Process extends Controller
         $rowCount = $this->model->countRows($split[0], $split[1])["data"];
 
         $Rule = new Rule();
-        $userFilter = new UserFilter(Session::getUser(),"*", "insert", "*", "fkg", "*");
+        $userFilter = new UserFilter(Session::getUser(), "*", "insert", "*", "fkg", "*");
         $geofence = new GeofenceModel($userFilter);
         $rule = $geofence->authorize($Rule->get());
 
@@ -187,8 +187,9 @@ class Process extends Controller
             $response['code'] = 401;
             return $response;
         }
-
-        $sql = "SELECT * FROM $uploadTable as t WHERE ({$rule["filters"]["filter"]});";
+        // Prepare filter to be use on oploaded data
+        $filter = str_replace("geometri", "the_geom", $rule["filters"]["filter"]);
+        $sql = "SELECT * FROM $uploadTable WHERE ($filter);";
         $res = $this->model->prepare($sql);
         try {
             $res->execute();
@@ -512,17 +513,15 @@ class Process extends Controller
 
         $exif = exif_read_data($path);
 
-        if (isset($exif['Orientation']) ) {
+        if (isset($exif['Orientation'])) {
             $orientation = $exif['Orientation'];
-        }
-        elseif (isset($exif['IFD0']['Orientation'])) {
+        } elseif (isset($exif['IFD0']['Orientation'])) {
             $orientation = $exif['IFD0']['Orientation'];
-        }
-        else {
+        } else {
             $orientation = 0;
         }
 
-        switch($orientation) {
+        switch ($orientation) {
             case 3: // rotate 180 degrees
                 $src_img = imagerotate($src_img, 180, 0);
                 break;
