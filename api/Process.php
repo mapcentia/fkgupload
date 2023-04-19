@@ -182,7 +182,7 @@ class Process extends Controller
         $geofence = new GeofenceModel($userFilter);
         $rule = $geofence->authorize($rule->get());
 
-        $sql = "SELECT * FROM {$uploadTable} as t WHERE ST_intersects(t.the_geom, ST_transform(({$rule["filters"]["filter"]}), 25832));";
+        $sql = "SELECT * FROM $uploadTable as t WHERE {$rule["filters"]["filter"]});";
         $res = $this->model->prepare($sql);
         try {
             $res->execute();
