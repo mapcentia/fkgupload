@@ -548,7 +548,7 @@ class Process extends Controller
             $thumb_h = $new_height;
         }
 
-        $dst_img = ImageCreateTrueColor($thumb_w, $thumb_h);
+        $dst_img = ImageCreateTrueColor($thumb_w, (int)$thumb_h);
 
         imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $thumb_w, (int)$thumb_h, $old_x, $old_y);
 
