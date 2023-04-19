@@ -550,7 +550,7 @@ class Process extends Controller
 
         $dst_img = ImageCreateTrueColor($thumb_w, $thumb_h);
 
-        imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $thumb_w, $thumb_h, $old_x, $old_y);
+        imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $thumb_w, (int)$thumb_h, $old_x, $old_y);
 
         // New save location
         $new_thumb_loc = $moveToDir . $image_name;
