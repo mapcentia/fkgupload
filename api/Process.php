@@ -21,8 +21,9 @@ use app\inc\UserFilter;
 use app\models\Geofence as GeofenceModel;
 use app\models\Table;
 use Aws\S3\S3Client;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use \League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemException;
 use PDOException;
 use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
 use ZipArchive;
@@ -425,6 +426,7 @@ class Process extends Controller
      * @param string $fileName
      * @param string $fotoObjekId
      * @return array<mixed>
+     * @throws FilesystemException
      */
     public function storeImageInS3(string $fileName, string $fotoObjekId): array
     {
@@ -459,13 +461,13 @@ class Process extends Controller
 
         $objektIdName = $fotoObjekId . ".jpg";
 
-        $adapter = new AwsS3Adapter($client, 'mapcentia-www');
+        $adapter = new AwsS3V3Adapter($client, 'mapcentia-www');
         $filesystem = new Filesystem($adapter);
         $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
-        $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($filePath));
+        $filesystem->write(S3_FOLDER . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($filePath));
         foreach ($thumbNailsSizes as $size) {
             $this->createThumbnail($fileName, $size, $size, $targetDir, $targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR);
-            $filesystem->put(S3_FOLDER . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fileName));
+            $filesystem->write(S3_FOLDER . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $objektIdName, file_get_contents($targetDir . DIRECTORY_SEPARATOR . (string)$size . DIRECTORY_SEPARATOR . $fileName));
         }
 
         return [
