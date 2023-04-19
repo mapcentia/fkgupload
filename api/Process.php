@@ -181,6 +181,13 @@ class Process extends Controller
         $geofence = new GeofenceModel($userFilter);
         $rule = $geofence->authorize($Rule->get());
 
+        if (empty($rule["access"]) || $rule["access"] == "deny") {
+            $response['success'] = false;
+            $response['message'] = "Ingen adgang til datasættet";
+            $response['code'] = 401;
+            return $response;
+        }
+
         $sql = "SELECT * FROM $uploadTable as t WHERE ({$rule["filters"]["filter"]});";
         $res = $this->model->prepare($sql);
         try {
