@@ -19,9 +19,10 @@ use app\inc\Session;
 use app\inc\Model;
 use app\inc\UserFilter;
 use app\models\Geofence as GeofenceModel;
+use app\models\Rule;
 use app\models\Table;
 use Aws\S3\S3Client;
-use \League\Flysystem\AwsS3V3\AwsS3V3Adapter;
+use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemException;
 use PDOException;
@@ -136,7 +137,7 @@ class Process extends Controller
                     }
                     $response["data"]["fields"][$fieldName] = true;
                     if ($key != "objekt_id") {
-                        if (strpos($key, 'saeson_s') !== false) {
+                        if (str_contains($key, 'saeson_s')) {
                             $arr2[] = "('0001-'||" . $fieldName . ")::" . $value[2];
                         } else {
                             $arr2[] = $fieldName . "::" . $value[2];
@@ -144,7 +145,7 @@ class Process extends Controller
                         }
                         $arr1[] = $key;
                     }
-                    if (strpos($key, 'saeson_s') !== false) {
+                    if (str_contains($key, 'saeson_s')) {
                         $arr3[] = "{$key}=('0001-'||{$uploadTable}.{$fieldName})::{$value[2]}";
                     } else {
                         $arr3[] = "{$key}={$uploadTable}.{$fieldName}::{$value[2]}";
@@ -176,9 +177,10 @@ class Process extends Controller
         $rowCount = $this->model->countRows($split[0], $split[1])["data"];
 
 
-        $userFilter = new UserFilter("fkg", Session::getUser(), "*", "*", "*", "*", "fkg." . $themeName);
+        $rule = new Rule();
+        $userFilter = new UserFilter("fkg", Session::getUser(), "*", "*", "*", "*");
         $geofence = new GeofenceModel($userFilter);
-        $rule = $geofence->authorize();
+        $rule = $geofence->authorize($rule->get());
 
         $sql = "SELECT * FROM {$uploadTable} as t WHERE ST_intersects(t.the_geom, ST_transform(({$rule["filters"]["filter"]}), 25832));";
         $res = $this->model->prepare($sql);
