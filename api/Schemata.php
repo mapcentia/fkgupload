@@ -356,7 +356,7 @@ class Schemata
             "link3" => ["link", false, "varchar"],
             "link4" => ["link", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
-            "planstatus_kode" => ["planstatus", true, "int"],
+            "planstatus_kode" => ["planstat_k", false, "int"],
 
             "operatoer_ladefacilitet" => ["operatoer", false, "varchar"],
             "udbyder_ladefacilitet" => ["udbyder", false, "varchar"],
