@@ -355,13 +355,14 @@ class Schemata
             "link2" => ["link", false, "varchar"],
             "link3" => ["link", false, "varchar"],
             "link4" => ["link", false, "varchar"],
-            //"sagsnr" => ["sagsnr", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
             "planstatus_kode" => ["planstatus", true, "int"],
 
             "operatoer_ladefacilitet" => ["operatoer", false, "varchar"],
             "udbyder_ladefacilitet" => ["udbyder", false, "varchar"],
             "stiktype" => ["stiktype", false, "varchar"],
             "tilgaengelighed_type_kode" => ["tilgae_ty_k", false, "int"],
+            "omraade_navn" => ["omraade_navn", false, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
