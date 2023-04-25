@@ -362,7 +362,7 @@ class Schemata
             "udbyder_ladefacilitet" => ["udbyder", false, "varchar"],
             "stiktype" => ["stiktype", false, "varchar"],
             "tilgaengelighed_type_kode" => ["tilgae_ty_k", false, "int"],
-            "omraade_navn" => ["omraade_navn", false, "varchar"],
+            "omraade_navn" => ["omr_navn", false, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
