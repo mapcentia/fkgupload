@@ -187,9 +187,13 @@ class Process extends Controller
             $response['code'] = 401;
             return $response;
         }
-        // Prepare filter to be use on oploaded data
-        $filter = str_replace("geometri", "the_geom", $rule["filters"]["filter"]);
-        $sql = "SELECT * FROM $uploadTable WHERE ($filter);";
+        if ($rule["access"] == "limit") {
+            // Prepare filter to be use on oploaded data
+            $filter = str_replace("geometri", "the_geom", $rule["filters"]["filter"]);
+            $sql = "SELECT * FROM $uploadTable WHERE ($filter);";
+        } else {
+            $sql = "SELECT * FROM $uploadTable";
+        }
         $res = $this->model->prepare($sql);
         try {
             $res->execute();
