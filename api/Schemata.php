@@ -168,6 +168,9 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
+
+            "tilgaeng_opl" => ["tilgaeng_o", false, "varchar"],
+            "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
         ],
         5801 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -240,6 +243,8 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
+            "tilgaeng_opl" => ["tilgaeng_o", false, "varchar"],
+            "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
         ],
         5802 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -322,6 +327,8 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
+            "tilgaeng_opl" => ["tilgaeng_o", false, "varchar"],
+            "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
         ],
 
         5607 => [
