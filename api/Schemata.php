@@ -1,7 +1,7 @@
 <?php
 /**
  * @author     Martin Høgh <mh@mapcentia.com>
- * @copyright  2013-2022 MapCentia ApS
+ * @copyright  2013-2024 MapCentia ApS
  * @license    http://www.gnu.org/licenses/#AGPL  GNU AFFERO GENERAL PUBLIC LICENSE 3
  *
  */
@@ -169,7 +169,7 @@ class Schemata
             "postnr" => ["postnr", false, "int"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
 
-            "tilgaeng_opl" => ["tilgaeng_o", false, "varchar"],
+            "tilgaeng_opl" => ["tilgaeng_o", false, "jsonb"],
             "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
         ],
         5801 => [
@@ -243,7 +243,7 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
-            "tilgaeng_opl" => ["tilgaeng_o", false, "varchar"],
+            "tilgaeng_opl" => ["tilgaeng_o", false, "jsonb"],
             "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
         ],
         5802 => [
@@ -327,7 +327,7 @@ class Schemata
             "husnr" => ["husnr", false, "varchar"],
             "postnr" => ["postnr", false, "int"],
             "kvalitet_k" => ["kvalitet_k", false, "int"],
-            "tilgaeng_opl" => ["tilgaeng_o", false, "varchar"],
+            "tilgaeng_opl" => ["tilgaeng_o", false, "jsonb"],
             "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
         ],
 
