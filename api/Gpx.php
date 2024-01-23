@@ -1,7 +1,7 @@
 <?php
 /**
  * @author     Martin Høgh <mh@mapcentia.com>
- * @copyright  2013-2021 MapCentia ApS
+ * @copyright  2013-2024 MapCentia ApS
  * @license    http://www.gnu.org/licenses/#AGPL  GNU AFFERO GENERAL PUBLIC LICENSE 3
  *
  */
@@ -12,8 +12,9 @@ use app\inc\Controller;
 use app\inc\Route;
 use app\models\Database;
 use app\models\Sql;
-use app\inc\Session;
+use Exception;
 use Phpfastcache\Exceptions\PhpfastcacheInvalidArgumentException;
+use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
 
 
 /**
@@ -35,8 +36,8 @@ class Gpx extends Controller
     }
 
     /**
-     * @return array<mixed>|null
-     * @throws PhpfastcacheInvalidArgumentException
+     * @return array|null
+     * @throws Exception|WriterException|PhpfastcacheInvalidArgumentException
      */
     public function get_index(): ?array
     {
@@ -51,8 +52,7 @@ class Gpx extends Controller
             ];
         }
 
-        $q = "select navn as name,geometri from " . ($type == "point" ? self::PLAYER : self::LLAYER) . " WHERE objekt_id='{$objekt_id}'";
-//        die($q);
+        $q = "select navn as name,geometri from " . ($type == "point" ? self::PLAYER : self::LLAYER) . " WHERE objekt_id='$objekt_id'";
         $sql = new Sql("4326");
         $res = $sql->sql($q, "UTF8", "ogr/GPX", null, false, null, ($type == "point" ? "POINT" : "LINESTRING"), "gpx_" . $objekt_id);
         if (!$res["success"]) {
