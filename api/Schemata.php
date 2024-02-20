@@ -378,5 +378,68 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
+        5608 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "planstatus_kode" => ["planstat_k", false, "int"],
+            "beliggenhedskommune" => ["belig_kom", false, "int"],
+
+            "id_cykelknudepkt" => ["id_cykelkp", true, "varchar"],
+            "nodenumber" => ["nodenumber", true, "varchar"],
+            "ismain_kode" => ["ismain_k", true, "int"],
+            "deadend_kode" => ["deadend_k", true, "int"],
+            "refmain" => ["refmain", true, "varchar"],
+            "afm_cykelknudepkt_kode" => ["afm_kpkt_k", true, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
+        5609 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "planstatus_kode" => ["planstat_k", false, "int"],
+            "beliggenhedskommune" => ["belig_kom", false, "int"],
+
+            "id_cykelknudepunktsstraekning" => ["id_cykelks", true, "varchar"],
+            "length" => ["length", false, "double precision"],
+            "privatenot_kode" => ["privat_k", true, "int"],
+            "surfacenot_kode" => ["surface_k", true, "int"],
+            "onewaynot_kode" => ["oneway_k", true, "int"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
+        ],
+        5610 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "planstatus_kode" => ["planstat_k", false, "int"],
+            "beliggenhedskommune" => ["belig_kom", false, "int"],
+
+
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
+        ]
     ];
 }
