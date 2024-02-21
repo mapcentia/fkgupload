@@ -83,7 +83,9 @@ class Process extends Controller
             5711 => "t_5711_and_dis",
             5712 => "t_5712_plej_aeldr_dis",
             5607 => "t_5607_ladefacilitet",
-            5608 => "t_5608_plan_ladefaciliteter",
+            5608 => "t_5608_cykelknudepunkter",
+            5609 => "t_5609_cykelknudepunktsstraekninger",
+            5610 => "t_5610_cykelplanlaegning",
         ];
         return $names[$code];
     }
