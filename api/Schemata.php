@@ -394,10 +394,10 @@ class Schemata
 
             "id_cykelknudepkt" => ["id_cykelkp", true, "varchar"],
             "nodenumber" => ["nodenumber", true, "varchar"],
-            "ismain_kode" => ["ismain_k", true, "int"],
-            "deadend_kode" => ["deadend_k", true, "int"],
+            "ismain" => ["ismain_k", true, "int"],
+            "deadend" => ["deadend_k", true, "int"],
             "refmain" => ["refmain", true, "varchar"],
-            "afm_cykelknudepkt_kode" => ["afm_kpkt_k", true, "varchar"],
+            "afm_cykelknudepkt" => ["afm_kpkt_k", true, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
@@ -417,9 +417,9 @@ class Schemata
 
             "id_cykelknudepunktsstraekning" => ["id_cykelks", true, "varchar"],
             "length" => ["length", false, "double precision"],
-            "privatenot_kode" => ["privat_k", true, "int"],
-            "surfacenot_kode" => ["surface_k", true, "int"],
-            "onewaynot_kode" => ["oneway_k", true, "int"],
+            "privatenot" => ["privat_k", true, "int"],
+            "surfacenot" => ["surface_k", true, "int"],
+            "onewaynot" => ["oneway_k", true, "int"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
         ],
