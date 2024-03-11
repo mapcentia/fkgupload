@@ -394,9 +394,9 @@ class Schemata
 
             "id_cykelknudepkt" => ["id_cykelkp", true, "varchar"],
             "nodenumber" => ["nodenumber", true, "varchar"],
-            "ismain" => ["ismain", true, "bool"],
+            "ismain" => ["ismain", false, "bool"],
             "deadend" => ["deadend", true, "bool"],
-            "refmain" => ["refmain", true, "varchar"],
+            "refmain" => ["refmain", false, "varchar"],
             "afm_cykelknudepkt" => ["afm_kpkt", true, "bool"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
