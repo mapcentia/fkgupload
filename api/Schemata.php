@@ -393,7 +393,7 @@ class Schemata
             "beliggenhedskommune" => ["belig_kom", false, "int"],
 
             "id_cykelknudepkt" => ["id_cykelkp", true, "varchar"],
-            "nodenumber" => ["nodenumber", true, "varchar"],
+            "nodenumber" => ["nodenumber", false, "varchar"],
             "ismain" => ["ismain", false, "bool"],
             "deadend" => ["deadend", true, "bool"],
             "refmain" => ["refmain", false, "varchar"],
