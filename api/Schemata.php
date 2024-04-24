@@ -23,6 +23,29 @@ class Schemata
      * @var array[][]
      */
     static public $schemata = [
+        5700 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+
+            "forening_type_kode" => ["foren_ty_k", true, "int"],
+            "forening_navn" => ["foren_navn", true, "varchar"],
+            "lokalpl_nr" => ["lokalpl_nr", false, "varchar"],
+            "formand" => ["formand", false, "varchar"],
+            "gf_tlf" => ["gf_tlf", false, "int"],
+            "gf_mail" => ["gf_mail", false, "varchar"],
+            "gf_adr_beskyt_kode" => ["gf_besky_k", false, "varchar"],
+            "vedtaegt_kode" => ["vedtaegt_k", false, "int"],
+
+            "noegle" => ["noegle", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "cvr_opslag" => ["cvr_opslag", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
         5710 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
@@ -36,24 +59,6 @@ class Schemata
             "udd_distrikt_type_kode" => ["udd_d_ty_k", true, "int"],
             "starttrin_kode" => ["strtr_kode", false, "int"],
             "sluttrin_kode" => ["slutr_kode", false, "int"],
-
-            "noegle" => ["noegle", false, "varchar"],
-            "sagsnr" => ["sagsnr", false, "varchar"],
-            "link" => ["link", false, "varchar"],
-            "note" => ["note", false, "varchar"],
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
-        ],
-        5713 => [
-            "objekt_id" => ["objekt_id", false, "uuid"],
-            "cvr_kode" => ["cvr_kode", true, "int"],
-            "bruger_id" => ["bruger_id", true, "varchar"],
-            "oprindkode" => ["oprindkode", true, "int"],
-            "statuskode" => ["statuskode", true, "int"],
-            "off_kode" => ["off_kode", true, "int"],
-
-            "prog_distrikt_nr" => ["pro_dis_nr", false, "int"],
-            "prog_distrikt_navn" => ["pro_dis_na", false, "varchar"],
-            "prog_distrikt_type_kode" => ["pro_di_ty_k", false, "int"],
 
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
@@ -90,6 +95,24 @@ class Schemata
             "plej_distrikt_nr" => ["pl_dis_nr", false, "int"],
             "plej_distrikt_navn" => ["pl_dis_na", false, "varchar"],
             "plej_distrikt_type_kode" => ["pl_dis_ty_k", false, "int"],
+
+            "noegle" => ["noegle", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
+        5713 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+
+            "prog_distrikt_nr" => ["pro_dis_nr", false, "int"],
+            "prog_distrikt_navn" => ["pro_dis_na", false, "varchar"],
+            "prog_distrikt_type_kode" => ["pro_di_ty_k", false, "int"],
 
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
@@ -440,6 +463,6 @@ class Schemata
 
 
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
-        ]
+        ],
     ];
 }
