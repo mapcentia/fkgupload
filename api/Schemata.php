@@ -55,12 +55,34 @@ class Schemata
             "off_kode" => ["off_kode", true, "int"],
 
             "lokaludv_type_kode" => ["Lokalu_t_k", true, "int"],
-            "lokaludv_navn" => ["foren_navn", true, "varchar"],
+            "lokaludv_navn" => ["lokalu_n", true, "varchar"],
 
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
             "note" => ["note", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
+        5702 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+
+            "skorstenf_distrikt_nr" => ["skor_di_nr", false, "int"],
+            "skorstenf_distrikt_navn" => ["skor_di_na", false, "varchar"],
+            "gyldig_fra" => ["gyldig_fra", true, "date"],
+            "gyldig_til" => ["gyldig_til", false, "date"],
+            "skorstensfejer_firma" => ["skor_firma", true, "varchar"],
+
+
+            "noegle" => ["noegle", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "cvr_opslag" => ["cvr_opslag", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5710 => [
