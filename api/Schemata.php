@@ -125,6 +125,38 @@ class Schemata
             "cvr_opslag" => ["cvr_opslag", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
+        5707 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+
+            "udstyk_navn" => ["udstyk_na", true, "varchar"],
+            "grund_type_kode" => ["grund_ty_k", true, "int"],
+            "salg_status_kode" => ["salg_sta_k", true, "int"],
+            "pris" => ["pris", false, "int"],
+            "mindste_pris" => ["mind_pris", false, "int"],
+            "kvm_pris" => ["kvm_pris", false, "double precision"],
+            "kontakt_oplys" => ["kontak_opl", false, "varchar"],
+            "grundareal" => ["grundareal", false, "int"],
+            "bygningareal" => ["bygn_areal", false, "int"],
+            "budfrist_slut" => ["budfr_slut", false, "date"],
+
+            "vejkode" => ["vejkode", false, "int"],
+            "vejnavn" => ["vejnavn", false, "varchar"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "husnr" => ["husnr", false, "varchar"],
+            "postnr" => ["postnr", false, "int"],
+            "adr_id" => ["adr_id", false, "uuid"],
+
+            "noegle" => ["noegle", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
         5710 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
@@ -199,6 +231,7 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
+
         5800 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
@@ -538,7 +571,6 @@ class Schemata
 
             "planstatus_kode" => ["planstat_k", false, "int"],
             "beliggenhedskommune" => ["belig_kom", false, "int"],
-
 
 
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
