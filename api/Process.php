@@ -79,6 +79,7 @@ class Process extends Controller
             5701 => "t_5701_lok_omr",
             5702 => "t_5702_skorst_fej",
             5705 => "t_5705_forp_are",
+            5706 => "t_5706_havn_are",
             5710 => "t_5710_born_skole_dis",
             5800 => "t_5800_fac_pkt",
             5801 => "t_5801_fac_fl",
