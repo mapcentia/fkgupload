@@ -85,6 +85,26 @@ class Schemata
             "cvr_opslag" => ["cvr_opslag", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
+        5705 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+
+            "forpagter_navn" => ["forpagt_na", true, "varchar"],
+            "forpagter_formaal" => ["forpagt_fm", false, "varchar"],
+            "udlejning_kode" => ["udlejnin_k", true, "int"],
+            "landbrug_kode" => ["Landbrug_k", true, "int"],
+
+            "noegle" => ["noegle", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "cvr_opslag" => ["cvr_opslag", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
         5710 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
