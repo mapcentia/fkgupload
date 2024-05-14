@@ -75,6 +75,10 @@ class Process extends Controller
     private function getThemeName(int $code): string
     {
         $names = [
+            5608 => "t_5608_cykelknudepunkter",
+            5609 => "t_5609_cykelknudepunktsstraekninger",
+            5610 => "t_5610_cykelplanlaegning",
+
             5700 => "t_5700_grundej",
             5701 => "t_5701_lok_omr",
             5702 => "t_5702_skorst_fej",
@@ -82,17 +86,15 @@ class Process extends Controller
             5706 => "t_5706_havn_are",
             5707 => "t_5707_grunds",
             5710 => "t_5710_born_skole_dis",
+            5711 => "t_5711_and_dis",
+            5712 => "t_5712_plej_aeldr_dis",
+            5713 => "t_5713_prog_stat_dis",
+            5715 => "t_5715_botilbud",
+
             5800 => "t_5800_fac_pkt",
             5801 => "t_5801_fac_fl",
             5802 => "t_5802_fac_li",
-            5713 => "t_5713_prog_stat_dis",
-            5711 => "t_5711_and_dis",
-            5712 => "t_5712_plej_aeldr_dis",
             5607 => "t_5607_ladefacilitet",
-            5608 => "t_5608_cykelknudepunkter",
-            5609 => "t_5609_cykelknudepunktsstraekninger",
-            5610 => "t_5610_cykelplanlaegning",
-
         ];
         return $names[$code];
     }

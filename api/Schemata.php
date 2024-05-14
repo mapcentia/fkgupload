@@ -15,9 +15,9 @@ namespace app\extensions\fkgupload\api;
  */
 class Schemata
 {
-    const MULTIPOINT = "MULTIPOINT";
-    const MULTILINESTRING = "MULTILINESTRING";
-    const MULTIPOLYGON = "MULTIPOLYGON";
+    const string MULTIPOINT = "MULTIPOINT";
+    const string MULTILINESTRING = "MULTILINESTRING";
+    const string MULTIPOLYGON = "MULTIPOLYGON";
 
     /**
      * @var array[][]
@@ -170,6 +170,10 @@ class Schemata
             "udd_distrikt_type_kode" => ["udd_d_ty_k", true, "int"],
             "starttrin_kode" => ["strtr_kode", false, "int"],
             "sluttrin_kode" => ["slutr_kode", false, "int"],
+            "udd_hovedomr_nr" => ["udd_omr_nr", false, "int"],
+            "udd_hovedomr_navn" => ["udd_omr_na", false, "varchar"],
+            "udd_delomr_nr" => ["udd_del_nr", false, "int"],
+            "udd_delomr_navn" => ["udd_del_na", false, "varchar"],
 
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
@@ -206,6 +210,9 @@ class Schemata
             "plej_distrikt_nr" => ["pl_dis_nr", false, "int"],
             "plej_distrikt_navn" => ["pl_dis_na", false, "varchar"],
             "plej_distrikt_type_kode" => ["pl_dis_ty_k", false, "int"],
+            "plej_distrikt_dag" => ["plej_d_dag", false, "varchar"],
+            "plej_distrikt_aften" => ["plej_d_aft", false, "varchar"],
+            "plej_distrikt_nat" => ["plej_d_nat", false, "varchar"],
 
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
@@ -231,7 +238,29 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
+        5715 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
 
+            "botilbud_type_kode" => ["botilbud_k", true, "int"],
+            "ejerstatus_kode" => ["ejerstat_k", false, "int"],
+            "botilbud_navn" => ["botilbu_na", false, "varchar"],
+            "vejkode" => ["vejkode", false, "int"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "husnr" => ["husnr", false, "varchar"],
+            "postnr" => ["postnr", false, "int"],
+            "adr_id" => ["adr_id", false, "uuid"],
+
+            "noegle" => ["noegle", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
         5800 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
