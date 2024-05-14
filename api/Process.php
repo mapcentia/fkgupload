@@ -90,6 +90,8 @@ class Process extends Controller
             5712 => "t_5712_plej_aeldr_dis",
             5713 => "t_5713_prog_stat_dis",
             5715 => "t_5715_botilbud",
+            5716 => "t_5716_servicetilbud",
+            5717 => "t_5717_hoeringspart",
 
             5800 => "t_5800_fac_pkt",
             5801 => "t_5801_fac_fl",
