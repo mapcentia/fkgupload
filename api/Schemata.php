@@ -119,7 +119,6 @@ class Schemata
             "ejer_admin" => ["ejer_admin", false, "varchar"],
 
             "noegle" => ["noegle", false, "varchar"],
-            "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
             "note" => ["note", false, "varchar"],
             "cvr_opslag" => ["cvr_opslag", false, "varchar"],
@@ -256,7 +255,6 @@ class Schemata
             "adr_id" => ["adr_id", false, "uuid"],
 
             "noegle" => ["noegle", false, "varchar"],
-            "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
             "note" => ["note", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
@@ -279,7 +277,6 @@ class Schemata
             "adr_id" => ["adr_id", false, "uuid"],
 
             "noegle" => ["noegle", false, "varchar"],
-            "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
             "note" => ["note", false, "varchar"],
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
@@ -643,11 +640,23 @@ class Schemata
             "off_kode" => ["off_kode", true, "int"],
             "noegle" => ["noegle", false, "varchar"],
             "note" => ["note", false, "varchar"],
-            "link" => ["link", false, "varchar"],
 
             "planstatus_kode" => ["planstat_k", false, "int"],
-            "beliggenhedskommune" => ["belig_kom", false, "int"],
 
+            "rute_type_kode" => ["rutetype_k", false, "int"],
+            "rute_undertype_kode" => ["rute_u_t_k", false, "int"],
+            "planlaegningskort_type_kode" => ["kort_type_k", false, "int"],
+            "rute_navn" => ["rute_navn", false, "varchar"],
+            "rute_nr" => ["rute_nr", false, "varchar"],
+            "rute_beskrivelse" => ["rute_beskrivelse", false, "varchar"],
+            "plan_type_kode" => ["plantype_k", false, "int"],
+            "finansiering_kode" => ["finans_k", false, "int"],
+            "aarstal" => ["aarstal", false, "int"],
+            "beloeb" => ["beloeb", false, "int"],
+            "prioritering_kode" => ["prior_k", false, "int"],
+            "potentiale" => ["potentiale", false, "varchar"],
+            "eksisterende_kode" => ["eksis_k", false, "int"],
+            "faelleskommunalt_projekt_kode" => ["falles_p_k", false, "boolean"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
         ],
