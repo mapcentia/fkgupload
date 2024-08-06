@@ -709,7 +709,7 @@ class Schemata
             "geofafoto2" => ["geofafoto2", false, "varchar"],
             "geofafoto3" => ["geofafoto3", false, "varchar"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
     ];
 }
