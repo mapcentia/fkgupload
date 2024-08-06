@@ -717,7 +717,7 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "link" => ["link", false, "varchar"],
 
-            "vedlhold_f_type_kode" => ["f_typ_kode", true, "int"],
+            "vedlhold_l_type_kode" => ["f_typ_kode", true, "int"],
             "biodiversitet" => ["biodivers", false, "varchar"],
             "arbejdssted" => ["arb_sted", false, "varchar"],
             "konto_nr" => ["konto_nr", false, "varchar"],
