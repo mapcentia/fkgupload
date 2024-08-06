@@ -99,6 +99,7 @@ class Process extends Controller
             5607 => "t_5607_ladefacilitet",
 
             6800 => "t_6800_parl_fl",
+            6801 => "t_6801_parl_li",
         ];
         return $names[$code];
     }
