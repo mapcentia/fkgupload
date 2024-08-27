@@ -811,5 +811,46 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
+        6803 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "pg_distrikt_kode" => ["pg_distr_k", true, "int"],
+            "pg_fagentreprise_kode" => ["pg_fagen_k", false, "int"],
+            "pg_distrikt_nr" => ["pg_dist_nr", false, "varchar"],
+            "pg_distrikt_navn" => ["pg_dist_nv", false, "varchar"],
+            "ansvarlig" => ["ansvarlig", false, "varchar"],
+            "konto_nr" => ["konto_nr", false, "varchar"],
+            "cvr_opslag" => ["cvr_opslag", false, "varchar"],
+            "udfoerer" => ["udfoerer", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "udfoerer_kontakt1" => ["udf_kont_1", false, "varchar"],
+            "udfoerer_kontakt2" => ["udf_kont_2", false, "varchar"],
+            "udbyder_kontakt" => ["udbyd_kont", false, "varchar"],
+            "vejkode" => ["vejkode", false, "int"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "husnr" => ["husnr", false, "varchar"],
+            "postnr" => ["postnr", false, "int"],
+            "adr_id" => ["adr_id", false, "uuid"],
+
+            "foto_link" => ["foto_link", false, "varchar"],
+            "foto_link1" => ["foto_link1", false, "varchar"],
+            "foto_link2" => ["foto_link2", false, "varchar"],
+            "foto_link3" => ["foto_link3", false, "varchar"],
+
+            "geofafoto" => ["geofafoto", false, "varchar"],
+            "geofafoto1" => ["geofafoto1", false, "varchar"],
+            "geofafoto2" => ["geofafoto2", false, "varchar"],
+            "geofafoto3" => ["geofafoto3", false, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
     ];
 }
