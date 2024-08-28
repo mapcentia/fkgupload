@@ -39,6 +39,7 @@ class Schemata
             "gf_mail" => ["gf_mail", false, "varchar"],
             "gf_adr_beskyt_kode" => ["gf_besky_k", false, "varchar"],
             "vedtaegt_kode" => ["vedtaegt_k", false, "int"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
 
             "noegle" => ["noegle", false, "varchar"],
             "link" => ["link", false, "varchar"],
@@ -153,6 +154,12 @@ class Schemata
             "sagsnr" => ["sagsnr", false, "varchar"],
             "link" => ["link", false, "varchar"],
             "note" => ["note", false, "varchar"],
+
+            "foto_link" => ["foto_link", false, "varchar"],
+            "foto_link1" => ["foto_link1", false, "varchar"],
+            "foto_link2" => ["foto_link2", false, "varchar"],
+            "foto_link3" => ["foto_link3", false, "varchar"],
+
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5710 => [
@@ -294,6 +301,11 @@ class Schemata
             "part_formand_tlf" => ["pform_tlf", false, "int"],
             "part_formand_mail" => ["pform_mail", false, "varchar"],
             "adr_beskyt_kode" => ["adr_b_kode", false, "varchar"],
+
+            "vejkode" => ["vejkode", false, "int"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "husnr" => ["husnr", false, "varchar"],
+            "postnr" => ["postnr", false, "int"],
 
             "noegle" => ["noegle", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
