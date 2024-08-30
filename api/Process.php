@@ -75,9 +75,12 @@ class Process extends Controller
     private function getThemeName(int $code): string
     {
         $names = [
+            5600 => "t_5600_vintervedl",
             5608 => "t_5608_cykelknudepunkter",
             5609 => "t_5609_cykelknudepunktsstraekninger",
             5610 => "t_5610_cykelplanlaegning",
+            5611 => "t_5611_vinterute",
+            5612 => "t_5612_vinterserviceomraade",
 
             5700 => "t_5700_grundej",
             5701 => "t_5701_lok_omr",
