@@ -690,6 +690,33 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
         ],
+        5601 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "h_daemp_kode" => ["h_daemp_kode", true, "int"],
+            "omfang_kode" => ["omfang_kode", false, "int"],
+            "hastighed_kode" => ["hastighed_kode", true, "int"],
+
+            "foto_link" => ["foto_link", false, "varchar"],
+            "foto_link1" => ["foto_link1", false, "varchar"],
+            "foto_link2" => ["foto_link2", false, "varchar"],
+            "foto_link3" => ["foto_link3", false, "varchar"],
+
+            "geofafoto" => ["geofafoto", false, "varchar"],
+            "geofafoto1" => ["geofafoto1", false, "varchar"],
+            "geofafoto2" => ["geofafoto2", false, "varchar"],
+            "geofafoto3" => ["geofafoto3", false, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
         5611 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
