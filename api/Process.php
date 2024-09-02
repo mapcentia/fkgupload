@@ -80,6 +80,7 @@ class Process extends Controller
             5602 => "t_5602_p_zoner",
             5603 => "t_5603_hasti_omraade",
             5604 => "t_5604_koer_begr",
+            5605 => "t_5605_vejbyggel",
             5608 => "t_5608_cykelknudepunkter",
             5609 => "t_5609_cykelknudepunktsstraekninger",
             5610 => "t_5610_cykelplanlaegning",
