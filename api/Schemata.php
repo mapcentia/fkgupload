@@ -801,7 +801,7 @@ class Schemata
             "tilm" => ["tilm", false, "int"],
             "sted_metode_kode" => ["sted_met_k", false, "int"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+            "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
         ],
         5605 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -814,15 +814,42 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "link" => ["link", false, "varchar"],
 
-            "dekl_type_kode" => ["dekl_type_kode", true, "int"],
+            "dekl_type_kode" => ["dekl_ty_k", true, "int"],
             "vejkode" => ["vejkode", false, "int"],
             "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
             "dekl_link" => ["dekl_link", false, "varchar"],
             "bredde" => ["bredde", false, "int"],
-            "forskydning" => ["forskydning", false, "double precision"],
+            "forskydning" => ["forskydnin", false, "double precision"],
             "sagsnr" => ["sagsnr", false, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
+        5606 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+
+            "inventar_nr" => ["inventar_nr", false, "varchar"],
+            "inventar_type_kode" => ["inven_ty_k", true, "int"],
+            "model" => ["model", false, "varchar"],
+            "tilstand_kode" => ["tilstand_k", false, "int"],
+
+            "foto_link" => ["foto_link", false, "varchar"],
+            "foto_link1" => ["foto_link1", false, "varchar"],
+            "foto_link2" => ["foto_link2", false, "varchar"],
+            "foto_link3" => ["foto_link3", false, "varchar"],
+
+            "geofafoto" => ["geofafoto", false, "varchar"],
+            "geofafoto1" => ["geofafoto1", false, "varchar"],
+            "geofafoto2" => ["geofafoto2", false, "varchar"],
+            "geofafoto3" => ["geofafoto3", false, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
         5611 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
