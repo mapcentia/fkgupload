@@ -762,6 +762,23 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
+        5603 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "hastighed_kode" => ["hast_k", true, "int"],
+            "tavle_nr" => ["tavle_nr", false, "varchar"],
+            "hastighed_art_kode" => ["hast_art_k", false, "int"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
         5611 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
