@@ -779,6 +779,30 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
+        5604 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "regulerings_type_kode" => ["regul_ty_k", true, "int"],
+            "tilladt_periode_bil" => ["tillad_bil", false, "varchar"],
+            "tilladt_periode_cykel" => ["tillad_cyk", false, "varchar"],
+            "tilladt_periode_varekoersel" => ["tillad_var", false, "varchar"],
+            "cvf_adm_vejnr" => ["adm_vejnr", false, "int"],
+            "frakm" => ["frakm", false, "int"],
+            "fram" => ["fram", false, "int"],
+            "tilkm" => ["tilkm", false, "int"],
+            "tilm" => ["tilm", false, "int"],
+            "sted_metode_kode" => ["sted_met_k", false, "int"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
         5611 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
