@@ -760,7 +760,7 @@ class Schemata
             "p_pladser_cykel_aflaast" => ["plads_c_af", false, "int"],
             "p_pladser_cykel_overdaekket" => ["plads_c_ov", false, "int"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5603 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -862,7 +862,6 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "link" => ["link", false, "varchar"],
 
-            "rute_kode" => ["rute_k", true, "int"],
             "rute_nr" => ["rute_nr", false, "varchar"],
             "rute_navn" => ["rute_navn", false, "varchar"],
             "rutetype_kode" => ["rute_typ_k", false, "int"],
@@ -894,7 +893,7 @@ class Schemata
             "areal" => ["areal", false, "int"],
             "norm_tid" => ["norm_tid", false, "int"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5613 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -913,7 +912,7 @@ class Schemata
             "p_zone_nr" => ["p_zone_nr", false, "varchar"],
             "omraade" => ["omraade", false, "varchar"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         6800 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
