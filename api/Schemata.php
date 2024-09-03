@@ -740,7 +740,7 @@ class Schemata
             "p_soendag_start" => ["p_soen_st", false, "time"],
             "p_soendag_slut" => ["p_soen_sl", false, "time"],
             "p_pris_time" => ["p_pris_tim", false, "double precision"],
-            "p_pris_fri_startperiode" => ["p_pris_fri", false, "time"],
+            "p_pris_fri_startperiode" => ["p_pris_fri", false, "int"],
             "p_start_betalingsperiode_hverdag" => ["p_stbet_hv", false, "time"],
             "p_slut_betalingsperiode_hverdag" => ["p_slbet_hv", false, "time"],
             "p_start_betalingsperiode_loerdag" => ["p_stbet_lo", false, "time"],
