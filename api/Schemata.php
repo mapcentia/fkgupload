@@ -701,8 +701,8 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "link" => ["link", false, "varchar"],
 
-            "h_daemp_kode" => ["h_daemp_kode", true, "int"],
-            "omfang_kode" => ["omfang_kode", false, "int"],
+            "h_daemp_kode" => ["h_daemp_k", true, "int"],
+            "omfang_kode" => ["omfang_k", false, "int"],
             "hastighed_kode" => ["hastig_k", true, "int"],
 
             "foto_link" => ["foto_link", false, "varchar"],
