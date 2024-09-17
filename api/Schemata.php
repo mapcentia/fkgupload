@@ -703,7 +703,7 @@ class Schemata
 
             "h_daemp_kode" => ["h_daemp_kode", true, "int"],
             "omfang_kode" => ["omfang_kode", false, "int"],
-            "hastighed_kode" => ["hastighed_kode", true, "int"],
+            "hastighed_kode" => ["hastig_k", true, "int"],
 
             "foto_link" => ["foto_link", false, "varchar"],
             "foto_link1" => ["foto_link1", false, "varchar"],
@@ -773,7 +773,7 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "link" => ["link", false, "varchar"],
 
-            "hastighed_kode" => ["hast_k", true, "int"],
+            "hastighed_kode" => ["hastig_k", true, "int"],
             "tavle_nr" => ["tavle_nr", false, "varchar"],
             "hastighed_art_kode" => ["hast_art_k", false, "int"],
 
