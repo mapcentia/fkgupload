@@ -914,6 +914,22 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
+        5614 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "stationerings_nr" => ["station_nr", false, "int"],
+            "stationerings_beskrivelse" => ["statio_bes", false, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
         6800 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],

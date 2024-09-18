@@ -88,6 +88,7 @@ class Process extends Controller
             5611 => "t_5611_vinterute",
             5612 => "t_5612_vinterserviceomraade",
             5613 => "t_5613_p_plads",
+            5614 => "t_5614_stationering_cykelplanlaegning",
 
             5700 => "t_5700_grundej",
             5701 => "t_5701_lok_omr",
