@@ -9,6 +9,7 @@
 namespace app\extensions\fkgupload\api;
 
 use app\inc\Controller;
+use app\inc\Model;
 use app\inc\Route;
 use app\models\Database;
 use app\models\Sql;
@@ -52,9 +53,22 @@ class Gpx extends Controller
             ];
         }
 
+        // Check if multi
+        $sql = "select ST_NumGeometries(geometri) from " . ($type == "point" ? self::PLAYER : self::LLAYER) . " WHERE objekt_id='$objekt_id'";
+        $res = (new Model())->prepare($sql);
+        $res->execute();
+        $parts = $res->fetchColumn();
+        if ($parts > 1) {
+            $point = "MULTIPOINT";
+            $line = "MULTILINESTRING";
+        } else {
+            $point = "POINT";
+            $line = "LINESTRING";
+        }
+
         $q = "select navn as name,geometri from " . ($type == "point" ? self::PLAYER : self::LLAYER) . " WHERE objekt_id='$objekt_id'";
         $sql = new Sql("4326");
-        $res = $sql->sql($q, "UTF8", "ogr/GPX", null, false, null, ($type == "point" ? "POINT" : "LINESTRING"), "gpx_" . $objekt_id);
+        $res = $sql->sql($q, "UTF8", "ogr/GPX", null, false, null, ($type == "point" ? $point : $line), "gpx_" . $objekt_id);
         if (!$res["success"]) {
             return $res;
         }
