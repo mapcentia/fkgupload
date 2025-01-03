@@ -75,6 +75,8 @@ class Process extends Controller
     private function getThemeName(int $code): string
     {
         $names = [
+            5003 => "t_5003_draenledn",
+            5004 => "t_5004_draenomr",
             5600 => "t_5600_vintervedl",
             5601 => "t_5601_hasti_daemp",
             5602 => "t_5602_p_zoner",

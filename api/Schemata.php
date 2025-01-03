@@ -23,6 +23,58 @@ class Schemata
      * @var array[][]
      */
     static public $schemata = [
+        5003 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+
+            "ledn_nr" => ["ledn_nr", false, "varchar"],
+            "ledn_type_kode" => ["ledn_type_k", false, "int"],
+            "etableringstidspunkt" => ["etabl_tid", false, "varchar"],
+            "start_dybde" => ["start_dyb", false, "double precision"],
+            "slut_dybde" => ["slut_dyb", false, "double precision"],
+            "start_kote" => ["start_kote", false, "double precision"],
+            "slut_kote" => ["slut_kote", false, "double precision"],
+            "kotesystem_kode" => ["kotesyst_k", false, "int"],
+            "fald_promille" => ["fald_prom", false, "double precision"],
+            "diameter_mm" => ["diam_mm", false, "int"],
+            "diameter_tommer" => ["diam_tomme", false, "double precision"],
+            "datakilde_kode" => ["datakild_k", false, "int"],
+            "praecision_god" => ["praecis", false, "boolean"],
+            "projektnr" => ["projektnr", false, "varchar"],
+            "kommentar" => ["kommentar", false, "varchar"],
+
+            "noegle" => ["noegle", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
+        ],
+
+        5004 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+
+            "omr_navn" => ["omr_navn", false, "varchar"],
+            "omr_type_kode" => ["omr_type_k", true, "int"],
+            "etableringstidspunkt" => ["etabl_tid", false, "varchar"],
+            "projektnr" => ["projektnr", false, "varchar"],
+            "bemaerkning" => ["bemaerk", false, "varchar"],
+
+            "noegle" => ["noegle", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
+
         5700 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
