@@ -54,6 +54,34 @@ class Schemata
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
         ],
 
+        5011 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+
+            "broend_nr" => ["broend_nr", false, "varchar"],
+            "broendtype_kode" => ["br_type_k", false, "int"],
+            "diameter_mm" => ["diam_mm", false, "int"],
+            "diameter_tommer" => ["diam_tomme", false, "double precision"],
+            "dybde_udloeb" => ["dybde_ud", false, "int"],
+            "kote_udloeb" => ["kote_ud", false, "double precision"],
+            "kotesystem_kode" => ["kotesyst_k", false, "int"],
+            "datakilde_kode" => ["datakild_k", false, "int"],
+            "bemaerkning" => ["bemaerk", false, "varchar"],
+            "broend_synlig" => ["broend_syn", false, "boolean"],
+            "etableringstidspunkt" => ["etabl_tid", false, "varchar"],
+            "praecision_god" => ["praecis", false, "boolean"],
+
+            "noegle" => ["noegle", false, "varchar"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
+
         5004 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
             "cvr_kode" => ["cvr_kode", true, "int"],
