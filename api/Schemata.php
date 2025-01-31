@@ -393,7 +393,7 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "cvr_opslag" => ["cvr_opslag", false, "varchar"],
             "adr_id" => ["adr_id", false, "uuid"],
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
 
         5800 => [
