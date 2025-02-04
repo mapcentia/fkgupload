@@ -114,8 +114,8 @@ class Process extends Controller
 
             6800 => "t_6800_parl_fl",
             6801 => "t_6801_parl_li",
-            6802 => "t_6802_parl_pkt_t",
-            6803 => "t_6803_parl_omr_t",
+            6802 => "t_6802_parl_pkt",
+            6803 => "t_6803_parl_omr",
         ];
         return $names[$code];
     }
