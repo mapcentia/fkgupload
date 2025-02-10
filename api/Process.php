@@ -461,7 +461,7 @@ class Process extends Controller
         $brugerId = Session::get()["screen_name"];
         $sql = "INSERT INTO fkg.t_7901_foto(cvr_kode, bruger_id, oprindkode, statuskode, off_kode) VALUES (:cvrKode,:brugerId,0,3,1) RETURNING objekt_id";
         $res = $this->model->prepare($sql);
-        $res->execute([$cvrKode, $brugerId]);
+        $res->execute(["cvrKode" => $cvrKode, "brugerId" => $brugerId]);
         $row = $this->model->fetchRow($res);
         return $row["objekt_id"];
 
@@ -627,7 +627,7 @@ class Process extends Controller
 
         $res = $this->model->prepare($sql);
         try {
-            $res->execute([$cvrKode, $brugerId, $tema, $foto_objek, $foto_lokat]);
+            $res->execute(["cvrKode" => $cvrKode, "brugerId" => $brugerId, "tema" => $tema, "foto_objek" => $foto_objek, "foto_lokat" => $foto_lokat]);
         } catch (PDOException $e) {
             $response['success'] = false;
             $response['message'][] = $e->getMessage();
@@ -648,7 +648,7 @@ class Process extends Controller
         $sql = "DELETE FROM fkg.t_7900_fotoforbindelse WHERE objekt_id=:objekt_id";
         $res = $this->model->prepare($sql);
         try {
-            $res->execute([$objekt_id]);
+            $res->execute(["objekt_id" => $objekt_id]);
         } catch (PDOException $e) {
             $response['success'] = false;
             $response['message'][] = $e->getMessage();
@@ -720,7 +720,7 @@ class Process extends Controller
         $sql = "update fkg.t_7900_fotoforbindelse set primaer_kode=0 where foto_objek=:objekt_id;";
         $res = $this->model->prepare($sql);
         try {
-            $res->execute([$objekt_id]);
+            $res->execute(["objekt_id" => $objekt_id]);
         } catch (PDOException $e) {
             $response['success'] = false;
             $response['message'][] = $e->getMessage();
@@ -731,7 +731,7 @@ class Process extends Controller
         $sql = "update fkg.t_7900_fotoforbindelse set primaer_kode=1 where objekt_id=:objekt_id;";
         $res = $this->model->prepare($sql);
         try {
-            $res->execute([$objekt_id_7900]);
+            $res->execute(["objekt_id" => $objekt_id_7900]);
         } catch (PDOException $e) {
             $response['success'] = false;
             $response['message'][] = $e->getMessage();
