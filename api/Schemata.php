@@ -1258,11 +1258,6 @@ class Schemata
             "foto_link2" => ["foto_link2", false, "varchar"],
             "foto_link3" => ["foto_link3", false, "varchar"],
 
-            "geofafoto" => ["geofafoto", false, "varchar"],
-            "geofafoto1" => ["geofafoto1", false, "varchar"],
-            "geofafoto2" => ["geofafoto2", false, "varchar"],
-            "geofafoto3" => ["geofafoto3", false, "varchar"],
-
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5106 => [
@@ -1330,11 +1325,6 @@ class Schemata
             "foto_link1" => ["foto_link1", false, "varchar"],
             "foto_link2" => ["foto_link2", false, "varchar"],
             "foto_link3" => ["foto_link3", false, "varchar"],
-
-            "geofafoto" => ["geofafoto", false, "varchar"],
-            "geofafoto1" => ["geofafoto1", false, "varchar"],
-            "geofafoto2" => ["geofafoto2", false, "varchar"],
-            "geofafoto3" => ["geofafoto3", false, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
