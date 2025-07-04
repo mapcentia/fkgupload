@@ -469,6 +469,7 @@ class Schemata
 
             "tilgaeng_opl" => ["tilgaeng_o", false, "jsonb"],
             "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
+            "bookinglink" => ["book_link", false, "varchar"],
         ],
         5801 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -542,6 +543,7 @@ class Schemata
             "kvalitet_k" => ["kvalitet_k", false, "int"],
             "tilgaeng_opl" => ["tilgaeng_o", false, "jsonb"],
             "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
+            "bookinglink" => ["book_link", false, "varchar"],
         ],
         5802 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -625,6 +627,8 @@ class Schemata
             "kvalitet_k" => ["kvalitet_k", false, "int"],
             "tilgaeng_opl" => ["tilgaeng_o", false, "jsonb"],
             "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
+            "danmarksnaturstier" => ["dknatursti", false, "bool"],
+            "vandrerutefarve_k" => ["rut_farv_k", false, "int"],
         ],
 
         5607 => [
