@@ -628,7 +628,7 @@ class Schemata
             "tilgaeng_opl" => ["tilgaeng_o", false, "jsonb"],
             "tilgaeng_beskriv" => ["tilgaeng_b", false, "varchar"],
             "danmarksnaturstier" => ["dknatursti", false, "bool"],
-            "vandrerutefarve_k" => ["rut_farv_k", false, "int"],
+            "rutefarve_k" => ["rut_farv_k", false, "int"],
         ],
 
         5607 => [
