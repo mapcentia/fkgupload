@@ -843,6 +843,12 @@ class Schemata
             "p_pladser_ladcykel" => ["plads_ladc", false, "int"],
             "p_pladser_cykel_aflaast" => ["plads_c_af", false, "int"],
             "p_pladser_cykel_overdaekket" => ["plads_c_ov", false, "int"],
+            "vejkode" => ["vejkode", false, "int"],
+            "husnr" => ["husnr", false, "varchar"],
+            "postnr" => ["postnr", false, "int"],
+            "adr_id" => ["adr_id", false, "uuid"],
+            "koordinat_north" => ["koord_n", false, "varchar"],
+            "koordinat_east" => ["koord_e", false, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
