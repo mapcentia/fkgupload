@@ -1458,5 +1458,31 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
+
+        5902 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "brine_maengde" => ["brine_mgd", false, "int"],
+            "brine_blandingsforhold" => ["brine_bl", false, "varchar"],
+            "strenge_antal" => ["stre_antal", false, "int"],
+            "strenge_laengde_samlede" => ["stre_laeng", false, "int"],
+            "tilladelses_dato" => ["tilla_dato", false, "date"],
+            "faerdigmeldingsdato" => ["faerd_dato", false, "date"],
+            "vaesketype_kode" => ["vaeskety_k", false, "int"],
+            "gyldig_fra" => ["gyldig_fra", true, "date"],
+            "gyldig_til" => ["gyldig_til", false, "date"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+            "sag_status_kode" => ["sag_stat_k", false, "int"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
     ];
 }
