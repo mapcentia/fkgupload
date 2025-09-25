@@ -1373,5 +1373,27 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
+        5400 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "gyldig_fra" => ["gyldig_fra", true, "date"],
+            "gyldig_til" => ["gyldig_til", false, "date"],
+            "affalddistrikt_nr" => ["aff_dis_nr", false, "int"],
+            "affalddistrikt_navn" => ["aff_dis_na", false, "varchar"],
+            "affaldstype_kode" => ["aff_type_k", false, "int"],
+            "afh_frekvens" => ["afh_frekv", false, "varchar"],
+            "afh_dag" => ["afh_frekv", false, "varchar"],
+            "cvr_opslag" => ["cvr_opslag", false, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
     ];
 }
