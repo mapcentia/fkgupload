@@ -1438,5 +1438,25 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
+        5506 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "anlaeg_type_kode" => ["anlaeg_ty_k", true, "int"],
+            "punkt_nr" => ["punkt_nr", false, "varchar"],
+            "oplandstype" => ["opl_type", false, "varchar"],
+            "recipient" => ["recipient", false, "varchar"],
+            "anlaegsstatus_kode" => ["anl_stat_k", false, "int"],
+            "planstatus_kode" => ["anl_status", true, "int"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
     ];
 }
