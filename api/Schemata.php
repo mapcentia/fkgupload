@@ -1338,5 +1338,40 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
+
+        5200 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "affald_prod_kode" => ["affald_pr_k", true, "int"],
+            "cvr_opslag" => ["cvr_opslag", false, "varchar"],
+            "navn" => ["navn", true, "varchar"],
+            "ejendoms_nr" => ["ejd_nr", true, "int"],
+            "vejkode" => ["vejkode", false, "int"],
+            "cvf_vejkode" => ["cvf_vejkode", false, "varchar"],
+            "husnr" => ["husnr", false, "varchar"],
+            "postnr" => ["postnr", false, "int"],
+            "adr_id" => ["adr_id", false, "uuid"],
+            "markblok" => ["markblok", false, "varchar"],
+            "marknummer" => ["mark_nr", false, "varchar"],
+            "dosering_toerstof" => ["dose_toers", false, "double precision"],
+            "dosering_vaadvaegt" => ["dose_vaadv", false, "double precision"],
+            "fosfor_total" => ["fosfor_tot", false, "double precision"],
+            "fosfor_udnyttelse" => ["fosfor_udn", false, "double precision"],
+            "kvaelstof_total" => ["kvaels_tot", false, "double precision"],
+            "kvaelstof_udnyttelse" => ["kvaels_udn", false, "double precision"],
+            "kalium_total" => ["kalium_tot", false, "double precision"],
+            "udbringning_aar" => ["udbrin_aar", false, "double precision"],
+            "sagsnr" => ["sagsnr", false, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
     ];
 }
