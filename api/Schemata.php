@@ -1484,5 +1484,32 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
+
+        6200 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "data_oprindelse" => ["data_oprindelse", false, "varchar"],
+            "omraade_nr" => ["omr_nr", false, "int"],
+            "geologi_kode" => ["geologi_k", false, "int"],
+            "jordtype_kode" => ["jord_ty_k", false, "int"],
+            "terraen_kode" => ["terraen_k", false, "int"],
+            "kompleksitet_kode" => ["kompleks_k", false, "int"],
+            "vandelement" => ["vand_elem", false, "varchar"],
+            "farvandsomraade" => ["farvand_om", false, "varchar"],
+            "strandbred" => ["strandbred", false, "varchar"],
+            "begrund_afgraensning" => ["afgraens", false, "varchar"],
+            "omr_sammenhaeng" => ["omr_sam", false, "varchar"],
+            "link1" => ["link1", false, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+        ],
     ];
 }
