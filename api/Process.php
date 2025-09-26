@@ -123,6 +123,7 @@ class Process extends Controller
 
             5902 => "t_5902_jordv_anl",
             6200 => "t_6200_nat_geo",
+            6201 => "t_6201_kult_geo",
 
             6800 => "t_6800_parl_fl",
             6801 => "t_6801_parl_li",
