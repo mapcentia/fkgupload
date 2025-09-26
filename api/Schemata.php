@@ -1371,7 +1371,7 @@ class Schemata
             "udbringning_aar" => ["udbrin_aar", false, "double precision"],
             "sagsnr" => ["sagsnr", false, "varchar"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5400 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -1393,7 +1393,7 @@ class Schemata
             "afh_dag" => ["afh_frekv", false, "varchar"],
             "cvr_opslag" => ["cvr_opslag", false, "varchar"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         5401 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -1482,7 +1482,7 @@ class Schemata
             "sagsnr" => ["sagsnr", false, "varchar"],
             "sag_status_kode" => ["sag_stat_k", false, "int"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
 
         6200 => [
@@ -1498,10 +1498,10 @@ class Schemata
 
             "data_oprindelse" => ["data_oprindelse", false, "varchar"],
             "omraade_nr" => ["omr_nr", false, "int"],
-            "geologi_kode" => ["geologi_k", false, "int"],
-            "jordtype_kode" => ["jord_ty_k", false, "int"],
-            "terraen_kode" => ["terraen_k", false, "int"],
-            "kompleksitet_kode" => ["kompleks_k", false, "int"],
+            "geologi_kode" => ["geologi_k", true, "int"],
+            "jordtype_kode" => ["jord_ty_k", true, "int"],
+            "terraen_kode" => ["terraen_k", true, "int"],
+            "kompleksitet_kode" => ["kompleks_k", true, "int"],
             "vandelement" => ["vand_elem", false, "varchar"],
             "farvandsomraade" => ["farvand_om", false, "varchar"],
             "strandbred" => ["strandbred", false, "varchar"],
@@ -1509,7 +1509,7 @@ class Schemata
             "omr_sammenhaeng" => ["omr_sam", false, "varchar"],
             "link1" => ["link1", false, "varchar"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         6201 => [
             "objekt_id" => ["objekt_id", false, "uuid"],
@@ -1530,7 +1530,7 @@ class Schemata
             "link2" => ["link2", false, "varchar"],
             "link3" => ["link3", false, "varchar"],
 
-            "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
     ];
 }
