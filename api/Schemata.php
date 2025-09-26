@@ -1572,5 +1572,33 @@ class Schemata
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
+        6203 => [
+            "objekt_id" => ["objekt_id", false, "uuid"],
+            "cvr_kode" => ["cvr_kode", true, "int"],
+            "bruger_id" => ["bruger_id", true, "varchar"],
+            "oprindkode" => ["oprindkode", true, "int"],
+            "statuskode" => ["statuskode", true, "int"],
+            "off_kode" => ["off_kode", true, "int"],
+            "noegle" => ["noegle", false, "varchar"],
+            "note" => ["note", false, "varchar"],
+            "link" => ["link", false, "varchar"],
+
+            "omraade_nr" => ["omr_nr", false, "int"],
+            "delomraade_nr" => ["delomr_nr", false, "varchar"],
+            "karakterstyrke_kode" => ["kar_styr_k", true, "int"],
+            "karakterstyrke_notat" => ["kar_styr_n", false, "varchar"],
+            "visuel_notat" => ["visuel_n", false, "varchar"],
+            "tilstand_kode" => ["tilst_k", false, "int"],
+            "tilstand_notat" => ["tilst_n", false, "varchar"],
+            "udvikling" => ["udvikling", false, "varchar"],
+            "saarbarhed_kode" => ["saarbar_k", false, "int"],
+            "saarbarhed_notat" => ["saarbar_n", false, "varchar"],
+            "tiltag" => ["tiltag", false, "varchar"],
+
+            "link1" => ["link1", false, "varchar"],
+            "link2" => ["link2", false, "varchar"],
+
+            "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
+        ],
     ];
 }
