@@ -32,7 +32,7 @@ class Schemata
             "off_kode" => ["off_kode", true, "int"],
 
             "ledn_nr" => ["ledn_nr", false, "varchar"],
-            "ledn_type_kode" => ["ledn_type_k", false, "int"],
+            "ledn_type_kode" => ["ledn_t_k", false, "int"],
             "etableringstidspunkt" => ["etabl_tid", false, "varchar"],
             "start_dybde" => ["start_dyb", false, "double precision"],
             "slut_dybde" => ["slut_dyb", false, "double precision"],
