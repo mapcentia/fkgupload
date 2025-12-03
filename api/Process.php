@@ -122,6 +122,7 @@ class Process extends Controller
             5607 => "t_5607_ladefacilitet",
 
             5902 => "t_5902_jordv_anl",
+            6122 => "t_6122_beskyttelsesrum",
             6200 => "t_6200_nat_geo",
             6201 => "t_6201_kult_geo",
             6202 => "t_6202_landk_omr",
