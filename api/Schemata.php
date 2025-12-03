@@ -1630,7 +1630,7 @@ class Schemata
             "adgang_gartnerarbejde_kode" => ["adg_g", false, "int"],
             "adgang_bygningsarbejde_kode" => ["adg_b", false, "int"],
             "beskyt_rum_anvendelse_kode" => ["bes_an_k", false, "int"],
-            "antal_pladdser" => ["antal_pl", false, "int"],
+            "antal_pladser" => ["antal_pl", false, "int"],
             "antal_opholdsrum" => ["ant_rum", false, "int"],
             "trapper_antal" => ["trap_ant", false, "int"],
             "adgangsdoerhuller_antal" => ["adg_ant", false, "int"],
