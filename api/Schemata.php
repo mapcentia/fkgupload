@@ -1450,7 +1450,7 @@ class Schemata
             "note" => ["note", false, "varchar"],
             "link" => ["link", false, "varchar"],
 
-            "anlaeg_type_kode" => ["anlaeg_ty_k", true, "int"],
+            "anlaeg_type_kode" => ["anlaeg_t_k", true, "int"],
             "punkt_nr" => ["punkt_nr", false, "varchar"],
             "oplandstype" => ["opl_type", false, "varchar"],
             "recipient" => ["recipient", false, "varchar"],
