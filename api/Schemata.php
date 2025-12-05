@@ -1552,7 +1552,7 @@ class Schemata
             "tidsdybde_kode" => ["tidsdyb_k", false, "int"],
             "tidsdybde_beskr" => ["tidsdyb_b", false, "varchar"],
             "intakthed_kode" => ["intakt_k", true, "int"],
-            "intakthed_beskr" => ["intakt_ b", false, "varchar"],
+            "intakthed_beskr" => ["intakt_b", false, "varchar"],
             "noeglefunktion" => ["noeglefunk", false, "varchar"],
             "afgr_naboomr" => ["afg_nabo", false, "varchar"],
             "skala_kode" => ["skala_k", false, "int"],
