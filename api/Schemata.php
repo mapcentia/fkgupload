@@ -1525,7 +1525,7 @@ class Schemata
 
             "data_oprindelse" => ["data_opr", false, "varchar"],
             "omraade_nr" => ["omr_nr", false, "int"],
-            "begrund_afgraensning" => ["afgraens", true, "int"],
+            "begrund_afgraensning" => ["afgraens", true, "varchar"],
 
             "link1" => ["link1", false, "varchar"],
             "link2" => ["link2", false, "varchar"],
