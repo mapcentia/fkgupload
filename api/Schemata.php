@@ -1391,7 +1391,7 @@ class Schemata
             "affalddistrikt_navn" => ["aff_dis_na", false, "varchar"],
             "affaldstype_kode" => ["aff_type_k", false, "int"],
             "afh_frekvens" => ["afh_frekv", false, "varchar"],
-            "afh_dag" => ["afh_frekv", false, "varchar"],
+            "afh_dag" => ["afh_dag", false, "varchar"],
             "cvr_opslag" => ["cvr_opslag", false, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
