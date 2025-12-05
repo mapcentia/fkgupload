@@ -1596,9 +1596,6 @@ class Schemata
             "saarbarhed_notat" => ["saarbar_n", false, "varchar"],
             "tiltag" => ["tiltag", false, "varchar"],
 
-            "link1" => ["link1", false, "varchar"],
-            "link2" => ["link2", false, "varchar"],
-
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
         6122 => [
