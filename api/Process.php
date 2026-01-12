@@ -561,6 +561,9 @@ class Process extends Controller
         if ($mime['mime'] == 'image/jpg' || $mime['mime'] == 'image/jpeg' || $mime['mime'] == 'image/pjpeg') {
             $src_img = imagecreatefromjpeg($path);
         }
+        if ($mime['mime'] == 'image/webp') {
+            $src_img = imagecreatefromwebp($path);
+        }
 
         $exif = exif_read_data($path);
 
