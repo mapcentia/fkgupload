@@ -1646,6 +1646,7 @@ class Schemata
             "note_konstruktion" => ["note_konst", false, "varchar"],
             "oevrig_teknisk_installationer_bemaerkninger" => ["oev_inst_b", false, "varchar"],
             "oevrig_bemaerkninger" => ["oev_bem", false, "varchar"],
+            "adr_id" => ["adr_id", false, "uuid"],
 
             #1
             "_1_konstruktion_intakt_kode" => ["_1kon_in_k", false, "int"],
