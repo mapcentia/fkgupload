@@ -9,10 +9,9 @@
 namespace app\extensions\fkgupload\api;
 
 use app\conf\App;
-use app\conf\Connection;
+use app\inc\Connection;
 use app\inc\Controller;
 use app\inc\Route;
-use app\models\Database;
 use app\models\Sql;
 use app\inc\Session;
 use app\api\v3\Xmlworkspace;
@@ -27,15 +26,15 @@ use ZipArchive;
 class Template extends Controller
 {
 
-    /**
-     * Template constructor.
-     */
+
+    public Connection $connection;
+
     function __construct()
     {
         parent::__construct();
         Session::start();
         Session::authenticate(null);
-        Database::setDb(Session::getDatabase());
+        $this->connection = new Connection(database: Session::getDatabase());
     }
 
     /**
@@ -61,9 +60,9 @@ class Template extends Controller
         // If Xml Workspace when creating and zip
         if ($format == "ESRI Xml Workspace") {
             $name = "_" . md5(rand(1, 999999999) . microtime());
-            $path = App::$param['path'] . "app/tmp/" . Connection::$param["postgisdb"] . "/__vectors/" . $name;
+            $path = App::$param['path'] . "app/tmp/" . $this->connection->database . "/__vectors/" . $name;
             $Xmlworkspace = new Xmlworkspace();
-            $xml = $Xmlworkspace->create("fkg." . $layer, Connection::$param["postgisdb"], $fieldArr);
+            $xml = $Xmlworkspace->create("fkg." . $layer, $this->connection->database, $fieldArr);
             file_put_contents($path, $xml);
             $zip = new ZipArchive();
             $zipPath = $path . ".zip";

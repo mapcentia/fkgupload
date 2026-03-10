@@ -10,11 +10,10 @@ namespace app\extensions\fkgupload\api;
 
 use app\conf\App;
 use app\controllers\Tilecache;
+use app\inc\Connection;
 use app\inc\Controller;
 use app\inc\Input;
 use app\inc\Route;
-use app\models\Database;
-use app\conf\Connection;
 use app\inc\Session;
 use app\inc\Model;
 use app\inc\UserFilter;
@@ -38,10 +37,11 @@ const S3_FOLDER = "fkg";
  */
 class Process extends Controller
 {
-    /**
-     * @var Model
-     */
+
     private $model;
+
+    public Connection $connection;
+
 
     function __construct()
     {
@@ -50,8 +50,8 @@ class Process extends Controller
         Session::start();
         Session::authenticate(null);
 
-        Database::setDb(Session::getDatabase());
-        Connection::$param["postgisschema"] = $_SESSION['postgisschema'];
+        $this->connection = new Connection(database: Session::getDatabase(), schema:  $_SESSION['postgisschema']);
+
 
         $this->model = new Model();
 
@@ -364,7 +364,7 @@ class Process extends Controller
         $fileName = $request["fileName"];
         $delete = $request["delete"];
         $response = [];
-        $dir = App::$param['path'] . "app/tmp/" . Connection::$param["postgisdb"] . "/__vectors";
+        $dir = App::$param['path'] . "app/tmp/" . $this->connection->database . "/__vectors";
         $safeName = Session::getUser() . "_" . md5(microtime() . rand());
 
         if (is_numeric($safeName[0])) {
@@ -402,7 +402,7 @@ class Process extends Controller
                 $fileFullPath = $dir . "/" . $safeName;
             }
 
-            $connectionStr = "\"PG:host=" . Connection::$param["postgishost"] . " user=" . Connection::$param["postgisuser"] . " password=" . Connection::$param["postgispw"] . " dbname=" . Connection::$param["postgisdb"] . "\"";
+            $connectionStr = "\"PG:host=" . $this->connection->host . " user=" . $this->connection->user . " password=" . $this->connection->password . " dbname=" . $this->connection->database . "\"";
 
             $cmd = "ogr2postgis" .
                 " -c {$connectionStr}" .
@@ -420,7 +420,7 @@ class Process extends Controller
             // Check ogr2ogr output
             if ($out[0] == "") {
                 // Bust cache, in case of layer already exist
-                Tilecache::bust(Connection::$param["postgisschema"] . "." . $safeName);
+                Tilecache::bust($this->connection->schema . "." . $safeName);
             } else {
                 $response['success'] = false;
                 $response['message'] = Session::createLog($out, $fileName);
@@ -430,7 +430,7 @@ class Process extends Controller
                 // Make sure the table is dropped if not
                 // skipping failures and it didn't exists before
                 // =================================================
-                $sql = "DROP TABLE " . Connection::$param["postgisschema"] . "." . $safeName;
+                $sql = "DROP TABLE " . $this->connection->schema . "." . $safeName;
                 $res = $this->model->prepare($sql);
                 try {
                     $res->execute();
