@@ -634,6 +634,7 @@ class Schemata
             "danmarksnaturstier" => ["dknatursti", false, "bool"],
             "rutefarve_k" => ["rut_farv_k", false, "int"],
             "kvalitetstjekket_k" => ["kva_tjek_k", false, "int"],
+            "rundtur" => ["rundtur", false, "boolean"],
         ],
 
         5607 => [
