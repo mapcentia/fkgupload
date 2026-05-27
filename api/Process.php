@@ -126,6 +126,8 @@ class Process extends Controller
             6201 => "t_6201_kult_geo",
             6202 => "t_6202_landk_omr",
             6203 => "t_6203_landk_vur",
+            6204 => "t_6204_bygningsvurderingsgruppe",
+            6205 => "t_6205_bygningsvurdering",
 
             6800 => "t_6800_parl_fl",
             6801 => "t_6801_parl_li",
