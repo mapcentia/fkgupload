@@ -50,7 +50,7 @@ class Process extends Controller
         Session::start();
         Session::authenticate(null);
 
-        $this->connection = new Connection(database: Session::getDatabase(), schema:  $_SESSION['postgisschema']);
+        $this->connection = new Connection(database: Session::getDatabase(), schema: $_SESSION['postgisschema']);
 
 
         $this->model = new Model();
@@ -699,6 +699,7 @@ class Process extends Controller
         }
         while ($row = $this->model->fetchRow($res)) {
             $response['data'][] = $row["objekt_id"];
+            $response['attr'][] = $ro;
         }
         $response['success'] = true;
         return $response;
@@ -711,18 +712,27 @@ class Process extends Controller
     public function get_7900(): array
     {
         $objekt_id = Route::getParam("objekt_id");
-        $sql = "select * from fkg.t_7900_fotoforbindelse where foto_objek=:objekt_id order by oprettet desc,objekt_id";
+        $sql = "select b.*, f.billedtekst,f.alt_tekst,f.copyright, f.fotoregistrator, f.fotodato, f.navn
+                    from fkg.t_7900_fotoforbindelse b
+                    join fkg.t_7901_foto f on b.foto_lokat=f.objekt_id
+                    where foto_objek = :objekt_id
+                    order by oprettet desc, objekt_id";
         $res = $this->model->prepare($sql);
-        try {
-            $res->execute(["objekt_id" => $objekt_id]);
-        } catch (PDOException $e) {
-            $response['success'] = false;
-            $response['message'][] = $e->getMessage();
-            $response['code'] = 401;
-            return $response;
-        }
+        $res->execute(["objekt_id" => $objekt_id]);
         while ($row = $this->model->fetchRow($res)) {
-            $response['data'][] = [$row["foto_lokat"], $row["primaer_kode"], $row["objekt_id"]];
+            $response['data'][] = [
+                $row["foto_lokat"],
+                $row["primaer_kode"],
+                $row["objekt_id"],
+                "attributes" => [
+                    "navn" => $row["navn"],
+                    "billedtekst" => $row["billedtekst"],
+                    "alt_tekst" => $row["alt_tekst"],
+                    "copyright" => $row["copyright"],
+                    "fotoregistrator" => $row["fotoregistrator"],
+                    "fotodato" => $row["fotodato"],
+                ],
+            ];
         }
         $response['success'] = true;
         return $response;
@@ -758,6 +768,46 @@ class Process extends Controller
             $response['code'] = 401;
             return $response;
         }
+        $response['success'] = true;
+        return $response;
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function put_7901(): array
+    {
+        $request = json_decode(Input::getBody(), true);
+        $objekt_id = $request["objekt_id"] ?? null;
+        $columns = ["billedtekst", "navn", "fotoregistrator", "fotodato", "copyright", "alt_tekst"];
+        $updates = [];
+        $params = ["objekt_id" => $objekt_id];
+
+        foreach ($columns as $column) {
+            if (array_key_exists($column, $request)) {
+                $updates[] = $column . "=:" . $column;
+                $params[$column] = $request[$column];
+            }
+        }
+
+        if (empty($updates)) {
+            $response['success'] = true;
+            return $response;
+        }
+
+        $sql = "update fkg.t_7901_foto set " . implode(",", $updates) . " where objekt_id=:objekt_id;";
+        $res = $this->model->prepare($sql);
+        $res->execute($params);
+        $response['success'] = true;
+        return $response;
+    }
+
+    public function delete_7901(): array
+    {
+        $objekt_id = Route::getParam("objekt_id");
+        $sql = "DELETE FROM fkg.t_7901_foto WHERE objekt_id=:objekt_id";
+        $res = $this->model->prepare($sql);
+        $res->execute(["objekt_id" => $objekt_id]);
         $response['success'] = true;
         return $response;
     }
