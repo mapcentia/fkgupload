@@ -698,8 +698,7 @@ class Process extends Controller
             return $response;
         }
         while ($row = $this->model->fetchRow($res)) {
-            $response['data'][] = $row["objekt_id"];
-            $response['attr'][] = $ro;
+            $response['data'][] = $row;
         }
         $response['success'] = true;
         return $response;
@@ -724,7 +723,7 @@ class Process extends Controller
                 $row["foto_lokat"],
                 $row["primaer_kode"],
                 $row["objekt_id"],
-                "attributes" => [
+                [
                     "navn" => $row["navn"],
                     "billedtekst" => $row["billedtekst"],
                     "alt_tekst" => $row["alt_tekst"],
