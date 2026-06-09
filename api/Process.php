@@ -743,8 +743,8 @@ class Process extends Controller
      */
     public function put_7900(): array
     {
+        $objekt_id = Route::getParam("objekt_id");
         $request = json_decode(Input::getBody(), true);
-        $objekt_id = $request["objekt_id"];
         $objekt_id_7900 = $request["objekt_id_7900"];
 
         $sql = "update fkg.t_7900_fotoforbindelse set primaer_kode=0 where foto_objek=:objekt_id;";
@@ -777,8 +777,8 @@ class Process extends Controller
      */
     public function put_7901(): array
     {
+        $objekt_id = Route::getParam("objekt_id");
         $request = json_decode(Input::getBody(), true);
-        $objekt_id = $request["objekt_id"] ?? null;
         $columns = ["billedtekst", "navn", "fotoregistrator", "fotodato", "copyright", "alt_tekst"];
         $updates = [];
         $params = ["objekt_id" => $objekt_id];
@@ -786,7 +786,7 @@ class Process extends Controller
         foreach ($columns as $column) {
             if (array_key_exists($column, $request)) {
                 $updates[] = $column . "=:" . $column;
-                $params[$column] = $request[$column];
+                $params[$column] = empty($request[$column]) ? null : $request[$column];
             }
         }
 
