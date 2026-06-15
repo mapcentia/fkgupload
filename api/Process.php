@@ -711,7 +711,7 @@ class Process extends Controller
     public function get_7900(): array
     {
         $objekt_id = Route::getParam("objekt_id");
-        $sql = "select b.*, f.billedtekst,f.alt_tekst,f.copyright, f.fotoregistrator, f.fotodato, f.navn
+        $sql = "select b.*, f.billedtekst,f.alt_tekst,f.copyright, f.fotoregistrator, f.fotodato, f.navn, f.off_kode
                     from fkg.t_7900_fotoforbindelse b
                     join fkg.t_7901_foto f on b.foto_lokat=f.objekt_id
                     where foto_objek = :objekt_id
@@ -730,6 +730,7 @@ class Process extends Controller
                     "copyright" => $row["copyright"],
                     "fotoregistrator" => $row["fotoregistrator"],
                     "fotodato" => $row["fotodato"],
+                    "off_kode" => $row["off_kode"],
                 ],
             ];
         }
@@ -778,7 +779,7 @@ class Process extends Controller
     {
         $objekt_id = Route::getParam("objekt_id");
         $request = json_decode(Input::getBody(), true);
-        $columns = ["billedtekst", "navn", "fotoregistrator", "fotodato", "copyright", "alt_tekst"];
+        $columns = ["billedtekst", "navn", "fotoregistrator", "fotodato", "copyright", "alt_tekst", "off_kode"];
         $updates = [];
         $params = ["objekt_id" => $objekt_id];
 
