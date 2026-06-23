@@ -698,12 +698,10 @@ class Schemata
             "planstatus_kode" => ["planstat_k", false, "int"],
             "beliggenhedskommune" => ["belig_kom", false, "int"],
 
-            "id_cykelknudepkt" => ["id_cykelkp", true, "varchar"],
-            "nodenumber" => ["nodenumber", false, "varchar"],
-            "ismain" => ["ismain", false, "bool"],
-            "deadend" => ["deadend", true, "bool"],
-            "refmain" => ["refmain", false, "varchar"],
-            "afm_cykelknudepkt" => ["afm_kpkt", true, "bool"],
+            "krydspunktsnummer" => ["kryds_nr", false, "varchar"],
+            "primaerpunkt" => ["primar_pkt", false, "bool"],
+            "blindt_punkt" => ["blindt_pkt", true, "bool"],
+            "afm_krydspunkt" => ["afm_kryds", true, "bool"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOINT],
         ],
@@ -721,11 +719,9 @@ class Schemata
             "planstatus_kode" => ["planstat_k", false, "int"],
             "beliggenhedskommune" => ["belig_kom", false, "int"],
 
-            "id_cykelknudepunktsstraekning" => ["id_cykelks", true, "varchar"],
-            "length" => ["length", false, "double precision"],
-            "privatenot" => ["privatenot", true, "bool"],
-            "surfacenot" => ["surfacenot", true, "bool"],
-            "onewaynot" => ["onewaynot", true, "bool"],
+            "privatvej" => ["privatvej", true, "bool"],
+            "asfalteret" => ["asfalteret", true, "bool"],
+            "ensrettet" => ["ensrettet", true, "bool"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
         ],
