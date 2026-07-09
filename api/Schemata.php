@@ -1776,7 +1776,7 @@ class Schemata
             "objekt" => ["objekt", false, "varchar"],
             "registreringsproblem" => ["reg_probl", false, "varchar"],
             "komplekstype" => ["kompl_type", false, "varchar"],
-            "oprindelig_funktion" => ["opr_funkt", false, "varchar"],
+            "bygningsfunktion" => ["byg_funkt", false, "varchar"],
             "vurderingsbaseline" => ["baseline", false, "varchar"],
             "bygningsdel" => ["byg_del", false, "varchar"],
             "doereporte" => ["doereporte", false, "varchar"],
@@ -1810,6 +1810,13 @@ class Schemata
             "registrator" => ["registra", false, "varchar"],
             "bevaringsvaerdig" => ["bev_status", false, "bool"],
             "bevaringsaarsag_kode" => ["bev_bggr_k", true, "int"],
+
+            "ombygningsaar" => ["omb_aar", true, "int"],
+            "tagdaekning" => ["tagdaekn", true, "varchar"],
+            "ydervaeg" => ["ydervaeg    ", true, "varchar"],
+            "bebyggetareal" => ["beb_areal", true, "int"],
+            "totalbygningsareal" => ["tot_areal", true, "int"],
+            "etager" => ["etager", true, "int"],
 
             "link" => ["link", false, "varchar"],
             "link1" => ["link1", false, "varchar"],
