@@ -1765,7 +1765,7 @@ class Schemata
             "koordinat_north" => ["koord_n", false, "varchar"],
             "koordinat_east" => [" koord_e", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
-            "ejendomsnummer" => ["ejd_nr", false, "int"],
+            "bfe_nr" => ["bfe_nr", false, "int"],
             "bygningsnummer" => ["byg_nr", false, "int"],
             "matrikel_ejerlav" => ["matrikel", false, "varchar"],
             "opfoerelsesaar" => ["opf_aar", false, "int"],
