@@ -288,35 +288,85 @@ class Process extends Controller
             $countAfterRules++;
         }
 
-        $sqlExists = "SELECT 1 FROM fkg." . $themeName . " WHERE objekt_id=:objekt_id";
-        $sqlUpdate = "UPDATE fkg." . $themeName . " SET " . implode(", ", $arr3) . " FROM " . $uploadTable . " WHERE fkg." . $themeName . ".objekt_id=" . $uploadTable . ".objekt_id::uuid AND " . $themeName . ".objekt_id=:objekt_id;";
-        //echo $sqlUpdate . "\n\n";
-        $resExists = $this->model->prepare($sqlExists);
-        $resUpdate = $this->model->prepare($sqlUpdate);
-
         $response["data"]["updated_ids"] = [];
-        foreach ($sqlUpdateIds as $objekt_id) {
-
-            try {
-                $resExists->execute(["objekt_id" => $objekt_id]);
-            } catch (PDOException $e) {
-                $response['success'] = false;
-                $response['message'][] = $e->getMessage();
-                $response['code'] = 401;
-                return $response;
-            }
-            $rowExists = $this->model->fetchRow($resExists);
-            if (!empty($rowExists)) {
+        if ($themeName === "t_6205_bygningsvurdering") {
+            // t_6205_bygningsvurdering is a VIEW with INSTEAD OF triggers that write
+            // to two underlying tables, so ON CONFLICT cannot be used here. Emulate
+            // the upsert manually: the objekt_id may be assigned up front, so when
+            // it already exists we update the row in place, otherwise we insert it
+            // with the supplied objekt_id. Both paths go through the view so its
+            // triggers fire. objekt_id is added to the insert column list here (it
+            // is excluded from $arr1/$arr2, which the server-assigned-id insert
+            // below relies on).
+            //
+            // Existence must be probed against fkg.generel with the SAME predicate
+            // the INSTEAD OF INSERT trigger uses (an active row: systid_til IS NULL),
+            // NOT against the view. The view can hide active rows, so probing it
+            // would wrongly route an existing objekt_id to INSERT and hit the
+            // trigger's "Objekt ... already exists" RAISE.
+            $sqlExists = "SELECT 1 FROM fkg.generel WHERE objekt_id=:objekt_id::uuid AND systid_til IS NULL";
+            $sqlUpdate = "UPDATE fkg." . $themeName . " SET " . implode(", ", $arr3) . " FROM " . $uploadTable . " WHERE fkg." . $themeName . ".objekt_id=" . $uploadTable . ".objekt_id::uuid AND " . $themeName . ".objekt_id=:objekt_id;";
+            $upsertCols = array_merge(["objekt_id"], $arr1);
+            $upsertVals = array_merge(["objekt_id::uuid"], $arr2);
+            // Insert exactly ONE upload row (the lowest gid) for this objekt_id. The
+            // upload may contain several rows with the same objekt_id; selecting them
+            // all here would make the INSTEAD OF INSERT trigger fire once per row and
+            // the 2nd row would see the 1st row's just-inserted active generel row and
+            // RAISE "Objekt ... already exists". gid is the upload table's unique key.
+            $sqlUpsertInsert = "INSERT INTO fkg." . $themeName . " (" . implode(",", $upsertCols) . ") (SELECT " . implode(",", $upsertVals) . " FROM " . $uploadTable . " WHERE gid = (SELECT MIN(gid) FROM " . $uploadTable . " WHERE objekt_id=:objekt_id))";
+            $resExists = $this->model->prepare($sqlExists);
+            $resUpdate = $this->model->prepare($sqlUpdate);
+            $resUpsertInsert = $this->model->prepare($sqlUpsertInsert);
+            // De-duplicate: a repeated objekt_id must be resolved to a single row, not
+            // inserted-then-updated once per duplicate (which would spawn extra versions).
+            foreach (array_unique($sqlUpdateIds) as $objekt_id) {
                 try {
-                    $resUpdate->execute(["objekt_id" => $objekt_id]);
+                    $resExists->execute(["objekt_id" => $objekt_id]);
+                    $rowExists = $this->model->fetchRow($resExists);
+                    if (!empty($rowExists)) {
+                        $resUpdate->execute(["objekt_id" => $objekt_id]);
+                        $this->model->fetchRow($resUpdate);
+                    } else {
+                        $resUpsertInsert->execute(["objekt_id" => $objekt_id]);
+                    }
                 } catch (PDOException $e) {
                     $response['success'] = false;
                     $response['message'][] = $e->getMessage();
                     $response['code'] = 401;
                     return $response;
                 }
-                $this->model->fetchRow($resUpdate); // TODO can this line be deleted?
                 $response["data"]["updated_ids"][] = $objekt_id;
+            }
+        } else {
+            $sqlExists = "SELECT 1 FROM fkg." . $themeName . " WHERE objekt_id=:objekt_id";
+            $sqlUpdate = "UPDATE fkg." . $themeName . " SET " . implode(", ", $arr3) . " FROM " . $uploadTable . " WHERE fkg." . $themeName . ".objekt_id=" . $uploadTable . ".objekt_id::uuid AND " . $themeName . ".objekt_id=:objekt_id;";
+            //echo $sqlUpdate . "\n\n";
+            $resExists = $this->model->prepare($sqlExists);
+            $resUpdate = $this->model->prepare($sqlUpdate);
+
+            foreach ($sqlUpdateIds as $objekt_id) {
+
+                try {
+                    $resExists->execute(["objekt_id" => $objekt_id]);
+                } catch (PDOException $e) {
+                    $response['success'] = false;
+                    $response['message'][] = $e->getMessage();
+                    $response['code'] = 401;
+                    return $response;
+                }
+                $rowExists = $this->model->fetchRow($resExists);
+                if (!empty($rowExists)) {
+                    try {
+                        $resUpdate->execute(["objekt_id" => $objekt_id]);
+                    } catch (PDOException $e) {
+                        $response['success'] = false;
+                        $response['message'][] = $e->getMessage();
+                        $response['code'] = 401;
+                        return $response;
+                    }
+                    $this->model->fetchRow($resUpdate); // TODO can this line be deleted?
+                    $response["data"]["updated_ids"][] = $objekt_id;
+                }
             }
         }
 
@@ -432,7 +482,7 @@ class Process extends Controller
 
             $connectionStr = "\"PG:host=" . $this->connection->host . " user=" . $this->connection->user . " password=" . $this->connection->password . " dbname=" . $this->connection->database . "\"";
 
-            $cmd = "ogr2postgis" .
+            $cmd = "/usr/local/bin/ogr2postgis" .
                 " -c {$connectionStr}" .
                 " -s EPSG:25832" .
                 " -t EPSG:25832" .
