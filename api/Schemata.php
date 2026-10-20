@@ -1743,6 +1743,11 @@ class Schemata
             "link2" => ["link2", false, "varchar"],
             "link3" => ["link3", false, "varchar"],
             "beliggenhedskommune" => ["belig_kom", false, "int"],
+            "beliggenhed" => ["gr_belig", false, "varchar"],
+            "gruppetype" => ["gr_type", false, "varchar"],
+            "oprettelsesdato" => ["gr_opretda", false, "date"],
+            "komplekstype" => ["gr_komplek", false, "varchar"],
+            "bebyggelsestype" => ["gr_bebyg", false, "varchar"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTIPOLYGON],
         ],
