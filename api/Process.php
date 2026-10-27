@@ -289,7 +289,7 @@ class Process extends Controller
         }
 
         $response["data"]["updated_ids"] = [];
-        if ($themeName === "t_6205_bygningsvurdering") {
+        if ($themeName === "t_6205_bygningsvurdering" || $themeName === "t_6204_bygningsvurderingsgruppe") {
             // t_6205_bygningsvurdering is a VIEW with INSTEAD OF triggers that write
             // to two underlying tables, so ON CONFLICT cannot be used here. Emulate
             // the upsert manually: the objekt_id may be assigned up front, so when
