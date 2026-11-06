@@ -2372,6 +2372,7 @@ class Schemata
 
             "bundkote" => ["bundkote", false, "double precision"],
             "topkote" => ["topkote", false, "double precision"],
+            "gentagelsesperiode" => ["gentag_per", false, "varchar"],
             "afloebskapacitet" => ["afloeb_kap", false, "double precision"],
 
             "link" => ["link", false, "varchar"],
