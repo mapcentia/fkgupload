@@ -892,6 +892,8 @@ class Schemata
             "tilkm" => ["tilkm", false, "int"],
             "tilm" => ["tilm", false, "int"],
             "sted_metode_kode" => ["sted_met_k", false, "int"],
+            "gyldig_fra" => ["gyldig_fra", true, "date"],
+            "gyldig_til" => ["gyldig_til", false, "date"],
 
             "geometri" => ["the_geom", true, "geometry", self::MULTILINESTRING],
         ],
@@ -1232,7 +1234,7 @@ class Schemata
             "gyldig_fra" => ["gyldig_fra", true, "date"],
             "funktion" => ["funktion", true, "varchar"],
             "planlagt_aktivitet" => ["planl_akti", true, "varchar"],
-            "genoptaget" => ["genoptaget", true, "date"],
+            "genoptaget" => ["genoptaget", false, "date"],
             "kommentar" => ["kommentar", false, "varchar"],
             "sagsnr" => ["sagsnr", false, "varchar"],
 
